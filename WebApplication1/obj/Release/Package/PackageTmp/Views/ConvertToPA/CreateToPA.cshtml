@@ -1,0 +1,688 @@
+﻿
+@{
+    ViewBag.Title = "CreateToPA";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+      // Warning before leaving the page (back button, or outgoinglink)
+    window.onbeforeunload = function () {
+        return "Do you really want to leave our brilliant application?";
+        //if we return nothing here (just calling return;) then there will be no pop-up question at all
+        //return;
+    };
+    $(document).ready(function () {
+        InitialPage();
+        GetNoMemo();
+        GetListExpense(); 
+    });
+    $(document).ready(function () {
+        $('#txtNominalBayar').keyup(function () {
+            GetEndBudget();
+        });
+    });
+    $(document).ready(function (){
+        $("#ddl_memo").change(function () {
+            SubdistBayar();
+            LoadSaldoDetailPA();
+         
+        });
+    });
+    $(document).ready(function () {
+        $("#ddl_subdist_bayar").change(function () {
+            GetTujuanSabdist();
+        });
+    });
+    $(document).ready(function () {
+        $("#ddl_tujuan_subdist").change(function () {
+            GetBudgetAvailable();
+        });
+    });
+    $(document).ready(function () {
+        $("#ddl_list_expense").change(function () {
+           
+        });
+    });
+    $(document).ready(function () {
+        $("#btnAddDetail").click(function () {
+           
+            $('#txtNoRek').attr('placeholder', 'Silahkan Isi Nomer Rekening');
+            $('#txtNoteRemarks').attr('placeholder', 'Silahkan Isi Note Remaks');
+            $('#txtNominalBayar').attr('placeholder', 'Silahkan Isi Nominal Tambahan');
+
+            
+            var NoMemoSend = $("#ddl_memo").val();
+            var ShipToIDSend = $("#ddl_tujuan_subdistBayar").val();
+            var AmountSend = $("#txtNominalBayar").val();
+            var NoRekeningSend = $("#txtNoRek").val();
+            var NoteRemarksSend = $("#txtNoteRemarks").val();
+            var ListExpenseSend = $("#ddl_list_expense").val();
+            var LineNumberToSend = $("#ddl_tujuan_subdist").val();
+            var EndBudgetSend = $("#txtEndBudget").val();
+            var NamaBankSend = $("#txtBank").val();
+            var NamaRekeningSend = $("#txtNamaRek").val();
+            var SaldoPASubdist = $("#txtsaldoPA").val();
+            if (SaldoPASubdist < AmountSend) {
+                alert('Saldo anda tidak mencukupi');
+                return;
+            }
+            alert(AmountSend);
+            $.ajax({
+                url: 'InsertAddDetail?NoMemo=' + NoMemoSend +
+                    "&ShipToID=" + ShipToIDSend +
+                    "&amount=" + AmountSend +
+                    "&NoRekening=" + NoRekeningSend +
+                    "&NoteRemarks=" + NoteRemarksSend +
+                    "&ListExpense=" + ListExpenseSend +
+                    "&LineNumberTo=" + LineNumberToSend +
+                    "&EndBudget=" + EndBudgetSend +
+                    "&NamaBank=" + NamaBankSend +
+                    "&NamaRekening="+NamaRekeningSend,
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $('#txtsaldoPA').val(data);
+                    LoadBtnCreateClosePA();
+
+                }, error: function (ex) {
+                    alert(JSON.stringify(ex));
+                }
+            });
+        });
+    });
+    $(document).ready(function () {
+        $("#ddl_tujuan_subdistBayar").change(function () {
+            GetSaldoPA();
+        });
+    });
+    $(document).ready(function () {
+        $("#btnCreatePA").click(function () {
+            InsertCreateToPA();
+        });
+    });
+    $(document).ready(function(){
+        $("#btnCloseSisaBayar").click(function () {
+            CloseSisaBayar();
+        });
+        
+    });
+
+
+    function InitialPage() {
+        $('#CardDetailPA').attr('Hidden', true);
+        $('#formSaldo').attr('Hidden', true);
+        $('#formBtnCreateClosePA').attr('hidden', true);
+        $('#form_tablePA').attr('hidden', true);
+    }
+    function LoadSaldoDetailPA() {
+        $('#CardDetailPA').attr('Hidden', false);
+        $('#formSaldo').attr('Hidden', false);
+        //GetSaldoPA();
+    }
+    function LoadBtnCreateClosePA() {
+        $('#formBtnCreateClosePA').attr('hidden', false);
+        $('#form_tablePA').attr('hidden', false);
+        var NoMemoSend = $("#ddl_memo").val();
+        var LineNumberToSend = $("#ddl_tujuan_subdist").val();
+
+        $.ajax({
+            url: "GetDetailTO?NoMemo="+NoMemoSend+"&LineNumberTo="+LineNumberToSend,
+            type: "post",
+            dataType: "json",
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                var trHTML = '';
+                var trav = 0;
+                var Count = data.length;
+                
+                for (trav = 0; trav < Count; trav++) {
+                    trHTML += '<tr><td>' + data[trav].No + '</td><td>' + data[trav].HeaderLineNumber + '</td><td>' + data[trav].ShiptoID + '</td><td>' + data[trav].Subdist + '</td><td>' + data[trav].Amount + '</td><td><button class="btn btn-primary" id=btnDeleteLevel onclick="Delete(this)">Delete</button></td >;</tr>';
+                }
+                if (Count > 0) {
+
+                }
+                $("#tBodyPA").empty();
+                $("#tblItemList").append(trHTML);
+
+            }
+        });
+    }
+    function BtnAddDetail() {
+        AddDetailClick();
+    }
+    function ConfirmCreatePA() {        
+        swal({
+            title: "Apakah Anda yakin untuk Create To PA ?",
+            text: "Pastikan Data Yang Anda inputkan Benar !",
+            type: "warning",
+            showCancelButton: !0,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, Create To PA !!",
+            closeOnConfirm: !1
+        }, function () {
+            swal({
+                title: "Create To PA Berhasil !!",
+                text: "Anda Akan diarahkan ke Home",
+                type: "success",
+                timer: 2e3,
+                closeOnConfirm: !1
+
+            }, function () {
+                var url = "HomePage";
+                $(location).attr('href', url);
+            });
+        });
+    }
+    function ConfirmCloseSisa() {
+        swal({
+            title: "Apakah Anda yakin untuk Close Sisa Pembayaran ?",
+            text: "Pastikan Data Yang Anda inputkan Benar !",
+            type: "warning",
+            showCancelButton: !0,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Ya, Close Sisa Pembayaran!!",
+            closeOnConfirm: !1
+        }, function () {
+            swal({
+                title: "Close Sisa Pembayaran Berhasil !!",
+                text: "Anda Akan diarahkan ke Home",
+                type: "success",
+                timer: 2e3,
+                showConfirmButton: !1
+
+            }, function () {
+                var url = "HomePage";
+                $(location).attr('href', url);
+            });
+        });
+    }
+    /* Function */
+    function NotKopkarSelected() {
+        var SubdistBayarIDSend = $("#ddl_tujuan_subdistBayar").val();
+
+        $.ajax({
+            url: 'NotKopkarSelected?ShipToID='+SubdistBayarIDSend,
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $("#txtNamaRek").val(data);
+
+            }, error: function (ex) {
+                alert(JSON.stringify(ex));
+            }
+        });
+    }
+    function GetNoMemo() {
+
+        $.ajax({
+            url: 'GetNoMemo',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var count = data.length;
+                var trhtml = '';
+                var trav = 0;
+                
+                trhtml += '<option disabled selected hidden class="dropdown-header">*** Pilih Nomer Memo ***</option>';
+                if (count > 0) {
+                    for (trav = 0; trav < count; trav++) {
+                        trhtml += '<Option class="dropdown-item" value = "' + data[trav] + '" > ' + data[trav];
+                    }
+                }
+                $("#ddl_memo").empty();
+                $("#ddl_memo").append(trhtml);
+                $("#ddl_memo").select2();
+            }, error: function (ex) {
+                alert(JSON.stringify(ex));
+            }
+        });
+    }
+    function SubdistBayar() {
+        var NoMemoSend = $("#ddl_memo").val();
+        $.ajax({
+            url: 'GetTujuanSubdist?NoMemo='+NoMemoSend,
+            type: 'post',
+            dataType: 'json',
+            //data: JSON.stringify(dto),
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var count = data.length;
+                var trhtml = '';
+                var trav = 0;
+
+                trhtml += '<option disabled selected hidden class="dropdown-header">*** Pilih Subdist Bayar ***</option>';
+                if (count > 0) {
+                    for (trav = 0; trav < count; trav++) {
+                        trhtml += '<Option class="dropdown-item" value = "' + data[trav].LineNumber + '" > ' + data[trav].Description;
+                    }
+                }
+                $("#ddl_tujuan_subdist").empty();
+                $("#ddl_tujuan_subdist").append(trhtml);
+                $("#ddl_tujuan_subdist").select2();
+
+                LoadSaldoDetailPA();
+
+            }, error: function (ex) {
+                alert(JSON.stringify(ex));
+            }
+        });
+    }
+    function GetSaldoPA() {
+        var SubdistBayarIDSend = $("#ddl_tujuan_subdistBayar").val();
+
+        $.ajax({
+            url: 'GetSaldo?NoSubdist='+SubdistBayarIDSend,
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $('#txtsaldoPA').val(data[0].Saldo);
+                $('#txtsaldoPAShow').val(data[0].SaldoShow);
+                if (SubdistBayarIDSend != '595733') {
+                    NotKopkarSelected();
+                }
+
+            }, error: function (ex) {
+                alert(JSON.stringify(ex));
+            }
+        });
+    }
+
+    
+
+
+    function GetTujuanSabdist(ShipToID) {
+        var NoSubdistSend = ShipToID;
+        var NoMemoSend = $("#ddl_memo").val();
+
+        $.ajax({
+            url: 'GetTujuanSubdistBayar?NoSubdist='+NoSubdistSend+"&NoMemo="+NoMemoSend,
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var count = data.length;
+                var trhtml = '';
+                var trav = 0;
+
+                trhtml += '<option disabled selected hidden class="dropdown-header">*** Silahkan Pilih Tujuan Subdist ***</option>';
+                if (count > 0) {
+                    for (trav = 0; trav < count; trav++) {
+                        trhtml += '<Option class="dropdown-item" value = "' + data[trav].ShipToID + '" > ' + data[trav].Description;
+                    }
+                }
+                $("#ddl_tujuan_subdistBayar").empty();
+                $("#ddl_tujuan_subdistBayar").append(trhtml);
+
+                
+            }, error: function (ex) {
+                alert(JSON.stringify(ex));
+            }
+        });
+    }
+
+    function GetBudgetAvailable() {
+        var NoMemoSend = $("#ddl_memo").val();
+        var LineNumberSend = $("#ddl_tujuan_subdist").val();
+       
+
+        $.ajax({
+            url: 'GetBudgetAvailable?NoMemo='+NoMemoSend+"&LineNumber="+LineNumberSend,
+            type: 'post',
+            dataType: 'json',
+            //data: JSON.stringify(dto),
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $('#txtBudgetAvailable').val(data[0].KlaimTO);
+                $('#txtBudgetAvailableShow').val(data[0].KlaimTOShow);
+                GetTujuanSabdist(data[0].ShipToID);
+
+            }, error: function (ex) {
+                alert(JSON.stringify(ex));
+            }
+        });
+    }
+
+    function GetListExpense() {
+
+        $.ajax({
+            url: 'GetItemExpense',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var count = data.length;
+                var trhtml = '';
+                var trav = 0;
+
+                trhtml += '<option disabled selected hidden class="dropdown-header">*** Silahkan Pilih List Expense ***</option>';
+                if (count > 0) {
+                    for (trav = 0; trav < count; trav++) {
+                        trhtml += '<Option class="dropdown-item" value = "' + data[trav].IdExpense + '" > ' + data[trav].DescExpense;
+                    }
+                }
+                $("#ddl_list_expense").empty();
+                $("#ddl_list_expense").append(trhtml);
+                
+            }, error: function (ex) {
+                alert(JSON.stringify(ex));
+            }
+        });
+    }
+
+    function GetEndBudget() {
+        var t_avail = parseInt($('#txtBudgetAvailable').val());
+        var t_nominalBayar = parseInt($('#txtNominalBayar').val());
+
+        var t_endBudget = t_avail - t_nominalBayar;
+
+        $('#txtEndBudget').val(t_endBudget);
+    }
+
+    /* Function Insert */
+
+    function InsertCreateToPA() {
+        var NoMemoSend = $("#ddl_memo").val();
+        var LineNumberSend = $("#ddl_tujuan_subdist").val();
+        var ShiptoIDSend = $("#ddl_tujuan_subdistBayar").val();
+
+
+        $.ajax({
+            url: 'CreateToPAExec?NoSubdist='+ShiptoIDSend+'&LineNumber='+LineNumberSend+'&NoMemo='+NoMemoSend,
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                swal("Success", "Create To PA Berhasil dengan nomor :" + data, "success");
+                $("#txtNoPA").val(data);
+                $("#btnAddDetail").attr("disabled", true);
+                $("#btnCloseSisaBayar").attr("disabled", true);
+                $("#btnCreatePA").attr("disabled", true);
+            }, error: function (ex) {
+                alert(JSON.stringify(ex));
+            }
+        });
+    }
+    function CloseSisaBayar() {
+        var NoMemoSend = $("#ddl_memo").val();
+        var LineNumberSend = $("#ddl_tujuan_subdist").val();
+
+        $.ajax({
+            url: 'CloseExec?NoMemo='+NoMemoSend+'&LineNumber='+LineNumberSend,
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                swal({
+                    title: "Close Sisa bayar berhasil",
+                    text: "Anda Akan diarahkan ke Home",
+                    type: "success",
+                    timer: 2e3,
+                    showConfirmButton: !1
+
+                }, function () {
+                    var url = "HomePage";
+                    $(location).attr('href', url);
+                });
+            }, error: function (ex) {
+                alert(JSON.stringify(ex));
+            }
+        });
+    }
+
+    function Delete(button) {
+        var row = $(button).closest("TR");
+        var HeadLNSend = $("TD", row).eq(1).html();
+        var NoMemoSend = $("#ddl_memo").val();
+        console.log(HeadLNSend);
+      
+        $.ajax({
+            url: "DeleteLineTOSLA?NoMemo=" + NoMemoSend + "&HeadLineNumber=" + HeadLNSend,
+            type: "post",
+            dataType: "json",
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                var trHTML = '';
+                var trav = 0;
+                var Count = data.length;
+
+                for (trav = 0; trav < Count; trav++) {
+                    trHTML += '<tr><td>' + data[trav].No + '</td><td>' + data[trav].HeaderLineNumber + '</td><td>' + data[trav].ShiptoID + '</td><td>' + data[trav].Subdist + '</td><td>' + data[trav].Amount + '</td><td><button class="btn btn-primary" id=btnDeleteLevel onclick="Delete(this)">Delete</button></td >;</tr>';
+                }
+                if (Count > 0) {
+
+                }
+                $("#tBodyPA").empty();
+                $("#tblItemList").append(trHTML);
+            },
+            error: function (errormessage) {
+            }
+        });
+    }
+
+</script>
+
+
+
+<div class="containers">
+    <div class="col-md-12">
+
+        <div id="CardHeaderPA" class="card">
+            <div class="card-body">
+                <h4 class="card-title">Create To PA</h4>
+
+                <hr />
+                <div class="basic-form">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <div class="col-md-2">
+                                    Tipe Pembayaran
+                                </div>
+                                <div class="col-md-8">
+
+                                    <select id="ddl_tipe_bayar" class="form-control">
+                                        <option selected disabled>Silahkan Pilih Tipe Pembayaran</option>
+                                        <option class="dropdown-item" value="TO">TO</option>
+                                        @*<option class="dropdown-item" value="SLA">SLA</option>*@
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-2">
+                                    No Memo
+                                </div>
+                                <div class="col-md-8">
+
+                                    <select id="ddl_memo" class="form-control">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row" hidden="hidden">
+                                <div class="col-md-2">
+                                    Subdist Bayar
+                                </div>
+                                <div class="col-md-8">
+
+                                    <select id="ddl_subdist_bayar" class="form-control" title="Silahkan Pilih Subdist Bayar">
+                                        
+                                    </select>
+                                </div>
+                            </div>
+
+                           
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="CardDetailPA" class="card">
+            <div class="card-body">
+                <h4 class="card-title">Detail PA</h4>
+                <hr />
+                <div class="basic-form">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <div class="col-md-2">
+                                    Tujuan Subdist
+                                </div>
+                                <div class="col-md-8">
+
+                                    <select id="ddl_tujuan_subdist" class="form-control" title="Silahkan Pilih Tujuan Subdist">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-2">
+                                    Budget Available
+                                </div>
+                                <div class="col-md-8">
+                                    <input id="txtBudgetAvailableShow" type="text" class="form-control" placeholder="*** Generate By System ***" readonly="readonly">
+                                    <input id="txtBudgetAvailable" type="text" class="form-control" placeholder="*** Generate By System ***" readonly="readonly" hidden="hidden">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-2">
+                                    Subdist Bayar
+                                </div>
+                                <div class="col-md-8">
+
+                                    <select id="ddl_tujuan_subdistBayar" class="form-control" title="Silahkan Pilih SubdistBayar">
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="formSaldo" class="form-group row">
+                                <div class="col-md-2">
+                                    Saldo
+                                </div>
+                                <div class="col-md-8">
+                                    <input id="txtsaldoPAShow" type="text" class="form-control" placeholder="*** Generate By System ***" readonly="readonly">
+                                    <input id="txtsaldoPA" type="text" class="form-control" placeholder="*** Generate By System ***" readonly="readonly" hidden="hidden">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-2">
+                                    Nama Bank
+                                </div>
+                                <div class="col-md-8">
+                                    <input id="txtBank" type="text" class="form-control" placeholder="Silahkan Isi Nama Bank">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-2">
+                                    Nama Rekening
+                                </div>
+                                <div class="col-md-8">
+                                    <input id="txtNamaRek" type="text" class="form-control" placeholder="Silahkan Isi Nama Rekening">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-2">
+                                    No Rekening
+                                </div>
+                                <div class="col-md-8">
+                                    <input id="txtNoRek" type="text" class="form-control" placeholder="Silahkan Isi Nomer Rekening">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-2">
+                                    Note Tambahan
+                                </div>
+                                <div class="col-md-8">
+                                    <input id="txtNoteRemarks" type="text" class="form-control" placeholder="Silahkan Isi Note Tambahan">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-2">
+                                    List Expense
+                                </div>
+                                <div class="col-md-8">
+
+                                    <select id="ddl_list_expense" class="form-control">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-2">
+                                    Nominal Bayar
+                                </div>
+                                <div class="col-md-8">
+                                    <input id="txtNominalBayar" type="number" class="form-control" placeholder="Silahkan Isi Nominal Klaim TO">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-2">
+                                    End Budget
+                                </div>
+                                <div class="col-md-8">
+                                    <input id="txtEndBudget" type="number" class="form-control" placeholder="*** Generate By System ***" readonly="readonly">
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <button id="btnAddDetail" class="btn btn-dark m-t-20 btn sweet-auto">Add Detail</button>
+                                    <button id="btnCloseSisaBayar" class="btn btn-dark m-t-20">Close Sisa Pembayaran</button>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-2">
+                                    No PA
+                                </div>
+                                <div class="col-md-8">
+                                    <input id="txtNoPA" type="text" class="form-control" placeholder="*** Generate By System ***" readonly="readonly">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12" style="margin-left:-15px">
+                            <div id="form_tablePA" class="form-group row">
+                                <table id="tblItemList" class="table table-striped table-bordered zero-configuration">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>HeadLN</th>
+                                            <th>ShipToID</th>
+                                            <th>NamaSubdist</th>
+                                            <th>Amount</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tBodyPA">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="formBtnCreateClosePA" class="form-group row">
+                                <div class="col-md-12">
+                                    <button id="btnCreatePA" class="btn btn-dark m-t-20" style="margin-right:20px">Create PA</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
