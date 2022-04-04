@@ -13,10 +13,7 @@
         GetPeriode();
          
 
-        $('#modalMasterSubdist').on('shown.bs.modal', function () {
-            $($.fn.dataTable.tables(true)).DataTable()
-                .columns.adjust(); 
-        });
+      
 
         $('#tblListMasterSubdist').DataTable({
             "scrollY": "400px",
@@ -24,7 +21,8 @@
             responsive: true, 
             ajax: {
                 url: 'GetListMasterSubdist',
-                cache: true
+                cache: true,
+                dataSrc: ""
             },
             columns: [
                 {
@@ -41,6 +39,11 @@
                 }
             ]
         }) 
+        $('#modalMasterSubdist').on('shown.bs.modal', function () {
+            $($.fn.dataTable.tables(true)).DataTable()
+                .columns.adjust();
+        });
+
     });
     $(document).ready(function () {
         //$('#btnShowMasterSubdist').trigger('click');
@@ -70,6 +73,8 @@
                         var trHTML = '';
                         var trav = 0;
                         var Count = data.length;
+
+                        console.log(data)
                         if (Count > 0) {
                             let dataInvalid = 0  // count error returned caused by unmatch subdist
 
@@ -141,20 +146,13 @@
                 var trHTML = '';
                 var trav = 0;
                 var Count = data.length;
-                if (Count > 0) {
-                    let errCount = 0
+                if (Count > 0) { 
                     for (trav = 0; trav < Count; trav++) {
-                        if (data[trav].IsValid === 0) {
-                            trHTML += '<tr class="bg-danger text-white"><td>' + data[trav].NoMemo + '</td><td>' + data[trav].Reg + '</td><td>' + data[trav].ShipToID + '</td><td>' + data[trav].Base + '</td><td>' + data[trav].Nama + '</td><td>' + data[trav].Subdist + '</td><td>' + data[trav].KlaimTO + '</td></tr>';
-                            errCount++
-                        } else {
-                            trHTML += '<tr><td>' + data[trav].NoMemo + '</td><td>' + data[trav].Reg + '</td><td>' + data[trav].ShipToID + '</td><td>' + data[trav].Base + '</td><td>' + data[trav].Nama + '</td><td>' + data[trav].Subdist + '</td><td>' + data[trav].KlaimTO + '</td></tr>';
-                        }
+                        trHTML += '<tr><td>' + data[trav].NoMemo + '</td><td>' + data[trav].Reg + '</td><td>' + data[trav].ShipToID + '</td><td>' + data[trav].Base + '</td><td>' + data[trav].Nama + '</td><td>' + data[trav].Subdist + '</td><td>' + data[trav].KlaimTO + '</td></tr>';
                         $("#tBodyItemList").empty();
                         $("#tblItemList").append(trHTML);
                     }
                      
-                    errCount > 0 && $('#btnSaveDetail').attr('data-error', true);
                 }
                 $("#divloading").attr("hidden", true);
                 swal("Success", "Konfirmasi Memo berhasil", "success");
@@ -195,7 +193,7 @@
     </div>
     <div class="col-md-12">
         <div id="divloading" style="position:fixed;z-index:1000;margin:auto;text-align:center;margin-left:350px;margin-top:200px;" hidden="hidden">
-            <img src="~/Content/images/Loading.gif" / style="width:50%;height:50%;">
+            <img src="~/Content/images/Loading.gif" style="width:50%;height:50%;">
         </div>
         <div class="card">
             <div class="card-body">
