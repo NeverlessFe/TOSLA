@@ -44,7 +44,8 @@ namespace WebApplication1.Controllers
 
                     var fileName = Path.GetFileName("TO_" + Periode + "_" + file.FileName);
 
-                    path = Path.Combine(@"\\kalbox-b7.bintang7.com\Intranetportal\Intranet Attachment\TO\", fileName);
+                    //path = Path.Combine(@"\\kalbox-b7.bintang7.com\Intranetportal\Intranet Attachment\TO\", fileName);
+                    path = Path.Combine(@"\\kalbox-b7.bintang7.com\Intranetportal\Intranet Attachment\TO\DEV", fileName);
                     //var path = Path.Combine("//10.167.1.78/File Sharing B7/Intranetportal/Intranet Attachment/CCC/AttachmentCC/CAPA/", fileName);
 
                     file.SaveAs(path);
@@ -203,5 +204,48 @@ namespace WebApplication1.Controllers
 
             return Json(ModelData);
         }
+   
+        public ActionResult GetListMasterSubdist()
+        {
+            DataTable dt = new DataTable();
+            string conString = ConfigurationManager.ConnectionStrings["dbReserveDiscount"].ConnectionString;
+            SqlConnection conn = new SqlConnection(conString); 
+            List<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
+            try
+            {
+                conn.Open();
+                using (SqlCommand command = new SqlCommand("[dbo].[STP_TOSLA]", conn))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.Add("@Option", System.Data.SqlDbType.Int);
+                    command.Parameters["@Option"].Value = 22;
+
+                    SqlDataAdapter dataAdapt = new SqlDataAdapter();
+                    dataAdapt.SelectCommand = command;
+
+                    dataAdapt.Fill(dt);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            Dictionary<string, object> row;
+            foreach (DataRow dr in dt.Rows)
+            {
+                row = new Dictionary<string, object>();
+                foreach (DataColumn col in dt.Columns)
+                {
+                    row.Add(col.ColumnName, dr[col]);
+                }
+                rows.Add(row);
+            }
+            return Json(rows, JsonRequestBehavior.AllowGet);
+        }
+    
     }
 }
