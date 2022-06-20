@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Dapper;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -9,11 +11,16 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebApplication1.DAL;
+using WebApplication1.Models;
+using static WebApplication1.Models.DapperModel;
 
 namespace WebApplication1.Controllers
 {
     public class UploadMemoController : Controller
     {
+
+        DataAccess DAL = new DataAccess();
         // GET: UploadMemo
         public ActionResult Index()
         {
@@ -23,7 +30,10 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-
+        public ActionResult List_Subdist()
+        {
+            return View();
+        }
         public ActionResult UploadAttachment(string Periode,string TypePembayaran)
         {
             List<string> ModelData = new List<string>();
@@ -42,9 +52,17 @@ namespace WebApplication1.Controllers
                 {
                     var file = Request.Files[i];
 
-                    var fileName = Path.GetFileName("TO_" + Periode + "_" + file.FileName);
+                    var fileName = Path.GetFileName(TypePembayaran + "_" + Periode + "_" + file.FileName);
+                    if(TypePembayaran == "TO")
+                    {
+                        path = Path.Combine(@"\\kalbox-b7.bintang7.com\Intranetportal\Intranet Attachment\TO\", fileName);
+                    }
 
-                    path = Path.Combine(@"\\kalbox-b7.bintang7.com\Intranetportal\Intranet Attachment\TO\", fileName);
+
+                    if (TypePembayaran == "SPB")
+                    {
+                        path = Path.Combine(@"\\kalbox-b7.bintang7.com\Intranetportal\Intranet Attachment\SPB\", fileName);
+                    }
                     //var path = Path.Combine("//10.167.1.78/File Sharing B7/Intranetportal/Intranet Attachment/CCC/AttachmentCC/CAPA/", fileName);
 
                     file.SaveAs(path);
@@ -54,78 +72,117 @@ namespace WebApplication1.Controllers
 
                 List<string> List = new List<string>();
 
-                String excelConnString = String.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties=\"Excel 12.0\"", path);
+                String excelConnString = String.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties=\"Excel 8.0\"", path);
                 //Create Connection to Excel work book 
-                string sql = string.Format("Select [No],[Reg],[Cabang],[ShipToID],[Base],[Nama],[Subdist],[KlaimTO],[NoPA],'','','"+ Periode + "' from [{0}]", "Sheet1$");
+                string sql;
+                if (TypePembayaran == "TO")
+                {
+                     sql = string.Format("Select [No],[Reg],[Cabang],[ShipToID],[Base],[Nama],[Subdist],[KlaimTO],[NoPA],'','','" + Periode + "' from [{0}]", "Sheet1$");
+                }
+                else 
+                {
+                     //SPB
+                     sql = string.Format("Select * from [Sheet1$] where [REG] is not null");
+                }
                 OleDbConnection oledbconn = new OleDbConnection(excelConnString);
                 OleDbCommand oledbcmd = new OleDbCommand(sql, oledbconn);
 
                 string ResultETL = "";
 
-                using (oledbconn)
+                if (TypePembayaran == "TO")
                 {
-                    oledbconn.Open();
-                    DbDataReader dr2 = oledbcmd.ExecuteReader();
-                    SqlBulkCopy bulkInsert = new SqlBulkCopy(conString);
-                    bulkInsert.DestinationTableName = "tblR_tempUploadTO";
-                    bulkInsert.WriteToServer(dr2);
-                    oledbconn.Close();
-                }
-
-                conn.Open();
-                using (SqlCommand command = new SqlCommand("[dbo].[STP_TOSLA]", conn))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    command.Parameters.Add("@Option", System.Data.SqlDbType.Int);
-                    command.Parameters["@Option"].Value = 1;
-
-                    command.Parameters.Add("@UserNameGet", System.Data.SqlDbType.NVarChar);
-                    command.Parameters["@UserNameGet"].Value = "Admin";
-
-                    command.Parameters.Add("@TypePembayaran", System.Data.SqlDbType.NVarChar);
-                    command.Parameters["@TypePembayaran"].Value = TypePembayaran;
-
-                    Result = (string)command.ExecuteScalar();
-                }
-                conn.Close();
-
-                if(Result != "UNVALID")
-                {
-                    Session["NoMemo"] = Result;
+                    using (oledbconn)
+                    {
+                        oledbconn.Open();
+                        DbDataReader dr2 = oledbcmd.ExecuteReader();
+                        SqlBulkCopy bulkInsert = new SqlBulkCopy(conString);
+                        bulkInsert.DestinationTableName = "tblR_tempUploadTO";
+                        bulkInsert.WriteToServer(dr2);
+                        oledbconn.Close();
+                    }
                     conn.Open();
                     using (SqlCommand command = new SqlCommand("[dbo].[STP_TOSLA]", conn))
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
                         command.Parameters.Add("@Option", System.Data.SqlDbType.Int);
-                        command.Parameters["@Option"].Value = 2;
+                        command.Parameters["@Option"].Value = 1;
 
-                        command.Parameters.Add("@NoMemoGet", System.Data.SqlDbType.NVarChar);
-                        command.Parameters["@NoMemoGet"].Value = Result;
+                        command.Parameters.Add("@UserNameGet", System.Data.SqlDbType.NVarChar);
+                        command.Parameters["@UserNameGet"].Value = "Admin";
 
-                        SqlDataAdapter dataAdapt = new SqlDataAdapter();
-                        dataAdapt.SelectCommand = command;
+                        command.Parameters.Add("@TypePembayaran", System.Data.SqlDbType.NVarChar);
+                        command.Parameters["@TypePembayaran"].Value = TypePembayaran;
 
-                        dataAdapt.Fill(dt);
+                        Result = (string)command.ExecuteScalar();
                     }
                     conn.Close();
-                    List<DataRow> objAR = dt.AsEnumerable().ToList();
 
-                    System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-
-                    Dictionary<string, object> row;
-                    foreach (DataRow dr in dt.Rows)
+                    if(Result != "UNVALID")
                     {
-                        row = new Dictionary<string, object>();
-                        foreach (DataColumn col in dt.Columns)
+                        Session["NoMemo"] = Result;
+                        conn.Open();
+                        using (SqlCommand command = new SqlCommand("[dbo].[STP_TOSLA]", conn))
                         {
-                            row.Add(col.ColumnName, dr[col]);
+                            command.CommandType = CommandType.StoredProcedure;
+
+                            command.Parameters.Add("@Option", System.Data.SqlDbType.Int);
+                            command.Parameters["@Option"].Value = 2;
+
+                            command.Parameters.Add("@NoMemoGet", System.Data.SqlDbType.NVarChar);
+                            command.Parameters["@NoMemoGet"].Value = Result;
+
+                            SqlDataAdapter dataAdapt = new SqlDataAdapter();
+                            dataAdapt.SelectCommand = command;
+
+                            dataAdapt.Fill(dt);
                         }
-                        rows.Add(row);
+                        conn.Close();
+                        List<DataRow> objAR = dt.AsEnumerable().ToList();
+
+                        System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+
+                        Dictionary<string, object> row;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            row = new Dictionary<string, object>();
+                            foreach (DataColumn col in dt.Columns)
+                            {
+                                row.Add(col.ColumnName, dr[col]);
+                            }
+                            rows.Add(row);
+                        }
+                        return Json(rows);
                     }
-                    return Json(rows);
                 }
+                else
+                {
+                    var dictionary1 = new Dictionary<string, object>
+                    {
+                        {"Option", 4},
+                        {"Period", Periode}
+                    };
+                    DynamicParameters parameters2 = new DynamicParameters(dictionary1); 
+                    var truncate = Json(DAL.StoredProcedure(parameters2, "SP_SPB"));
+
+                    using (oledbconn)
+                    {
+                        oledbconn.Open();
+                        DbDataReader dr3 = oledbcmd.ExecuteReader();
+                        SqlBulkCopy bulkInserts = new SqlBulkCopy(conString);
+                        bulkInserts.DestinationTableName = "temp_SPB";
+                        bulkInserts.WriteToServer(dr3);
+                        oledbconn.Close();
+                    }
+                    var dictionary = new Dictionary<string, object>
+                    {
+                        {"Option", 3},
+                        {"Period", Periode}
+                    };
+                    DynamicParameters parameters = new DynamicParameters(dictionary);
+                    return Json(DAL.StoredProcedure(parameters, "SP_SPB"));
+                }
+                
             }
             catch(Exception ex)
             {
@@ -202,6 +259,48 @@ namespace WebApplication1.Controllers
             }
 
             return Json(ModelData);
+        }
+
+        public ActionResult DynamicController(DynamicModel Models, string spname)
+        {
+            var parameters = new DynamicParameters(Models.Model);
+            return Json(DAL.StoredProcedure(parameters, spname), JsonRequestBehavior.AllowGet);
+
+        }
+        public ActionResult InsertPaymentDet(InsertPaymentDet paymentDet,DynamicModel Models)
+        {
+            var pjg = paymentDet.PaymentDetail.Count;
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ID");
+            dt.Columns.Add("PERIODSPB");
+            dt.Columns.Add("REG");
+            dt.Columns.Add("BANK");
+            dt.Columns.Add("NOKTP");
+            dt.Columns.Add("NOMORREKENING");
+            dt.Columns.Add("NAMATEAM");
+            dt.Columns.Add("NOSURAT");
+            dt.Columns.Add("TOTAL_INCOME"); 
+            int trav;
+            for (trav = 0; trav < pjg; trav++)
+            {
+                DataRow rowstype = dt.NewRow();
+                rowstype["ID"] = paymentDet.PaymentDetail[trav].id;
+                rowstype["PERIODSPB"] = paymentDet.PaymentDetail[trav].PERIODSPB;
+                rowstype["REG"] = paymentDet.PaymentDetail[trav].REG;
+                rowstype["BANK"] = paymentDet.PaymentDetail[trav].BANK;
+                rowstype["NOKTP"] = paymentDet.PaymentDetail[trav].NOKTP;
+                rowstype["NOMORREKENING"] = paymentDet.PaymentDetail[trav].NOMORREKENING;
+                rowstype["NAMATEAM"] = paymentDet.PaymentDetail[trav].NAMATEAM;
+                rowstype["NOSURAT"] = paymentDet.PaymentDetail[trav].NOSURAT;
+                rowstype["TOTAL_INCOME"] = paymentDet.PaymentDetail[trav].TOTAL_INCOME;
+                dt.Rows.Add(rowstype);
+            }
+            var parameters = new DynamicParameters(Models.Model);
+            parameters.Add("PaymentTable", dt.AsTableValuedParameter("[dbo].[SPB_PaymentDetail]"));
+
+            var spname = "SP_PA_SPB";
+
+            return Json(DAL.StoredProcedure(parameters, spname));
         }
     }
 }

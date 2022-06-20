@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Report_SPB" targetNamespace="http://tempuri.org/Report_SPB.xsd" xmlns:mstns="http://tempuri.org/Report_SPB.xsd" xmlns="http://tempuri.org/Report_SPB.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Report_SPB" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="Report_SPB" msprop:Generator_UserDSName="Report_SPB">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="PA_SPB" msprop:Generator_TableClassName="PA_SPBDataTable" msprop:Generator_TableVarName="tablePA_SPB" msprop:Generator_TablePropName="PA_SPB" msprop:Generator_RowDeletingName="PA_SPBRowDeleting" msprop:Generator_RowChangingName="PA_SPBRowChanging" msprop:Generator_RowEvHandlerName="PA_SPBRowChangeEventHandler" msprop:Generator_RowDeletedName="PA_SPBRowDeleted" msprop:Generator_UserTableName="PA_SPB" msprop:Generator_RowChangedName="PA_SPBRowChanged" msprop:Generator_RowEvArgName="PA_SPBRowChangeEvent" msprop:Generator_RowClassName="PA_SPBRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="PERIODSPB" msprop:Generator_ColumnVarNameInTable="columnPERIODSPB" msprop:Generator_ColumnPropNameInRow="PERIODSPB" msprop:Generator_ColumnPropNameInTable="PERIODSPBColumn" msprop:Generator_UserColumnName="PERIODSPB" type="xs:string" minOccurs="0" />
+              <xs:element name="OWNER" msprop:Generator_ColumnVarNameInTable="columnOWNER" msprop:Generator_ColumnPropNameInRow="OWNER" msprop:Generator_ColumnPropNameInTable="OWNERColumn" msprop:Generator_UserColumnName="OWNER" type="xs:string" minOccurs="0" />
+              <xs:element name="GENDER" msprop:Generator_ColumnVarNameInTable="columnGENDER" msprop:Generator_ColumnPropNameInRow="GENDER" msprop:Generator_ColumnPropNameInTable="GENDERColumn" msprop:Generator_UserColumnName="GENDER" type="xs:string" minOccurs="0" />
+              <xs:element name="REG" msprop:Generator_ColumnVarNameInTable="columnREG" msprop:Generator_ColumnPropNameInRow="REG" msprop:Generator_ColumnPropNameInTable="REGColumn" msprop:Generator_UserColumnName="REG" type="xs:string" minOccurs="0" />
+              <xs:element name="KOTASUBDIST" msprop:Generator_ColumnVarNameInTable="columnKOTASUBDIST" msprop:Generator_ColumnPropNameInRow="KOTASUBDIST" msprop:Generator_ColumnPropNameInTable="KOTASUBDISTColumn" msprop:Generator_UserColumnName="KOTASUBDIST" type="xs:string" minOccurs="0" />
+              <xs:element name="SUBDISTBAYAR" msprop:Generator_ColumnVarNameInTable="columnSUBDISTBAYAR" msprop:Generator_ColumnPropNameInRow="SUBDISTBAYAR" msprop:Generator_ColumnPropNameInTable="SUBDISTBAYARColumn" msprop:Generator_UserColumnName="SUBDISTBAYAR" type="xs:string" minOccurs="0" />
+              <xs:element name="NOSURAT" msprop:Generator_ColumnVarNameInTable="columnNOSURAT" msprop:Generator_ColumnPropNameInRow="NOSURAT" msprop:Generator_ColumnPropNameInTable="NOSURATColumn" msprop:Generator_UserColumnName="NOSURAT" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DETAILSPB" msprop:Generator_TableClassName="DETAILSPBDataTable" msprop:Generator_TableVarName="tableDETAILSPB" msprop:Generator_TablePropName="DETAILSPB" msprop:Generator_RowDeletingName="DETAILSPBRowDeleting" msprop:Generator_RowChangingName="DETAILSPBRowChanging" msprop:Generator_RowEvHandlerName="DETAILSPBRowChangeEventHandler" msprop:Generator_RowDeletedName="DETAILSPBRowDeleted" msprop:Generator_UserTableName="DETAILSPB" msprop:Generator_RowChangedName="DETAILSPBRowChanged" msprop:Generator_RowEvArgName="DETAILSPBRowChangeEvent" msprop:Generator_RowClassName="DETAILSPBRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="NOSURAT" msprop:Generator_ColumnVarNameInTable="columnNOSURAT" msprop:Generator_ColumnPropNameInRow="NOSURAT" msprop:Generator_ColumnPropNameInTable="NOSURATColumn" msprop:Generator_UserColumnName="NOSURAT" type="xs:string" minOccurs="0" />
+              <xs:element name="TEAM" msprop:Generator_ColumnVarNameInTable="columnTEAM" msprop:Generator_ColumnPropNameInRow="TEAM" msprop:Generator_ColumnPropNameInTable="TEAMColumn" msprop:Generator_UserColumnName="TEAM" type="xs:string" minOccurs="0" />
+              <xs:element name="TOT_INCOME" msprop:Generator_ColumnVarNameInTable="columnTOT_INCOME" msprop:Generator_ColumnPropNameInRow="TOT_INCOME" msprop:Generator_ColumnPropNameInTable="TOT_INCOMEColumn" msprop:Generator_UserColumnName="TOT_INCOME" type="xs:string" minOccurs="0" />
+              <xs:element name="PERIODSPB" msprop:Generator_ColumnVarNameInTable="columnPERIODSPB" msprop:Generator_ColumnPropNameInRow="PERIODSPB" msprop:Generator_ColumnPropNameInTable="PERIODSPBColumn" msprop:Generator_UserColumnName="PERIODSPB" type="xs:string" minOccurs="0" />
+              <xs:element name="Tot_Biaya" msprop:Generator_ColumnVarNameInTable="columnTot_Biaya" msprop:Generator_ColumnPropNameInRow="Tot_Biaya" msprop:Generator_ColumnPropNameInTable="Tot_BiayaColumn" msprop:Generator_UserColumnName="Tot_Biaya" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Footer1" msprop:Generator_TableClassName="Footer1DataTable" msprop:Generator_TableVarName="tableFooter1" msprop:Generator_TablePropName="Footer1" msprop:Generator_RowDeletingName="Footer1RowDeleting" msprop:Generator_RowChangingName="Footer1RowChanging" msprop:Generator_RowEvHandlerName="Footer1RowChangeEventHandler" msprop:Generator_RowDeletedName="Footer1RowDeleted" msprop:Generator_UserTableName="Footer1" msprop:Generator_RowChangedName="Footer1RowChanged" msprop:Generator_RowEvArgName="Footer1RowChangeEvent" msprop:Generator_RowClassName="Footer1Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="REGION" msprop:Generator_ColumnVarNameInTable="columnREGION" msprop:Generator_ColumnPropNameInRow="REGION" msprop:Generator_ColumnPropNameInTable="REGIONColumn" msprop:Generator_UserColumnName="REGION" type="xs:string" minOccurs="0" />
+              <xs:element name="NAMEKAR" msprop:Generator_ColumnVarNameInTable="columnNAMEKAR" msprop:Generator_ColumnPropNameInRow="NAMEKAR" msprop:Generator_ColumnPropNameInTable="NAMEKARColumn" msprop:Generator_UserColumnName="NAMEKAR" type="xs:string" minOccurs="0" />
+              <xs:element name="JOBDESC" msprop:Generator_ColumnVarNameInTable="columnJOBDESC" msprop:Generator_ColumnPropNameInRow="JOBDESC" msprop:Generator_ColumnPropNameInTable="JOBDESCColumn" msprop:Generator_UserColumnName="JOBDESC" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Footer2" msprop:Generator_TableClassName="Footer2DataTable" msprop:Generator_TableVarName="tableFooter2" msprop:Generator_TablePropName="Footer2" msprop:Generator_RowDeletingName="Footer2RowDeleting" msprop:Generator_RowChangingName="Footer2RowChanging" msprop:Generator_RowEvHandlerName="Footer2RowChangeEventHandler" msprop:Generator_RowDeletedName="Footer2RowDeleted" msprop:Generator_UserTableName="Footer2" msprop:Generator_RowChangedName="Footer2RowChanged" msprop:Generator_RowEvArgName="Footer2RowChangeEvent" msprop:Generator_RowClassName="Footer2Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="NAMEKAR" msprop:Generator_ColumnVarNameInTable="columnNAMEKAR" msprop:Generator_ColumnPropNameInRow="NAMEKAR" msprop:Generator_ColumnPropNameInTable="NAMEKARColumn" msprop:Generator_UserColumnName="NAMEKAR" type="xs:string" minOccurs="0" />
+              <xs:element name="JOBDESC" msprop:Generator_ColumnVarNameInTable="columnJOBDESC" msprop:Generator_ColumnPropNameInRow="JOBDESC" msprop:Generator_ColumnPropNameInTable="JOBDESCColumn" msprop:Generator_UserColumnName="JOBDESC" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Footer3" msprop:Generator_TableClassName="Footer3DataTable" msprop:Generator_TableVarName="tableFooter3" msprop:Generator_TablePropName="Footer3" msprop:Generator_RowDeletingName="Footer3RowDeleting" msprop:Generator_RowChangingName="Footer3RowChanging" msprop:Generator_RowEvHandlerName="Footer3RowChangeEventHandler" msprop:Generator_RowDeletedName="Footer3RowDeleted" msprop:Generator_UserTableName="Footer3" msprop:Generator_RowChangedName="Footer3RowChanged" msprop:Generator_RowEvArgName="Footer3RowChangeEvent" msprop:Generator_RowClassName="Footer3Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="NAMEKAR" msprop:Generator_ColumnVarNameInTable="columnNAMEKAR" msprop:Generator_ColumnPropNameInRow="NAMEKAR" msprop:Generator_ColumnPropNameInTable="NAMEKARColumn" msprop:Generator_UserColumnName="NAMEKAR" type="xs:string" minOccurs="0" />
+              <xs:element name="JOBDESC" msprop:Generator_ColumnVarNameInTable="columnJOBDESC" msprop:Generator_ColumnPropNameInRow="JOBDESC" msprop:Generator_ColumnPropNameInTable="JOBDESCColumn" msprop:Generator_UserColumnName="JOBDESC" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="PA_SPB_Footer11" msdata:parent="PA_SPB" msdata:child="Footer1" msdata:parentkey="REG" msdata:childkey="REGION" msprop:Generator_UserChildTable="Footer1" msprop:Generator_ChildPropName="GetFooter1Rows" msprop:Generator_UserRelationName="PA_SPB_Footer11" msprop:Generator_RelationVarName="relationPA_SPB_Footer11" msprop:Generator_UserParentTable="PA_SPB" msprop:Generator_ParentPropName="PA_SPBRow" />
+      <msdata:Relationship name="PA_SPB_DETAILSPB" msdata:parent="PA_SPB" msdata:child="DETAILSPB" msdata:parentkey="NOSURAT" msdata:childkey="NOSURAT" msprop:Generator_UserChildTable="DETAILSPB" msprop:Generator_ChildPropName="GetDETAILSPBRows" msprop:Generator_UserRelationName="PA_SPB_DETAILSPB" msprop:Generator_RelationVarName="relationPA_SPB_DETAILSPB" msprop:Generator_UserParentTable="PA_SPB" msprop:Generator_ParentPropName="PA_SPBRow" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>
