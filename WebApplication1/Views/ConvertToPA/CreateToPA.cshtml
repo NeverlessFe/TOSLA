@@ -55,6 +55,11 @@
             $("#ddl_SubBayar_SPB").attr("disabled", false);
             //alert($('input[name="SB_Konfirm"]:checked').val());
         });
+        $('#Tanggal_Cetak_SPB').change(function () {
+            var tanggal = $('#Tanggal_Cetak_SPB').val();
+            tanggalpembayaran(tanggal);
+            //alert($('input[name="SB_Konfirm"]:checked').val());
+        });
         $('#ddl_SubBayar_SPB').change(function () {
 
             $('#ddl_Cabang_SPB').attr("disabled", false);
@@ -669,10 +674,15 @@
                     statussubdist = 'KONFIRM EO'
                     cabang = 'HO'
                     GetListEO(result[0].NOEO);
+                    $('input[id="Konfirm_EO"]').prop('checked', true)
+                    $('#div_List_EO').attr("hidden", false);
+                }
+                else {
+                    $('input[name="SB_Konfirm"][value="' + statussubdist + '"]').prop('checked', true)
                 }
                 getCabang(cabang);
                 //$('input[name="SB_Konfirm"][value=' + statussubdist + ']').prop('checked', true);
-                $('input[name="SB_Konfirm"][value=' + statussubdist + ']').prop('checked', true)
+                
             },
 
             error: function (error) {
@@ -684,7 +694,6 @@
     }
 
     function GetListEO(NoEO) {
-
         var dictlist = {
             Option: 4,
             NoEO: NoEO
@@ -700,19 +709,7 @@
             contentType: "application/json;charset=utf-8",
             success: function (data) {
                 var result = JSON.parse(data);
-                var Count = result.length;
-                var trHTML = '';
-                trHTML += '<option disabled selected hidden class="dropdown-header" value="-">--Please Select--</option>';
-                var trav = 0;
-                if (Count > 0) {
-                    for (trav = 0; trav < Count; trav++) {
-                        trHTML += '<Option value="' + result[trav].NamaEO + '">' + result[trav].NamaEO;
-                    }
-                }
-
-                $("#ddl_ListEo_SPB").empty();
-                $("#ddl_ListEo_SPB").append(trHTML);
-                $('#ddl_ListEo_SPB').select2();
+                $('#Txt_Nama_EO').val(result[0].NamaEO + ' || ' + result[0].BankEO);
             },
 
             error: function (error) {
@@ -1017,7 +1014,7 @@
                     Period: $("#ddl_Periode_SPB").val(),
                     KodeSubdist: $("#ddl_SubBayar_SPB").val(),
                     Group_SBD: $("#ddl_SubBuyer_SPB").val(),
-                    NoEO: $('#div_EO').val(),
+                    NoEO: $('#Txt_Nama_EO').val(),
                     TanggalCetak: $('#Tanggal_Cetak_SPB').val(),
                     TanggalPembayaran: $('#Tanggal_Pembayaran_SPB').val(),
                     Cabang: $('#ddl_Cabang_SPB').val(),
@@ -1035,7 +1032,7 @@
                     Option: 12,
                     Periode_PA: $("#ddl_Periode_SPB").val(),
                     Subdist_Bayar: $("#ddl_SubBayar_SPB").val(),
-                    EO: $('#div_EO').val(),
+                    EO: $('#Txt_Nama_EO').val(),
                     Cabang: $('#ddl_Cabang_SPB').val(),
                     Subdist_Buyer: $("#ddl_SubBuyer_SPB").val(),
                     Tanggal_Cetak: $('#Tanggal_Cetak_SPB').val(),
@@ -1048,18 +1045,7 @@
                 }
                 $.each(checklist, function (key, value) {
 
-                    if ($('input[name="SB_Konfirm"]:checked').val() == 'KONFIRM EO' && key == 'NoEO' && value == '') {
-                        swal({
-                            title: "Error!",
-                            text: "Silahakan memilih EO terlebih dahulu",
-                            type: "error",
-                            showConfirmButton: false,
-                            timer: 2000,
-                        });
-                        return valid = false;
-                        
-                    }
-                    else if (key != 'NoEO' && (value == '' || value == null) && key != 'Tot_Biaya' && key != 'Ket_Pengurangan' && key != 'Ket_Penambahan') {
+                    if (key != 'NoEO' && (value == '' || value == null) && key != 'Tot_Biaya' && key != 'Ket_Pengurangan' && key != 'Ket_Penambahan') {
                         if (key.indexOf("_") > 0) {
                             var keysplit = key.split('_');
                             swal({
@@ -1113,6 +1099,10 @@
                                 timer: 2000,
                             });
 
+                            $('#Create_PA_SPB').attr("disabled", true);
+                            $('#Close_PA_SPB').attr("disabled", true);
+
+                            window.location.reload();
                         },
                         error: function (ex) {
                             console.log(JSON.stringify(ex))
@@ -1129,7 +1119,7 @@
                 Period: $("#ddl_Periode_SPB").val(),
                 KodeSubdist: $("#ddl_SubBayar_SPB").val(),
                 Group_SBD: $("#ddl_SubBuyer_SPB").val(),
-                NoEO: $('#div_EO').val(),
+                NoEO: $('#Txt_Nama_EO').val(),
                 TanggalCetak: $('#Tanggal_Cetak_SPB').val(),
                 TanggalPembayaran: $('#Tanggal_Pembayaran_SPB').val(),
                 Cabang: $('#ddl_Cabang_SPB').val(),
@@ -1148,7 +1138,7 @@
                 Subdist_Bayar: $("#ddl_SubBayar_SPB").val(),
                 Cabang: $('#ddl_Cabang_SPB').val(),
                 Subdist_Buyer: $("#ddl_SubBuyer_SPB").val(),
-                EO: $('#div_EO').val(),
+                EO: $('#Txt_Nama_EO').val(),
                 Tanggal_Cetak: $('#Tanggal_Cetak_SPB').val(),
                 Tanggal_Pembayaran: $('#Tanggal_Pembayaran_SPB').val(),
                 Biaya_Tambahan: biayapengur,
@@ -1160,17 +1150,7 @@
             var valid = false;
             $.each(checklist, function (key, value) {
 
-                if ($('input[name="SB_Konfirm"]:checked').val() == 'KONFIRM EO' && key == 'NoEO' && value == '') {
-                    swal({
-                        title: "Error!",
-                        text: "Silahakan memilih EO terlebih dahulu",
-                        type: "error",
-                        showConfirmButton: false,
-                        timer: 2000,
-                    });
-                  return  valid = false;
-                }
-                else if (key != 'NoEO' && (value == '' || value == null) && key != 'Tot_Biaya' && key != 'Ket_Pengurangan' && key != 'Ket_Penambahan') {
+                if (key != 'NoEO' && (value == '' || value == null) && key != 'Tot_Biaya' && key != 'Ket_Pengurangan' && key != 'Ket_Penambahan') {
                    
                     if (key.indexOf('_') > 0) {
                         var keysplit = key.split('_');
@@ -1221,10 +1201,14 @@
                         swal({
                             title: "Success!",
                             text: "Transaction berhasil di Insert",
-                            icon: "success",
+                            type: "success",
                             showConfirmButton: false,
                             timer: 2000,
                         });
+                        $('#Create_PA_SPB').attr("disabled", true);
+                        $('#Close_PA_SPB').attr("disabled", true);
+
+                        window.location.reload();
                         console.log(result);
                     },
 
@@ -1280,6 +1264,35 @@
                 alert(error);
             }
         });
+    }
+    function tanggalpembayaran(tanggalcetak) {
+        var date = new Date(tanggalcetak);
+        date.setDate(date.getDate() + 14);
+        dateFormat(date,"yyyy-MM-dd")
+    }
+    function dateFormat(inputDate, format) {
+        //parse the input date
+        const date = new Date(inputDate);
+
+        //extract the parts of the date
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+
+        //replace the month
+        format = format.replace("MM", month.toString().padStart(2, "0"));
+
+        //replace the year
+        if (format.indexOf("yyyy") > -1) {
+            format = format.replace("yyyy", year.toString());
+        } else if (format.indexOf("yy") > -1) {
+            format = format.replace("yy", year.toString().substr(2, 2));
+        }
+
+        //replace the day
+        format = format.replace("dd", day.toString().padStart(2, "0"));
+
+        $('#Tanggal_Pembayaran_SPB').val(format);
     }
 </script>
 <style>
@@ -1568,18 +1581,17 @@
                                 </div>
                                 <div class="col-md-1">
 
-                                    <input type="radio" id="Konfirm_EO" name="SB_Konfirm" value="KONFIRM EO">
+                                    <input type="radio" id="Konfirm_EO" name="SB_Konfirm" value="KONFIRM EO" disabled>
                                     <label for="EO" id="EOLbl">EO</label>
                                 </div>
                             </div>
-                            <div class="form-group row" id="div_EO">
+                            <div class="form-group row" id="div_List_EO">
                                 <div class="col-md-2">
-                                    List EO
+                                 Nama EO
                                 </div>
                                 <div class="col-md-8">
 
-                                    <select id="ddl_ListEo_SPB" class="form-control" title="Silahkan Pilih Periode">
-                                    </select>
+                                    <input id="Txt_Nama_EO" type="text" class="form-control" value="" readonly>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -1626,7 +1638,7 @@
                                 </div>
                                 <div class="col-md-8">
 
-                                    <input type="date" class="form-control" id="Tanggal_Pembayaran_SPB" />
+                                    <input type="date" class="form-control" id="Tanggal_Pembayaran_SPB" readonly />
                                 </div>
                             </div>
 
@@ -1683,7 +1695,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-1">
-                                    <input type="button" class="btn btn-primary" id="Create_PA_SPB" name="SB_Konfirm" value="Create to PA">
+                                    <input type="button" class="btn btn-primary" id="Create_PA_SPB"  value="Create to PA">
 
                                 </div>
                                 @*<div class="col-md-1">
@@ -1693,7 +1705,7 @@
                                     </div>*@
                                 <div class="col-md-1">
 
-                                    <input type="button" class="btn btn-primary" id="Close_PA_SPB" name="SB_Konfirm" value="Close SPB">
+                                    <input type="button" class="btn btn-primary" id="Close_PA_SPB"  value="Close SPB">
 
                                 </div>
                             </div>

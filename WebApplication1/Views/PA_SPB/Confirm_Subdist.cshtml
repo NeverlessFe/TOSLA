@@ -164,7 +164,7 @@
                 var trav = 0;
                 if (Count > 0) {
                     for (trav = 0; trav < Count; trav++) {
-                        trHTML += '<Option value="' + result[trav].NoEO + '">' + result[trav].NamaEO;
+                        trHTML += '<Option value="' + result[trav].NoEO + '">' + result[trav].NamaEO + ' || ' + result[trav].BankEO;
                     }
                 }
 
@@ -395,7 +395,7 @@
                     showConfirmButton: false,
                     timer: 1000,
                 });
-                getspb();
+                window.location.reload();
             },
             error: function (error) {
                 $("#divloading").attr("hidden", true);
