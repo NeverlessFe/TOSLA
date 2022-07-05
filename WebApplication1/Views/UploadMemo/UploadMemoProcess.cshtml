@@ -26,7 +26,25 @@
     });
     $(document).ready(function () {
         $("#btnUploadDataMaster").click(function () {
-            $("#divloading").attr("hidden", false);
+            //$("#divloading").attr("hidden", false);
+            swal({
+                title: "Upload Progress",
+                text: "Proses Upload sedang berlangsung, mohon menungggu",
+                type: "warning",
+                timer: 10000,
+                timerProgressBar: true,
+                showConfirmButton: false
+            });
+            if ($('#ddlPeriode').val() == '' || $('#ddlPeriode').val() == null ) {
+                swal({
+                    title: "Warning",
+                    text: "Silahkan pilih Periode Terlebih dahulu",
+                    type: "warning",
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+                return
+            }
             var formData = new FormData();
             var PeriodSend = $("#ddlPeriode").val();
             var TypePembayaranSend = $("#ddlTipe").val();
@@ -45,8 +63,19 @@
                     contentType: false,
                     processData: false,
                     success: function (data) {
+                        $('#ddlTipe').attr("disabled", true);
+                        $('#ddlPeriode').attr("disabled", true);
                         $("#divloading").attr("hidden", true);
-                        swal("Success", "Upload Memo Berhasil", "success");
+                        $('#btnSaveDetail').attr("hidden", false);
+                        $('#UploadAttachment').attr("disabled", true);
+                        swal({
+                            title: "Success",
+                            text: "Upload Memo Berhasil",
+                            type: "success",
+                            timer: 3000,
+                            showConfirmButton: false
+                        });
+                        //swal("Success", "Upload Memo Berhasil", "success");
                         $("#btnUploadDataMaster").attr("disabled", true);
                         var trHTML = '';
                         var trav = 0;
@@ -64,7 +93,7 @@
                         }
                         else if ($("#ddlTipe").val() == 'SPB') {
                             var table = $('#tblSPB').DataTable({
-                                "pageLength": 5,
+                                "pageLength": 25,
                                 "data": JSON.parse(data),
                                 "lengthChange": true,
                                 "paging": true,
@@ -131,7 +160,7 @@
                                 text: "Beberapa Kodesubdist/Namasubdist tidak sesuai dengan system, harap perbaiki data terlebih dahulu! ",
                                 type: "error",
                                 showConfirmButton: false,
-                                timer: 1000,
+                                timer: 5000,
                             });
                             $('#UploadAttachment').attr("disabled", true);
                             $('#btnSaveDetail').text("Reload Page");
@@ -148,7 +177,13 @@
                 });
             } else {
                 $('#divLoading').attr("hidden", true);
-                alert("Pilih Attachment Terlebih dahulu");
+                swal({
+                    title: "Warning",
+                    text: "Pilih Attachment Terlebih dahulu",
+                    type: "warning",
+                    timer: 2000,
+                    showConfirmButton: false
+                });
             }
         });
     });
@@ -230,13 +265,14 @@
                     $("#divloading").attr("hidden", true);
                     swal({
                         title: "Success!",
-                        text: "Konfirmasi Memo berhasil!",
+                        text: "Konfirmasi SPB berhasil!",
                         type: "success",
                         button: false,
-                        timer: 1000,
+                        timer: 3000,
                     });
+
+                    window.location.reload()
                 },
-                window.location.reload();
                 error: function (error) {
                     $("#divloading").attr("hidden", true);
                     alert(error);
@@ -433,13 +469,9 @@
                     </div>
                     <br />
                     <div class="row">
-                        <div class="col-md-2">
-
-                            <button id="btn_ListSubdist" class="btn btn-primary m-t-20">List Subdist</button>
-                        </div>
-                        <div class="col-md-2">
-
-                            <button id="btnSaveDetail" type="submit" class="btn btn-dark m-t-20">Konfirmasi File Upload</button>
+                        <div class="col-md-4">
+                            <button id="btnSaveDetail" type="submit" class="btn btn-success m-t-20" hidden>Konfirmasi</button>
+                            <button id="btn_ListSubdist" class="btn btn-primary ">List Subdist</button>
                         </div>
                     </div>
                 </div>

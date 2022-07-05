@@ -320,3 +320,32 @@
 
 </body>
 </html>
+
+<script>
+     $(document).ready(function () {
+            $(document).ajaxError(function (a, xhr, c) {
+                console.log(xhr.status);
+                var status = xhr.status
+                console.log(status);
+                if (xhr.status === 401) {
+                    chcksession(xhr.status)
+                }
+            });
+        });
+
+
+        function chcksession(xhr) {
+             if (xhr === 401) {
+
+                   swal({
+                        title: 'Session Expired! Silahkan login Kembali ',
+                        type: "warning",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        }).then(() => {
+                            return window.location.href = '../Login/Index';
+                        });
+                }
+        }
+
+</script>

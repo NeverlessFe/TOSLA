@@ -17,7 +17,16 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
+        public ActionResult AddApproval_SPB()
+        {
+            return View();
+        }
         public ActionResult Rpt_SPB(string No_Surat)
+        {
+            ViewBag.No_Surat = No_Surat;
+            return View();
+        }
+        public ActionResult Report_Lampiran_SPB(string No_Surat)
         {
             ViewBag.No_Surat = No_Surat;
             return View();

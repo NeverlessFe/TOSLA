@@ -3,9 +3,10 @@
     "",
     "\\WebApplication1",
     "\\WebApplication1\\Controllers",
-    "\\WebApplication1\\Views",
-    "\\WebApplication1\\Views\\ConvertToPA"
+    "\\WebApplication1\\Report_SPB",
+    "\\WebApplication1\\Views\\ConvertToPA",
+    "\\WebApplication1\\Views\\Report_SPB_View"
   ],
-  "SelectedNode": "\\WebApplication1\\Views\\ConvertToPA\\CreateToPA.cshtml",
+  "SelectedNode": "\\WebApplication1\\Report_SPB\\Report_Detail_Lampiran_SPB.rpt",
   "PreviewInSolutionExplorer": false
 }

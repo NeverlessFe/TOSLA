@@ -84,7 +84,7 @@
             </div>
         </div>
 
-        <div class="card">
+        <div class="card" id="Card_SPB" hidden>
             <div class="card-body">
                 <h4 class="card-title">List SPB</h4>
                 <hr />
@@ -117,10 +117,11 @@
     $(document).ready(function () {
         $('#ddl_Subdist').select2()
         getPeriode();
-        getspb();
         getEO();
         $('#ddlPeriode').change(function () {
             getsubdist();
+            $('#Total_Income').val('');
+            getspb();
             $("#ddl_Subdist").attr("disabled", false);
             //alert($('input[name="SB_Konfirm"]:checked').val());
         });
@@ -287,8 +288,10 @@
     }
 
     function getspb() {
+        $('#Card_SPB').attr("hidden", false);
         var dictlist = {
-            Option: 9
+            Option: 9,
+            Period: $('#ddlPeriode').val()
         }
         var dto1 = {
             Model: dictlist
@@ -336,38 +339,38 @@
         var statsubdist = $('input[name="SB_Konfirm"]:checked').val();
         var NoEO = $('#ddlEO').val();
         if ($('input[name="SB_Konfirm"]:checked').val() == 'KONFIRM EO') {
-            statsubdist = 'KONFIRM'
+            statsubdist = 'KONFIRM EO'
         }
         else {
             NoEO =''
         }
         if ($('#ddlPeriode').val() == null) {
             swal({
-                title: "Error!",
+                title: "Warning!",
                 text: "Periode  Harus dipilih terlebih dahulu! ",
-                type: "error",
+                type: "warning",
                 showConfirmButton: false,
-                timer: 1000,
+                timer: 3000,
             });
             return
         }
         if ($('#ddl_Subdist').val() == null) {
             swal({
-                title: "Error!",
+                title: "Warning!",
                 text: "Subdist Bayar Harus dipilih terlebih dahulu! ",
-                type: "error",
+                type: "warning",
                 showConfirmButton: false,
-                timer: 1000,
+                timer: 3000,
             });
             return
         }
-        if ($('#ddlEO').val() == null && statsubdist == 'NOT KONFIRM EO') {
+        if ($('#ddlEO').val() == null && statsubdist == 'KONFIRM EO') {
             swal({
-                title: "Error!",
+                title: "Warning!",
                 text: "EO Harus dipilih terlebih dahulu! ",
-                type: "error",
+                type: "warning",
                 showConfirmButton: false,
-                timer: 1000,
+                timer: 3000,
             });
             return
         }

@@ -34,6 +34,7 @@
         });
         $('#Biaya_Tambahan_SPB').keyup(function () {
             biayatamb = $('#Biaya_Tambahan_SPB').val();
+            //changetocurrency('Penambahan');
             CheckValue();
         });
         $('#Biaya_Pengurangan_SPB').change(function () {
@@ -43,13 +44,14 @@
             CheckValue();
         });
         $('#Biaya_Pengurangan_SPB').keyup(function () {
+
             biayapengur = $('#Biaya_Pengurangan_SPB').val()
+            //changetocurrency('Pengurangan');
             CheckValue();
         });
         $('#ddl_Periode_SPB').change(function () {
             getSubdist();
             getSubdistBuyer();
-            getCabang('');
 
             $('#tbl_SPB').DataTable().clear().destroy();
             $("#ddl_SubBayar_SPB").attr("disabled", false);
@@ -61,7 +63,7 @@
             //alert($('input[name="SB_Konfirm"]:checked').val());
         });
         $('#ddl_SubBayar_SPB').change(function () {
-
+            //alert($('#ddl_SubBayar_SPB').val());
             $('#ddl_Cabang_SPB').attr("disabled", false);
             $('#ddl_SubBuyer_SPB').attr("disabled", false);
             $('#ddl_ExpenseItem_SPB').attr("disabled", false);
@@ -70,6 +72,7 @@
             getSubdistStat();
             getExpenseItem();
             getListSPB();
+            getCabang();
             //alert($('input[name="SB_Konfirm"]:checked').val());
 
         });
@@ -605,7 +608,7 @@
                 var trav = 0;
                 if (Count > 0) {
                     for (trav = 0; trav < Count; trav++) {
-                        trHTML += '<Option value="' + result[trav].SHIPTOID + '">' + result[trav].SUBDISTBAYAR + ' || ' + result[trav].KOTASUBDIST;
+                        trHTML += '<Option value="' + result[trav].SUBDISTBAYAR + ' || ' + result[trav].KOTASUBDIST+ '">' + result[trav].SUBDISTBAYAR + ' || ' + result[trav].KOTASUBDIST;
                     }
                 }
 
@@ -638,7 +641,7 @@
             contentType: "application/json;charset=utf-8",
             success: function (data) {
                 var result = JSON.parse(data);
-                $('#txtBudgetSPB').val('RP. ' + result[0].Total)
+                $('#txtBudgetSPB').val('RP. ' + result[0].TotalRupiah)
                 totincome = result[0].Total;
 
                 CheckValue();
@@ -680,7 +683,6 @@
                 else {
                     $('input[name="SB_Konfirm"][value="' + statussubdist + '"]').prop('checked', true)
                 }
-                getCabang(cabang);
                 //$('input[name="SB_Konfirm"][value=' + statussubdist + ']').prop('checked', true);
                 
             },
@@ -718,11 +720,12 @@
             }
         });
     }
-    function getCabang(cabang) {
+    function getCabang() {
 
         var dictlist = {
             Option: 7,
-            Cabang: cabang
+            Period: $('#ddl_Periode_SPB').val(),
+            KodeSubdist: $('#ddl_SubBayar_SPB').val()
         }
         var dto1 = {
             Model: dictlist
@@ -734,6 +737,7 @@
             data: JSON.stringify(dto1),
             contentType: "application/json;charset=utf-8",
             success: function (data) {
+                console.log(data);
                 var result = JSON.parse(data);
                 var Count = result.length;
                 var trHTML = '';
@@ -759,6 +763,7 @@
     function getSubdistBuyer() {
         var dictlist = {
             Option: 8,
+            Period: $('#ddl_Periode_SPB').val(),
             KodeSubdist: $("#ddl_SubBayar_SPB").val()
         }
         var dto1 = {
@@ -855,7 +860,7 @@
                     }
                     else {
 
-                        $('#txt_BudgetAvail_SPB').val('RP. ' + result[0].Saldo);
+                        $('#txt_BudgetAvail_SPB').val('RP. ' + result[0].SaldoQP);
                     }
                     budgetavail = result[0].Saldo;
                 }
@@ -870,6 +875,20 @@
             }
         });
     }
+    //function changetocurrency(amount) {
+    //    var biaya;
+    //    if (amount == 'Penambahan') {
+    //        biaya = $('#Biaya_Tambahan_SPB').val();
+    //        var currbiaya = parseInt(biaya);
+    //        var currency = currbiaya.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,")
+    //        $('#Biaya_Tambahan_SPB').val(currency);
+    //    }
+    //    else {
+    //        biaya = $('#Biaya_Pengurangan_SPB').val();
+    //        var currency = biaya.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,")
+    //        $('#Biaya_Pengurangan_SPB').val(currency);
+    //    }
+    //}
     function CheckValue() {
         if ($('#txtBudgetSPB').val() != '') {
             if ($('#Biaya_Pengurangan_SPB').val() > totincome) {
@@ -889,8 +908,9 @@
             //- $('#Biaya_Tambahan_SPB').val() + $('#Biaya_Pengurangan_SPB').val()
             totbiayaspb = totincome + tambahkurang;
 
+            var akhir = "RP. " + totbiayaspb.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
             console.log(totincome);
-            $('#txtTotBiayaSPB').val('RP. ' + totbiayaspb);
+            $('#txtTotBiayaSPB').val(akhir);
         }
     }
     function getListSPB() {
@@ -977,7 +997,8 @@
         else {
             totincome += jmlh
         }
-        $('#txtBudgetSPB').val('RP. ' + totincome);
+        var akhir = "RP. " + totincome.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+        $('#txtBudgetSPB').val(akhir);
         CheckValue();
     }
     function CreatePASPB() {
@@ -1155,9 +1176,9 @@
                     if (key.indexOf('_') > 0) {
                         var keysplit = key.split('_');
                         swal({
-                            title: "Error!",
+                            title: "Warning!",
                             text: "Silahakan melengkapi " + keysplit[0] + " " + keysplit[1] + " yang kosong terlebih dahulu",
-                            type: "error",
+                            type: "warning",
                             showConfirmButton: false,
                             timer: 2000,
                         });
@@ -1165,9 +1186,9 @@
                     }
                     else {
                         swal({
-                            title: "Error!",
+                            title: "Warning!",
                             text: "Silahakan melengkapi " + key + " yang kosong terlebih dahulu",
-                            type: "error",
+                            type: "warning",
                             showConfirmButton: false,
                             timer: 2000,
                         });
@@ -1177,9 +1198,9 @@
                 }
                 else if (key == 'Tot_Biaya' && budgetavail < totbiayaspb) {
                     swal({
-                        title: "Error!",
+                        title: "Warning!",
                         text: "Maaf Budget Anda Kurang dari Pengeluaran Anda",
-                        type: "error",
+                        type: "warning",
                         showConfirmButton: false,
                         timer: 2000,
                     });s

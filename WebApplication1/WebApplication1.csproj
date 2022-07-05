@@ -266,6 +266,19 @@
       <DependentUpon>EJOLPendaftaranList.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report_SPB\Report_Detail_Lampiran_SPB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Report_Detail_Lampiran_SPB.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report_SPB\Report_Lampiran.aspx.cs">
+      <DependentUpon>Report_Lampiran.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report_SPB\Report_Lampiran.aspx.designer.cs">
+      <DependentUpon>Report_Lampiran.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Report_SPB\Report_SPB.cs">
       <DependentUpon>Report_SPB.xsd</DependentUpon>
     </Compile>
@@ -273,6 +286,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Report_SPB.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Report_SPB\Report_SPB_Detail.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Report_SPB_Detail.xsd</DependentUpon>
     </Compile>
     <Compile Include="Report_SPB\Rpt_SPB_Memo.aspx.cs">
       <DependentUpon>Rpt_SPB_Memo.aspx</DependentUpon>
@@ -287,6 +305,7 @@
       <DependentUpon>Report_SPB_Memo.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Scripts\CheckSession\SessionValidation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="aspnet_client\system_web\2_0_50727\crystalreportviewers13\ActiveXControls\PrintControl.cab" />
@@ -6400,6 +6419,7 @@
       <DependentUpon>EJOLPendaftaranList.edmx</DependentUpon>
       <LastGenOutput>EJOLPendaftaranList.cs</LastGenOutput>
     </Content>
+    <Content Include="Report_SPB\Report_Lampiran.aspx" />
     <Content Include="Report_SPB\Rpt_SPB_Memo.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -6692,6 +6712,17 @@
     <Content Include="Report_SPB\Report_SPB.xss">
       <DependentUpon>Report_SPB.xsd</DependentUpon>
     </Content>
+    <Content Include="Report_SPB\Report_SPB_Detail.xsc">
+      <DependentUpon>Report_SPB_Detail.xsd</DependentUpon>
+    </Content>
+    <None Include="Report_SPB\Report_SPB_Detail.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Report_SPB_Detail.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Report_SPB\Report_SPB_Detail.xss">
+      <DependentUpon>Report_SPB_Detail.xsd</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -6728,6 +6759,10 @@
     <Content Include="Views\Report_SPB_View\Rpt_SPB.cshtml" />
     <Content Include="Views\Report_SPB_View\Report_SPB_Memo.cshtml" />
     <Content Include="Views\CMS\CMS_EO.cshtml" />
+    <Content Include="Views\Login\Session_Error.cshtml" />
+    <Content Include="Views\PA_SPB\Cancel_Subdist.cshtml" />
+    <Content Include="Views\Report_SPB_View\AddApproval_SPB.cshtml" />
+    <Content Include="Views\Report_SPB_View\Report_Lampiran_SPB.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -6752,6 +6787,10 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Report_SPB\Report_Detail_Lampiran_SPB.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Report_Detail_Lampiran_SPB.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Report_SPB\Report_SPB_Memo.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Report_SPB_Memo.cs</LastGenOutput>

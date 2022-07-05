@@ -24,7 +24,10 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-
+        public ActionResult Session_Error()
+        {
+            return View();
+        }
         public ActionResult TestLokasi()
         {
             return View();
