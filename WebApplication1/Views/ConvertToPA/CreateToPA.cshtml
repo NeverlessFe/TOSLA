@@ -18,6 +18,7 @@
     var totbiayaspb;
     var biayatamb = 0;
     var biayapengur = 0;
+    var EO;
     $(document).ready(function () {
         InitialPage();
         GetNoMemo();
@@ -246,6 +247,20 @@
     }
     function BtnAddDetail() {
         AddDetailClick();
+    }
+    function DisableAll() {
+        $('#Create_PA_SPB').attr("disabled", true);
+        $('#Close_PA_SPB').attr("disabled", true);
+        $('#ddl_Periode_SPB').attr("disabled", true);
+        $('#ddl_SubBayar_SPB').attr("disabled", true);
+        $('#ddl_Cabang_SPB').attr("disabled", true);
+        $('#ddl_SubBuyer_SPB').attr("disabled", true);
+        $('#Tanggal_Cetak_SPB').attr("disabled", true);
+        $('#ddl_ExpenseItem_SPB').attr("disabled", true);
+        $('#Biaya_Tambahan_SPB').attr("disabled", true);
+        $('#Ket_Tamb_SPB').attr("disabled", true);
+        $('#Biaya_Pengurangan_SPB').attr("disabled", true);
+        $('#Ket_Kurang_SPB').attr("disabled", true);
     }
     function ConfirmCreatePA() {
         swal({
@@ -673,7 +688,7 @@
                 var result = JSON.parse(data);
                 var statussubdist = result[0].StatusSubdistBuyer;
                 var cabang = result[0].CAB;
-                if (result[0].NOEO != '' && result[0].StatusSubdistBuyer == 'KONFIRM') {
+                if (result[0].NOEO != '' && result[0].StatusSubdistBuyer == 'KONFIRM EO') {
                     statussubdist = 'KONFIRM EO'
                     cabang = 'HO'
                     GetListEO(result[0].NOEO);
@@ -682,6 +697,9 @@
                 }
                 else {
                     $('input[name="SB_Konfirm"][value="' + statussubdist + '"]').prop('checked', true)
+
+                    $('#Txt_Nama_EO').val('');
+
                 }
                 //$('input[name="SB_Konfirm"][value=' + statussubdist + ']').prop('checked', true);
                 
@@ -712,6 +730,7 @@
             success: function (data) {
                 var result = JSON.parse(data);
                 $('#Txt_Nama_EO').val(result[0].NamaEO + ' || ' + result[0].BankEO);
+                EO = NoEO;
             },
 
             error: function (error) {
@@ -1002,7 +1021,6 @@
         CheckValue();
     }
     function CreatePASPB() {
-
         if ($('input[name="SB_Konfirm"]:checked').val() == 'NOT KONFIRM') {
             var Jsonobj = [];
             var status = false;
@@ -1053,7 +1071,7 @@
                     Option: 12,
                     Periode_PA: $("#ddl_Periode_SPB").val(),
                     Subdist_Bayar: $("#ddl_SubBayar_SPB").val(),
-                    EO: $('#Txt_Nama_EO').val(),
+                    EO: EO,
                     Cabang: $('#ddl_Cabang_SPB').val(),
                     Subdist_Buyer: $("#ddl_SubBuyer_SPB").val(),
                     Tanggal_Cetak: $('#Tanggal_Cetak_SPB').val(),
@@ -1066,44 +1084,61 @@
                 }
                 $.each(checklist, function (key, value) {
 
-                    if (key != 'NoEO' && (value == '' || value == null) && key != 'Tot_Biaya' && key != 'Ket_Pengurangan' && key != 'Ket_Penambahan') {
-                        if (key.indexOf("_") > 0) {
+                    if (key != 'EO' && (value == '' || value == null) && key != 'Tot_Biaya' && key != 'Biaya_Tambahan' && key != 'Biaya_Pengurangan'
+                        && key != 'Ket_Pengurangan' && key != 'Ket_Penambahan') {
+
+                        if (key.indexOf('_') > 0) {
                             var keysplit = key.split('_');
                             swal({
-                                title: "Error!",
+                                title: "Warning!",
                                 text: "Silahakan melengkapi " + keysplit[0] + " " + keysplit[1] + " yang kosong terlebih dahulu",
-                                type: "error",
+                                type: "warning",
                                 showConfirmButton: false,
                                 timer: 2000,
                             });
-                            return  valid = false;
+                            return valid = false;
                         }
                         else {
                             swal({
-                                title: "Error!",
+                                title: "Warning!",
                                 text: "Silahakan melengkapi " + key + " yang kosong terlebih dahulu",
-                                type: "error",
+                                type: "warning",
                                 showConfirmButton: false,
                                 timer: 2000,
                             });
-                            return  valid = false;
+                            return valid = false;
                         }
 
                     }
+                    else if ((key == 'Biaya_Tambahan' || key == 'Biaya_Pengurangan') && value != 0) {
+                        if ((key == 'Ket_Pengurangan' || key == 'Ket_Penambahan') && (value == '' || value == null)) {
+                            if (key.indexOf('_') > 0) {
+                                var keysplit = key.split('_');
+                                swal({
+                                    title: "Warning!",
+                                    text: "Silahakan melengkapi " + keysplit[0] + " " + keysplit[1] + " yang kosong terlebih dahulu",
+                                    type: "warning",
+                                    showConfirmButton: false,
+                                    timer: 2000,
+                                });
+                                return valid = false;
+                            }
+                        }
+                    }
                     else if (key == 'Tot_Biaya' && budgetavail < totbiayaspb) {
                         swal({
-                            title: "Error!",
+                            title: "Warning!",
                             text: "Maaf Budget Anda Kurang dari Pengeluaran Anda",
-                            type: "error",
+                            type: "warning",
                             showConfirmButton: false,
                             timer: 2000,
-                        });
-                       return valid = false;
+                        }); s
+                        return valid = false;
                     }
                     else {
                         valid = true;
                     }
-                })
+                });
                 if (valid == true) {
                     $.ajax({
                         url: "../UploadMemo/InsertPaymentDet",
@@ -1112,16 +1147,13 @@
                         data: JSON.stringify(dto),
                         contentType: 'application/json; charset=utf-8',
                         success: function (data) {
+                            var result = JSON.parse(data)
                             swal({
                                 title: "Success!",
-                                text: "Transaction berhasil di Insert",
+                                text: "No PA " + result[0].NoPA + " Berhasil di Generate",
                                 type: "success",
-                                showConfirmButton: false,
-                                timer: 2000,
                             });
-
-                            $('#Create_PA_SPB').attr("disabled", true);
-                            $('#Close_PA_SPB').attr("disabled", true);
+                            DisableAll();
 
                             window.location.reload();
                         },
@@ -1159,7 +1191,7 @@
                 Subdist_Bayar: $("#ddl_SubBayar_SPB").val(),
                 Cabang: $('#ddl_Cabang_SPB').val(),
                 Subdist_Buyer: $("#ddl_SubBuyer_SPB").val(),
-                EO: $('#Txt_Nama_EO').val(),
+                EO: EO,
                 Tanggal_Cetak: $('#Tanggal_Cetak_SPB').val(),
                 Tanggal_Pembayaran: $('#Tanggal_Pembayaran_SPB').val(),
                 Biaya_Tambahan: biayapengur,
@@ -1171,7 +1203,8 @@
             var valid = false;
             $.each(checklist, function (key, value) {
 
-                if (key != 'NoEO' && (value == '' || value == null) && key != 'Tot_Biaya' && key != 'Ket_Pengurangan' && key != 'Ket_Penambahan') {
+                if (key != 'EO' && (value == '' || value == null) && key != 'Tot_Biaya' && key != 'Biaya_Tambahan' && key != 'Biaya_Pengurangan'
+                    && key != 'Ket_Pengurangan' && key != 'Ket_Penambahan') {
                    
                     if (key.indexOf('_') > 0) {
                         var keysplit = key.split('_');
@@ -1195,6 +1228,22 @@
                         return  valid = false;
                     }
 
+                }
+                else if ((key == 'Biaya_Tambahan' || key == 'Biaya_Pengurangan') && value != 0   )
+                {
+                    if ((key == 'Ket_Pengurangan' || key == 'Ket_Penambahan') && (value == '' || value == null)) {
+                        if (key.indexOf('_') > 0) {
+                            var keysplit = key.split('_');
+                            swal({
+                                title: "Warning!",
+                                text: "Silahakan melengkapi " + keysplit[0] + " " + keysplit[1] + " yang kosong terlebih dahulu",
+                                type: "warning",
+                                showConfirmButton: false,
+                                timer: 2000,
+                            });
+                            return valid = false;
+                        }
+                    }
                 }
                 else if (key == 'Tot_Biaya' && budgetavail < totbiayaspb) {
                     swal({
@@ -1221,15 +1270,10 @@
                         var result = JSON.parse(data);
                         swal({
                             title: "Success!",
-                            text: "Transaction berhasil di Insert",
+                            text: "No PA " + result[0].NoPA + " Berhasil di Generate",
                             type: "success",
-                            showConfirmButton: false,
-                            timer: 2000,
                         });
-                        $('#Create_PA_SPB').attr("disabled", true);
-                        $('#Close_PA_SPB').attr("disabled", true);
-
-                        window.location.reload();
+                        DisableAll()
                         console.log(result);
                     },
 
@@ -1277,6 +1321,7 @@
                     showConfirmButton: false,
                     timer: 2000,
                 });
+                DisableAll();
                 console.log(result);
             },
 
@@ -1715,8 +1760,10 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="col-md-1">
-                                    <input type="button" class="btn btn-primary" id="Create_PA_SPB"  value="Create to PA">
+                                <div class="col-md-6">
+                                    <input type="button" class="btn btn-primary" id="Create_PA_SPB" value="Create to PA">
+
+                                    <input type="button" class="btn btn-primary" id="Close_PA_SPB" value="Close SPB">
 
                                 </div>
                                 @*<div class="col-md-1">
@@ -1724,11 +1771,6 @@
                                         <input type="button" class="btn btn-primary" id="Chck_Val" name="SB_Konfirm" value="Check Value ">
 
                                     </div>*@
-                                <div class="col-md-1">
-
-                                    <input type="button" class="btn btn-primary" id="Close_PA_SPB"  value="Close SPB">
-
-                                </div>
                             </div>
                         </div>
                     </div>
