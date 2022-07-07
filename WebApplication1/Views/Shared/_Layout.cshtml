@@ -12,6 +12,7 @@
     <script src="~/Content/plugins/sweetalert/js/sweetalert.min.js"></script>
     <link href="~/Content/plugins/sweetalert/css/sweetalert.css" rel="stylesheet" />
     <link href="~/Content/plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="~/Content/plugins/select2/css/select2.min.css" rel="stylesheet" />
     <script src="~/Content/js/jquery.min.js"></script>
 </head>
 <body>
@@ -41,7 +42,7 @@
             <div class="brand-logo">
                 <a href="~/Home/index">
                     <b class="logo-abbr"><img src="~/Content/images/logo.png" alt=""> </b>
-                    
+
                     <span class="brand-title">
                         @*<img src="~/Content/images/LogoB7.png" style="width:80%;height:80%;"/>*@
                         <label style="color:white;"><b><i>Convert </i></b></label><br />
@@ -238,28 +239,28 @@
                         </a>
                     </li>
                     @*<li>
-            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                <i class="icon-graph menu-icon"></i> <span class="nav-text">Monitoring</span>
-            </a>
-            <ul aria-expanded="false">
-                <li><a href="~/Sosialisasi/index">Sosialisasi</a></li>
-                <li><a href="~/Penanaman/index">Penanaman</a></li>
-                <li><a href="~/Monitoring/index">Monitoring</a></li>
-                <li><a href="~/Panen/index">Panen</a></li>
-                <li><a href="~/MonitoringPascaPanen/index">Monitoring Pasca Panen</a></li>
-                <li><a href="~/Pengiriman/index">Pengiriman Simplisia</a></li>
-            </ul>
-        </li>
-        <li>
-            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                <i class="icon-speedometer menu-icon"></i> <span class="nav-text">History</span>
-            </a>
-            <ul aria-expanded="false">
-                <li><a href="~/History/ApprovedList">Approved</a></li>
-                <li><a href="~/History/RejectList">Rejected</a></li>
-                <li><a href="~/AttachmentList/index">Attachment List</a></li>
-            </ul>
-        </li>*@
+                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <i class="icon-graph menu-icon"></i> <span class="nav-text">Monitoring</span>
+                            </a>
+                            <ul aria-expanded="false">
+                                <li><a href="~/Sosialisasi/index">Sosialisasi</a></li>
+                                <li><a href="~/Penanaman/index">Penanaman</a></li>
+                                <li><a href="~/Monitoring/index">Monitoring</a></li>
+                                <li><a href="~/Panen/index">Panen</a></li>
+                                <li><a href="~/MonitoringPascaPanen/index">Monitoring Pasca Panen</a></li>
+                                <li><a href="~/Pengiriman/index">Pengiriman Simplisia</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <i class="icon-speedometer menu-icon"></i> <span class="nav-text">History</span>
+                            </a>
+                            <ul aria-expanded="false">
+                                <li><a href="~/History/ApprovedList">Approved</a></li>
+                                <li><a href="~/History/RejectList">Rejected</a></li>
+                                <li><a href="~/AttachmentList/index">Attachment List</a></li>
+                            </ul>
+                        </li>*@
 
 
 
@@ -315,7 +316,36 @@
     <script src="~/Content/plugins/tables/js/jquery.dataTables.min.js"></script>
     <script src="~/Content/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
     <script src="~/Content/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
-
+    <script src="~/Content/plugins/select2/js/select2.full.min.js"></script>
 
 </body>
 </html>
+
+<script>
+     $(document).ready(function () {
+            $(document).ajaxError(function (a, xhr, c) {
+                console.log(xhr.status);
+                var status = xhr.status
+                console.log(status);
+                if (xhr.status === 401) {
+                    chcksession(xhr.status)
+                }
+            });
+        });
+
+
+        function chcksession(xhr) {
+             if (xhr === 401) {
+
+                   swal({
+                        title: 'Session Expired! Silahkan login Kembali ',
+                        type: "warning",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        }).then(() => {
+                            return window.location.href = '../Login/Index';
+                        });
+                }
+        }
+
+</script>
