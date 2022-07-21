@@ -186,7 +186,23 @@ namespace WebApplication1.Controllers
             }
             catch(Exception ex)
             {
+                SqlCommand cmd;
 
+                SqlDataAdapter dataAdapt = new SqlDataAdapter();
+                conn.Open();
+                using (SqlCommand command = new SqlCommand("[dbo].[STP_ErrorLog]", conn))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.Add("@ErrorMSG", System.Data.SqlDbType.NVarChar);
+                    command.Parameters["@ErrorMSG"].Value = ex.Message;
+
+                    SqlDataAdapter dataAdapt2 = new SqlDataAdapter();
+                    dataAdapt.SelectCommand = command;
+
+                    dataAdapt.Fill(dt);
+                }
+                conn.Close();
             }
             return Json(rows);
         }
