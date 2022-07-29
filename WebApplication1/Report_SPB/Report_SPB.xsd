@@ -61,6 +61,16 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="Signature" msprop:Generator_TableClassName="SignatureDataTable" msprop:Generator_TableVarName="tableSignature" msprop:Generator_RowChangedName="SignatureRowChanged" msprop:Generator_TablePropName="Signature" msprop:Generator_RowDeletingName="SignatureRowDeleting" msprop:Generator_RowChangingName="SignatureRowChanging" msprop:Generator_RowEvHandlerName="SignatureRowChangeEventHandler" msprop:Generator_RowDeletedName="SignatureRowDeleted" msprop:Generator_RowClassName="SignatureRow" msprop:Generator_UserTableName="Signature" msprop:Generator_RowEvArgName="SignatureRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TTD1" msprop:Generator_ColumnVarNameInTable="columnTTD1" msprop:Generator_ColumnPropNameInRow="TTD1" msprop:Generator_ColumnPropNameInTable="TTD1Column" msprop:Generator_UserColumnName="TTD1" type="xs:string" minOccurs="0" />
+              <xs:element name="Status" msprop:Generator_ColumnVarNameInTable="columnStatus" msprop:Generator_ColumnPropNameInRow="Status" msprop:Generator_ColumnPropNameInTable="StatusColumn" msprop:Generator_UserColumnName="Status" type="xs:string" minOccurs="0" />
+              <xs:element name="TTD2" msprop:Generator_ColumnVarNameInTable="columnTTD2" msprop:Generator_ColumnPropNameInRow="TTD2" msprop:Generator_ColumnPropNameInTable="TTD2Column" msprop:Generator_UserColumnName="TTD2" type="xs:string" minOccurs="0" />
+              <xs:element name="TTD3" msprop:Generator_ColumnVarNameInTable="columnTTD3" msprop:Generator_ColumnPropNameInRow="TTD3" msprop:Generator_ColumnPropNameInTable="TTD3Column" msprop:Generator_UserColumnName="TTD3" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:choice>
     </xs:complexType>
   </xs:element>

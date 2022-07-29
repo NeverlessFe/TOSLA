@@ -9,7 +9,7 @@ namespace WebApplication1
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
-            //filters.Add(new SessionValidation());
+            filters.Add(new SessionValidation());
         }
     }
 }

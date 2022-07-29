@@ -110,60 +110,90 @@ namespace WebApplication1.Report_SPB
                         throw ex2;
 
                     }
-                        try
+
+                    try
+                    {
+                        using (SqlCommand command = new SqlCommand("SP_PA_SPB", conn))
                         {
-                            using (SqlCommand command = new SqlCommand("SP_PA_SPB", conn))
-                            {
-                                command.CommandType = CommandType.StoredProcedure;
+                            command.CommandType = CommandType.StoredProcedure;
+
+                            command.Parameters.Add("@NOMSurat", System.Data.SqlDbType.VarChar);
+                            command.Parameters["@NOMSurat"].Value = No_Surat;
+
+                            command.Parameters.Add("@Option", System.Data.SqlDbType.Int);
+                            command.Parameters["@Option"].Value = 18;
 
 
-                                command.Parameters.Add("@Option", System.Data.SqlDbType.Int);
-                                command.Parameters["@Option"].Value = 18;
+                            SqlDataAdapter dataAdapt3 = new SqlDataAdapter();
+                            dataAdapt3.SelectCommand = command;
 
 
-                                SqlDataAdapter dataAdapt3 = new SqlDataAdapter();
-                                dataAdapt3.SelectCommand = command;
-
-
-                                dataAdapt3.Fill(data, "Footer2");
-                            }
+                            dataAdapt3.Fill(data, "Footer2");
                         }
-                        catch (Exception ex3)
+                    }
+                    catch (Exception ex3)
+                    {
+
+                        throw ex3;
+                    }
+
+                    try
+                    {
+                        using (SqlCommand command = new SqlCommand("SP_PA_SPB", conn))
                         {
+                            command.CommandType = CommandType.StoredProcedure;
 
-                            throw ex3;
+                            command.Parameters.Add("@NOMSurat", System.Data.SqlDbType.VarChar);
+                            command.Parameters["@NOMSurat"].Value = No_Surat;
+
+                            command.Parameters.Add("@Option", System.Data.SqlDbType.Int);
+                            command.Parameters["@Option"].Value = 19;
+
+
+                            SqlDataAdapter dataAdapt4 = new SqlDataAdapter();
+                            dataAdapt4.SelectCommand = command;
+
+
+                            dataAdapt4.Fill(data, "Footer3");
                         }
+                    }
+                    catch (Exception ex4)
+                    {
 
-                        try
+                        throw ex4;
+                    }
+                    try
+                    {
+                        using (SqlCommand command = new SqlCommand("SP_PA_SPB", conn))
                         {
-                            using (SqlCommand command = new SqlCommand("SP_PA_SPB", conn))
-                            {
-                                command.CommandType = CommandType.StoredProcedure;
+                            command.CommandType = CommandType.StoredProcedure;
 
 
-                                command.Parameters.Add("@Option", System.Data.SqlDbType.Int);
-                                command.Parameters["@Option"].Value = 19;
+                            command.Parameters.Add("@Option", System.Data.SqlDbType.Int);
+                            command.Parameters["@Option"].Value = 29;
+
+                            command.Parameters.Add("@NOMSurat", System.Data.SqlDbType.VarChar);
+                            command.Parameters["@NOMSurat"].Value = No_Surat;
+
+                        SqlDataAdapter dataAdapt5 = new SqlDataAdapter();
+                            dataAdapt5.SelectCommand = command;
 
 
-                                SqlDataAdapter dataAdapt4 = new SqlDataAdapter();
-                                dataAdapt4.SelectCommand = command;
-
-
-                                dataAdapt4.Fill(data, "Footer3");
-                            }
+                            dataAdapt5.Fill(data, "Signature");
                         }
-                        catch (Exception ex4)
-                        {
+                    }
+                    catch (Exception ex4)
+                    {
 
-                            throw ex4;
-                        }
+                        throw ex4;
+                    }
 
-                        //data.AcceptChanges();
-                        conn.Close();
-                        someDataSet.Load(Server.MapPath("~/Report_SPB/Report_SPB_Memo.rpt"));
-                        someDataSet.SetDatabaseLogon("sab7", "Welcome123");
-                        someDataSet.SetDataSource(data);
-                        someDataSet.VerifyDatabase();
+                //data.AcceptChanges();
+                conn.Close();
+                    someDataSet.Load(Server.MapPath("~/Report_SPB/Report_SPB_Memo.rpt"));
+                    someDataSet.SetDatabaseLogon("sab7", "Welcome123");
+                    someDataSet.SetDataSource(data);
+                    someDataSet.VerifyDatabase();
                     //someDataSet.SetDatabaseLogon("sab7", "Welcome1234");
                     //someDataSet.Database.Tables[4].SetDataSource(data.Tables["PA_SPB"]);
                     //someDataSet.Database.Tables[2].SetDataSource(data.Tables["DETAILSPB"]);

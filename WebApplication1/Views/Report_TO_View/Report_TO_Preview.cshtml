@@ -1,0 +1,237 @@
+﻿
+@{
+    ViewBag.Title = "Report_SPB_Preview";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href=" https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+<script src="https://kit.fontawesome.com/0507c93dbe.js" crossorigin="anonymous"></script>
+
+<style>
+    .dataTables_filter {
+        position: relative;
+    }
+
+        .dataTables_filter input {
+            width: 250px;
+            height: 32px;
+            background: #fcfcfc;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+            box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
+            text-indent: 10px;
+        }
+
+        .dataTables_filter .fa-search {
+            position: absolute;
+            top: 10px;
+            left: auto;
+            right: 10px;
+        }
+
+    @@media (min-width: 768px) {
+        .modal-xl {
+            width: 900%;
+            max-width: 1300px;
+        }
+    }
+
+    .select2-selection__rendered {
+        line-height: 40px !important;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 40px !important;
+    }
+
+    .select2-selection__arrow {
+        height: 40px !important;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-10" style="margin: 0 auto;float: none;margin-bottom: 10px; ">
+            <div class="card">
+                <div class="card-body">
+                    <div id="divNormal">
+                        <div class="col-md-12">
+                            <h2>Report TO Preview</h2>
+                        </div>
+                        <hr class="solid">
+                    </div>
+                    <div style="border-style: groove">
+                        <div style="margin: 90px"> 
+                            <div class="col-md-12">
+                                <h1 style="font-weight: bold"> Memo </h1> <br/>
+                                <div style="width: 100%;">
+                                    <div style="width: 7%; float: left; ">
+                                        <text>No</text>
+                                        <text style="float: right">:</text>
+                                    </div>
+                                    <div style="margin-left: 10%;">
+                                        <text>TC/114/M-INT/VII/DF-TO/2022 </text>
+                                    </div>
+                                </div>
+                                <div style="width: 100%;">
+                                    <div style="width: 7%; float: left; ">
+                                        <text>To</text>
+                                        <text style="float: right">:</text>
+                                    </div>
+                                    <div style="margin-left: 10%;">
+                                        <text>MSSD </text>
+                                    </div>
+                                </div>
+                                <div style="width: 100%;">
+                                    <div style="width: 7%; float: left; ">
+                                        <text>Cc</text>
+                                        <text style="float: right">:</text>
+                                    </div>
+                                    <div style="margin-left: 10%;">
+                                        <text><b>NSM, RM, Finance</b></text>
+                                    </div>
+                                </div>
+                                <div style="width: 100%;">
+                                    <div style="width: 7%; float: left; ">
+                                        <text>From</text>
+                                        <text style="float: right">:</text>
+                                    </div>
+                                    <div style="margin-left: 10%;">
+                                        <text>Trade & Channel</text>
+                                    </div>
+                                </div>
+                                <div style="width: 100%;">
+                                    <div style="width: 7%; float: left; ">
+                                        <text>Date</text>
+                                        <text style="float: right">:</text>
+                                    </div>
+                                    <div style="margin-left: 10%;">
+                                        <text>Jul 20 2022 </text>
+                                    </div>
+                                </div>
+                                <div style="width: 100%;">
+                                    <div style="width: 7%; float: left; ">
+                                        <text>Re</text>
+                                        <text style="float: right">:</text>
+                                    </div>
+                                    <div style="margin-left: 10%;">
+                                        <text>Memo Permintaan Pembayaran Biaya Gaji Salesman TO Subdist Periode Juni
+                                            2022 </text>
+                                    </div>
+                                </div>
+                                <hr style="height: 2px; border-width: 0; color: black; background-color: black">
+                            </div>
+                            <div class="col-md-12">
+                                <div>
+                                    <label>Dengan Hormat, </label><br /><br />
+                                    <label>Bersama ini kami sampaikan persetujuan pembayaran biaya gaji salesman TO Subdist:</label> <br />
+                                    <div class="col-md-6" style="margin-left: 50px">
+                                        <div style="width: 100%;">
+                                            <div style="width: 20%; float: left; ">
+                                                <text>Periode</text>
+                                                <text style="float: right">:</text>
+                                            </div>
+                                            <div style="margin-left: 25%;">
+                                                <b>Juni 2022 </b>
+                                            </div>
+                                        </div>
+                                        <div style="width: 100%;">
+                                            <div style="width: 20%; float: left; ">
+                                                <text>Region</text>
+                                                <text style="float: right">:</text>
+                                            </div>
+                                            <div style="margin-left: 25%;">
+                                                <b>Region tes </b>
+                                            </div>
+                                        </div>
+                                        <div style="width: 100%;">
+                                            <div style="width: 20%; float: left; ">
+                                                <text>Total</text>
+                                                <text style="float: right">:</text>
+                                            </div>
+                                            <div style="margin-left: 25%;">
+                                                <b>Rp.67,228,263.51</b>
+                                            </div>
+                                        </div>
+                                        <div style="width: 100%;">
+                                            <div style="width: 20%; float: left; ">
+
+                                            </div>
+                                            <div style="margin-left: 25%;">
+                                                <b>
+                                                    <i>
+                                                        (ENAM PULUH TUJUH JUTA DUA RATUS DUA
+                                                        PULUH DELAPAN RIBU DUA RATUS ENAM
+                                                        PULUH TIGA KOMA LIMA SATU )
+                                                    </i>
+                                                </b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <label>Adapun pembayaran ini memotong saldo development fund yang ada di subdist ybs</label><br />
+                                    <label><b>Note : rincian nilai biaya gaji per Subdist, terlampir </b></label> <br />
+                                    <label>
+                                        Demikian Memo ini kami sampaikan, atas perhatian dan kerjasamanya kami ucapkan
+                                        terima kasih.
+                                    </label> <br /> <br />
+                                    <label>Hormat Kami,  </label><br /><br />
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <br />
+                                <br />
+                                <div style="">
+                                    <div id="left" style="float: left; margin-right: -50px; text-align: center">
+                                        <b>
+                                            <p><u id="txtApprover1">This text will be underlined.</u></p>
+                                        </b>
+                                        <b id="txtJabatan1">Jabatan</b> <br />
+                                    </div>
+                                    <div id="right" style="float: right; margin-left: 50px; text-align: center">
+                                        <b>
+                                            <p><u id="txtApprover3">This text will be underlined.</u></p>
+                                        </b>
+                                        <b id="txtJabatan3">Jabatan</b> <br />
+                                    </div>
+                                    <div id="center" style="margin: 0 auto; width: 300px; text-align: left; text-align: center">
+                                        <b>
+                                            <p><u id="txtApprover2">This text will be underlined.</u></p>
+                                        </b>
+                                        <b id="txtJabatan2">Jabatan</b> <br />
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card" id="divAction" >
+                <div class="card-body">
+                    @*  <h2>Action</h2>
+                    <hr class="solid">*@
+                    <div style="text-align: center;">
+                        <button class="btn btn-primary approve" style="background-color: #28de7a; border-color: #28de7a; margin-left: 10px;  width: 200px" id="btn_Approve">Approve <i class="fa-regular fa-circle-check"></i></button> 
+                        <button class="btn btn-primary reject" style="background-color: red; border-color: red; margin-left: 10px; margin: 0 auto; width: 200px" id="btn_Reject; " value="Reject">Reject <i class="fa-solid fa-ban"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var No_Surat = "@Request.QueryString.Get("No_Surat")";
+    var status = "@Request.QueryString.Get("Status")";
+    var lineNumber = "@Request.QueryString.Get("LineNumber")";
+    var alasanReject = '';
+
+    @*console.log(No_Surat);
+    console.log(lineNumber);*@
+
+    $(document).ready(function() {
+        $('#tbl_Payment').dataTable();
+    });
+</script>

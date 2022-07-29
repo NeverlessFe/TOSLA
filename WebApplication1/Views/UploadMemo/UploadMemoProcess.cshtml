@@ -66,7 +66,7 @@
                         $('#ddlTipe').attr("disabled", true);
                         $('#ddlPeriode').attr("disabled", true);
                         $("#divloading").attr("hidden", true);
-                        $('#btnSaveDetail').attr("hidden", false);
+                        $('#btnSaveDetail').attr("hidden", false);  
                         $('#UploadAttachment').attr("disabled", true);
                         swal({
                             title: "Success",
@@ -92,9 +92,10 @@
                             }
                         }
                         else if ($("#ddlTipe").val() == 'SPB') {
+                            alert('masuk if')
                             var table = $('#tblSPB').DataTable({
                                 "pageLength": 25,
-                                "data": JSON.parse(data),
+                                "data": data,
                                 "lengthChange": true,
                                 "paging": true,
                                 "info": true,
@@ -190,6 +191,7 @@
     });
     $(document).ready(function () {
         $("#btnSaveDetail").click(function () {
+            alert($('#ddlPeriode').val());
             if ($('#btnSaveDetail').text() == 'Reload Page') {
                 window.location.reload();
                 return
@@ -248,6 +250,7 @@
             });
         }
         else if ($("#ddlTipe").val() == 'SPB') {
+         
             var dictlist = {
                 Option: 2,
                 Period: $('#ddlPeriode').val()
@@ -339,6 +342,7 @@
 
     }
 </script>
+
 <div class="containers">
     <div hidden="hidden">
         <input id="txtNoMemo" type="text" value="@ViewBag.NoMemo" />
