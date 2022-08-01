@@ -85,7 +85,7 @@
                 var status = data['Status'];
                 var lineNumber = data['LineNumber'];
 
-                window.open('../Report_TO_View/Report_TO_Preview')
+                window.open('../Report_TO_View/Report_TO_Preview?No_TO=' + noTO + '&Status=' + status + '&LineNumber=' + lineNumber);
             });
 
         $('#tbl_TO tbody').on('click', 'input[id="btn_Approve"]', function () {
@@ -214,7 +214,8 @@
         var dictlist = {
             Option: "Approve Report TO",
             NoTO: noTO,
-            LineNumber: lineNumber
+            LineNumber: lineNumber,
+            Uploader: "@Request.RequestContext.HttpContext.Session["UserName"]"
         }
         var dto = {
             Model: dictlist
@@ -244,7 +245,8 @@
             Option: "Reject Report TO",
             NoTO: noTO,
             LineNumber: lineNumber,
-            AlasanReject: alasanReject
+            AlasanReject: alasanReject,
+            Uploader: "@Request.RequestContext.HttpContext.Session["UserName"]"
         }
         var dto = {
             Model: dictlist

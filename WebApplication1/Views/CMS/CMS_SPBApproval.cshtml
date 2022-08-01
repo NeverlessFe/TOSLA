@@ -224,7 +224,8 @@
         var dictlist = {
             Option: "Approve Report",
             NoSPB: noSurat,
-            LineNumber: lineNumber
+            LineNumber: lineNumber,
+            Uploader: "@Request.RequestContext.HttpContext.Session["UserName"]"
         }
         var dto = {
             Model: dictlist
@@ -254,7 +255,8 @@
             Option: "Reject Report",
             NoSPB: noSurat,
             LineNumber: lineNumber,
-            AlasanReject: alasanReject
+            AlasanReject: alasanReject,
+            Uploader: "@Request.RequestContext.HttpContext.Session["UserName"]"
         }
         var dto = {
             Model: dictlist

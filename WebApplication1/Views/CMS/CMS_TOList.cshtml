@@ -52,7 +52,7 @@
                                     <thead style="text-align: center; ">
                                         <tr>
                                             <th>No</th>
-                                            <th>No. Surat</th>
+                                            <th>No. TO</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -74,21 +74,23 @@
 
         getTableData();
 
-        $('#tbl_SPB').on('click',
+        $('#tbl_TO').on('click',
             'tbody tr .detail', function () {
                 var row = $(this).closest("TR");
-                var data = $('#tbl_SPB').DataTable().row(row).data();
-                var noSurat = data['NoSurat'];
+                var data = $('#tbl_TO').DataTable().row(row).data();
+                var noTO = data['NoTO'];
                 var status = data['Status'];
-                window.open('../Report_SPB_View/Report_SPB_Preview?No_Surat=' + noSurat + '&Status=' + status);
+
+                window.open('../Report_TO_View/Report_TO_Preview?No_TO=' + noTO + '&Status=' + status);
         });
-        $('#tbl_SPB').on('click',
+
+        $('#tbl_TO').on('click',
             'tbody tr .view', function () {
                 var row = $(this).closest("TR");
-                var data = $('#tbl_SPB').DataTable().row(row).data();
-                var noSurat = data['NoSurat'];
+                var data = $('#tbl_TO').DataTable().row(row).data();
+                var noTO = data['NoTO'];
 
-                window.open('../Report_SPB/Rpt_SPB_Memo.aspx?No_Surat=' + noSurat);
+                window.open('../Report_TO/Report_TO.aspx?No_TO=' + noTO);
             });
     });
 
