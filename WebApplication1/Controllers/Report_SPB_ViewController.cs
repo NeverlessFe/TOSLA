@@ -21,9 +21,15 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-        public ActionResult Rpt_SPB(string No_Surat)
+
+        public ActionResult Report_SPB_Preview()
+        {
+            return View();
+        }
+        public ActionResult Rpt_SPB(string No_Surat, string Status, string LineNumber)
         {
             ViewBag.No_Surat = No_Surat;
+            ViewBag.Status = Status;
             return View();
         }
         public ActionResult Report_Lampiran_SPB(string No_Surat)

@@ -212,6 +212,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PA_SPBController.cs" />
     <Compile Include="Controllers\Report_SPB_ViewController.cs" />
+    <Compile Include="Controllers\Report_TO_ViewController.cs" />
     <Compile Include="Controllers\UnderContructionController.cs" />
     <Compile Include="Controllers\UploadMemoController.cs" />
     <Compile Include="DAL\DataAccess.cs" />
@@ -258,6 +259,7 @@
     <Compile Include="Models\PenanamanModel.cs" />
     <Compile Include="Models\PengirimanModel.cs" />
     <Compile Include="Models\RegistrationModel.cs" />
+    <Compile Include="Models\SignatureModel.cs" />
     <Compile Include="Models\SosialisasiModel.cs" />
     <Compile Include="Models\vw_EJOLSchedule.cs">
       <DependentUpon>EJOLPendaftaranList.tt</DependentUpon>
@@ -267,10 +269,10 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Report_SPB\Report_Detail_Lampiran_SPB.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Report_Detail_Lampiran_SPB.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
       <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Report_SPB\Report_Lampiran.aspx.cs">
       <DependentUpon>Report_Lampiran.aspx</DependentUpon>
@@ -283,14 +285,20 @@
       <DependentUpon>Report_SPB.xsd</DependentUpon>
     </Compile>
     <Compile Include="Report_SPB\Report_SPB.Designer.cs">
+      <DependentUpon>Report_SPB.xsd</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Report_SPB.xsd</DependentUpon>
     </Compile>
     <Compile Include="Report_SPB\Report_SPB_Detail.Designer.cs">
+      <DependentUpon>Report_SPB_Detail.xsd</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Report_SPB_Detail.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Report_SPB\Report_SPB_Memo.cs">
+      <DependentUpon>Report_SPB_Memo.rpt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Report_SPB\Rpt_SPB_Memo.aspx.cs">
       <DependentUpon>Rpt_SPB_Memo.aspx</DependentUpon>
@@ -299,10 +307,22 @@
     <Compile Include="Report_SPB\Rpt_SPB_Memo.aspx.designer.cs">
       <DependentUpon>Rpt_SPB_Memo.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Report_SPB\Report_SPB_Memo.cs">
+    <Compile Include="Report_TO\Report_TO.aspx.cs">
+      <DependentUpon>Report_TO.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report_TO\Report_TO.aspx.designer.cs">
+      <DependentUpon>Report_TO.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report_TO\Report_TO.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Report_SPB_Memo.rpt</DependentUpon>
+      <DependentUpon>Report_TO.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Report_TO\Report_TO_CR.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Report_TO_CR.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Scripts\CheckSession\SessionValidation.cs" />
@@ -1853,6 +1873,7 @@
     <Content Include="Content\images\profile\9.jpg" />
     <Content Include="Content\images\profile\cover.jpg" />
     <Content Include="Content\images\profile\profile.png" />
+    <Content Include="Content\images\rejected.png" />
     <Content Include="Content\images\users\1.jpg" />
     <Content Include="Content\images\users\2.jpg" />
     <Content Include="Content\images\users\3.jpg" />
@@ -6421,6 +6442,7 @@
     </Content>
     <Content Include="Report_SPB\Report_Lampiran.aspx" />
     <Content Include="Report_SPB\Rpt_SPB_Memo.aspx" />
+    <Content Include="Report_TO\Report_TO.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\css\style.css.map" />
@@ -6700,14 +6722,15 @@
     <Content Include="Models\EJOLPendaftaranList.edmx.diagram">
       <DependentUpon>EJOLPendaftaranList.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\images\b7logowatermark.docx" />
     <None Include="Properties\PublishProfiles\ConvertToPA.pubxml" />
     <Content Include="Report_SPB\Report_SPB.xsc">
       <DependentUpon>Report_SPB.xsd</DependentUpon>
     </Content>
     <None Include="Report_SPB\Report_SPB.xsd">
-      <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>Report_SPB.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </None>
     <Content Include="Report_SPB\Report_SPB.xss">
       <DependentUpon>Report_SPB.xsd</DependentUpon>
@@ -6716,12 +6739,23 @@
       <DependentUpon>Report_SPB_Detail.xsd</DependentUpon>
     </Content>
     <None Include="Report_SPB\Report_SPB_Detail.xsd">
-      <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>Report_SPB_Detail.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </None>
     <Content Include="Report_SPB\Report_SPB_Detail.xss">
       <DependentUpon>Report_SPB_Detail.xsd</DependentUpon>
+    </Content>
+    <Content Include="Report_TO\Report_TO.xsc">
+      <DependentUpon>Report_TO.xsd</DependentUpon>
+    </Content>
+    <None Include="Report_TO\Report_TO.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Report_TO.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Report_TO\Report_TO.xss">
+      <DependentUpon>Report_TO.xsd</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -6763,6 +6797,15 @@
     <Content Include="Views\PA_SPB\Cancel_Subdist.cshtml" />
     <Content Include="Views\Report_SPB_View\AddApproval_SPB.cshtml" />
     <Content Include="Views\Report_SPB_View\Report_Lampiran_SPB.cshtml" />
+    <Content Include="Views\CMS\CMS_Signature.cshtml" />
+    <Content Include="Views\Login\ChangePassword.cshtml" />
+    <Content Include="Views\CMS\CMS_SPBList.cshtml" />
+    <Content Include="Views\CMS\CMS_SPBApproval.cshtml" />
+    <Content Include="Views\Report_SPB_View\Report_SPB_Preview.cshtml" />
+    <Content Include="Views\CMS\MappingApprover.cshtml" />
+    <Content Include="Views\Report_TO_View\Report_TO_Preview.cshtml" />
+    <Content Include="Views\CMS\CMS_TOList.cshtml" />
+    <Content Include="Views\CMS\CMS_TOApproval.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -6794,6 +6837,10 @@
     <EmbeddedResource Include="Report_SPB\Report_SPB_Memo.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Report_SPB_Memo.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report_TO\Report_TO_CR.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Report_TO_CR.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
