@@ -70,12 +70,12 @@ namespace WebApplication1.Controllers
                 if (ADFlag == "isAD")
                 {
                     bool returnValue = LogonUser(UserName, MachineName, Pwd, LOGON32_LOGON_INTERACTIVE, LOGON32_PROVIDER_DEFAULT, ref tokenHandle);
-                   /*if (returnValue == false) //matiin dulu fungsi ini biar bisa login pake AD
+                    if (returnValue == false) //matiin dulu fungsi ini biar bisa login pake AD
                     {
                         ModelData.Add("Wrong Credentials");
                     }
                     else
-                    {*/
+                    {
                         conn.Open();
                         using (SqlCommand command = new SqlCommand("[dbo].[SP_Signature]", conn))
                         {
@@ -100,7 +100,7 @@ namespace WebApplication1.Controllers
                         Session["Role"] = dt.Rows[0]["Role"].ToString();
                         Session["NamaEmployee"] = dt.Rows[0]["NamaEmployee"].ToString();
                         ModelData.Add(dt.Rows[0][0].ToString());
-                    /*}*/
+                    }
                 }
                 else if(ADFlag == "isNotAD")
                 {
