@@ -1,6 +1,7 @@
 ﻿@{
     Layout = null;
 }
+
 <!DOCTYPE html>
 <html class="h-100" lang="en">
 
@@ -21,6 +22,8 @@
 
 
 </head>
+
+
 
 <body class="h-100">
 
@@ -91,13 +94,14 @@
     <script src="~/Content/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
     <script src="~/Content/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
     <script src="~/Content/plugins/select2/js/select2.full.min.js"></script>
-
+   
 </body>
 </html>
 
 
 
 <script>
+
     $(document).ready(function () {
         $('#ddlAD').select2();
 
@@ -118,16 +122,16 @@
                     timer: 2000
                 }).then(() => {
                     location.reload();
-                    });
+                });
             }
             else {
-                
+            
                 $.ajax({
                     url: "LoginExec?Username=" + usernameSend + "&Password=" + passwordSend + "&ADFlag=" + ADFlag,
                     type: "post",
                     contentType: "application/json;charset=utf-8",
                     success: function (data) {
-                       @* alert(data);*@
+                        @* alert(data);*@
                         if (data == "true") {
                             Swal.fire({
                                 title: "Warning!",

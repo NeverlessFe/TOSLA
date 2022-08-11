@@ -213,7 +213,7 @@
                     <hr class="solid">*@
                     <div style="text-align: center;">
                         <button class="btn btn-primary approve" style="background-color: #28de7a; border-color: #28de7a; margin-left: 10px;  width: 200px" id="btn_Approve">Approve <i class="fa-regular fa-circle-check"></i></button> 
-                        <button class="btn btn-primary reject" style="background-color: red; border-color: red; margin-left: 10px; margin: 0 auto; width: 200px" id="btn_Reject; " value="Reject">Reject <i class="fa-solid fa-ban"></i></button>
+                        <button class="btn btn-primary reject" style="background-color: red; border-color: red; margin-left: 10px; margin: 0 auto; width: 200px" id="btn_Reject" value="Reject">Reject <i class="fa-solid fa-ban"></i></button>
                     </div>
                     
                 </div>
@@ -226,6 +226,7 @@
     var No_Surat = "@Request.QueryString.Get("No_Surat")";
     var status = "@Request.QueryString.Get("Status")";
     var lineNumber = "@Request.QueryString.Get("LineNumber")";
+    var uploader = "@Request.QueryString.Get("UserName")";
     var alasanReject = '';
 
     @*console.log(No_Surat);
@@ -243,7 +244,7 @@
         var year = new Date().getFullYear();
         $('#txtYear').text(year);
 
-        $('#btn_Approve').click(function() {
+        $('#btn_Approve').click(function () {
             Swal.fire({
                 title: "Warning!",
                 text: "Approve Report?",
@@ -382,7 +383,8 @@
         var dictlist = {
             Option: "Approve Report",
             NoSPB: No_Surat,
-            LineNumber: lineNumber
+            LineNumber: lineNumber,
+            Uploader: uploader
         }
         var dto = {
             Model: dictlist
@@ -414,7 +416,8 @@
             Option: "Reject Report",
             NoSPB: No_Surat,
             LineNumber: lineNumber,
-            AlasanReject: alasanReject
+            AlasanReject: alasanReject,
+            Uploader: uploader
         }
         var dto = {
             Model: dictlist

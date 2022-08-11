@@ -300,6 +300,12 @@
       <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Report_SPB\Report_SPB_Memo1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Report_SPB_Memo.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Report_SPB\Rpt_SPB_Memo.aspx.cs">
       <DependentUpon>Rpt_SPB_Memo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1837,6 +1843,7 @@
     <Content Include="Content\images\l-white.png" />
     <Content Include="Content\images\loader.gif" />
     <Content Include="Content\images\Loading.gif" />
+    <Content Include="Content\images\loading2.gif" />
     <Content Include="Content\images\logo-compact.png" />
     <Content Include="Content\images\logo-text.png" />
     <Content Include="Content\images\logo-white.png" />
@@ -6836,7 +6843,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Report_SPB\Report_SPB_Memo.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>Report_SPB_Memo.cs</LastGenOutput>
+      <LastGenOutput>Report_SPB_Memo1.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Report_TO\Report_TO_CR.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
