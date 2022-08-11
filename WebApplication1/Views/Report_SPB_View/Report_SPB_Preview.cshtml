@@ -226,7 +226,7 @@
     var No_Surat = "@Request.QueryString.Get("No_Surat")";
     var status = "@Request.QueryString.Get("Status")";
     var lineNumber = "@Request.QueryString.Get("LineNumber")";
-    var uploader = "@Request.QueryString.Get("UserName")";
+    var uploader = "@Request.RequestContext.HttpContext.Session["UserName"]";
     var alasanReject = '';
 
     @*console.log(No_Surat);
@@ -384,8 +384,10 @@
             Option: "Approve Report",
             NoSPB: No_Surat,
             LineNumber: lineNumber,
-            Uploader: uploader
+            Uploader: uploader,
+            AlasanReject: 'testing'
         }
+
         var dto = {
             Model: dictlist
         }

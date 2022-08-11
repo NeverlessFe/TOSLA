@@ -323,9 +323,7 @@
         });
 
         $("#btnCreateUser").click(function () {
-
-          @*  alert($('#txtUsername123').val())
-            alert($('#txtNamaEmployee').val())*@
+           
             if ($('#txtNamaEmployee').val() == '' || $('#txtNamaEmployee').val() == null) {
                 swal({
                     title: "Warning!",
@@ -362,7 +360,7 @@
                     timer: 2000,
                 });
             }
-            else if ($(flagUploadedFileNotAD == false)) {
+            else if (flagUploadedFileNotAD === 'false') {
                 swal({
                     title: "Warning!",
                     text: "Silahkan Mengupload File Terlebih Dahulu!",
@@ -373,7 +371,7 @@
             }
             else {
                 CreateUser();
-                $('#btnCreateUser').Attr('disabled', true);
+                $('#btnCreateUser').attr('disabled', true);
             }
 
            
@@ -482,7 +480,7 @@
 
         $("#btnUploadBuktiNotAD").click(function () {
             flagUploadedFileNotAD = 'true';
-            uploadFileSignatureNotAD();
+             uploadFileSignatureNotAD();
         });
 
         $("#btnUploadBuktiUpdate").click(function () {
@@ -719,7 +717,7 @@
        var dictlist = {
             Option: "Insert New User",
             NamaEmployee: $('#txtNamaEmployee').val(),
-            Username: $('#txtUsername').val(),
+            Username: $('#txtUsername123').val(),
             Password: $('#txtPassword').val(),
             Jabatan: $('#txtJabatan').val(),
             FileName: filePathNotAD,
@@ -750,7 +748,7 @@
 
                 $('#btnCreateUser').attr('disabled', true);
                 $('#txtJabatan').attr('disabled', true);
-                $('#txtUsername').attr('disabled', true);
+                $('#txtUsername123').attr('disabled', true);
                 $('#txtNamaEmployee').attr('disabled', true);
                 $('#txtPassword').attr('disabled', true);
                 $('#idFileUploadAttachNotAD').attr('disabled', true);
