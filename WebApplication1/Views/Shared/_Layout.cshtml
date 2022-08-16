@@ -106,7 +106,7 @@
             <div class="nk-nav-scroll">
                 <ul class="metismenu" id="menu">
                     <li id="uploadMemo" hidden>
-                        <a href="~/UploadMemo/UploadMemoProcess" aria-expanded="false">
+                        <a href="https://portal.bintang7.com/ToSPBUpload/UploadMemo/UploadMemoProcess"target="_blank" aria-expanded="false">
                             <i class="icon-note menu-icon"></i><span class="nav-text">Upload Memo</span>
                         </a>
                     </li>
@@ -246,7 +246,10 @@
 </html>
 
 <script>
-     $(document).ready(function () {
+    $(document).ready(function () {
+        var role = "@Request.RequestContext.HttpContext.Session["Role"]"
+
+         @*alert(role)*@
             $(document).ajaxError(function (a, xhr, c) {
                 console.log(xhr.status);
                 var status = xhr.status;

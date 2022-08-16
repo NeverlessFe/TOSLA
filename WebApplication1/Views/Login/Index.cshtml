@@ -71,6 +71,10 @@
                                     </div>
                                 </form>
                                 <button id="btnLogin" class="btn login-form__btn submit w-100">Sign In</button>
+                                
+                                <div id="divloading" style="position:fixed;z-index:1000;margin:auto;text-align:center;margin-left:10%;margin-top:5%" hidden="hidden">
+                                    <img src="~/Content/images/Loading.gif" style="width:50%;height:50%;">
+                                </div>
                             </div>
                             </div>
                     </div>
@@ -106,7 +110,7 @@
         $('#ddlAD').select2();
 
         $("#btnLogin").click(function () {
-
+            $("#divloading").attr("hidden", false);
             var ADFlag = $("#ddlAD").val();
             var usernameSend = $("#txtUser").val();
             var passwordSend = $("#txtPass").val();
@@ -140,12 +144,13 @@
                                 showConfirmButton: false,
                                 timer: 2000
                             }).then(() => {
-                                window.location.replace("/Login/ChangePassword");
+                                window.location.replace("/Login/ChangePassword"); 
                             });
 
                         }
                         else if (data == "false") {
                             window.location.replace("/ConvertToPA/HomePage");
+                         
                         }
                         else if (data == "ADMIN") {
                             Swal.fire({
