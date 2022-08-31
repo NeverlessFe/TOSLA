@@ -21,7 +21,6 @@ namespace WebApplication1.Report_SPB
 
                 ConnectionStringSettings mySetting = ConfigurationManager.ConnectionStrings["dbReserveDiscount"];
                 string conString = mySetting.ConnectionString;
-                
                 SqlConnection conn = new SqlConnection(conString);
                 DataTable DT = new DataTable();
                 DataTable DT1 = new DataTable();
@@ -32,6 +31,7 @@ namespace WebApplication1.Report_SPB
                 //var someDataSet = new Report_SPB_Memo();
                 var someDataSet = new ReportDocument();
                 DataSet data = new DataSet();
+               
                 try
                 {
                     conn.Open();
@@ -49,7 +49,7 @@ namespace WebApplication1.Report_SPB
 
                             SqlDataAdapter dataAdapt = new SqlDataAdapter();
                             dataAdapt.SelectCommand = command;
-                            dataAdapt.Fill(data,"PA_SPB");
+                            dataAdapt.Fill(data,"PA_SPB_Memo");
                         }
                     }
                     catch (Exception ex0)
@@ -162,6 +162,7 @@ namespace WebApplication1.Report_SPB
 
                         throw ex4;
                     }
+
                     try
                     {
                         using (SqlCommand command = new SqlCommand("SP_PA_SPB", conn))
@@ -188,9 +189,113 @@ namespace WebApplication1.Report_SPB
                         throw ex4;
                     }
 
+                    try
+                    {
+                        using (SqlCommand command = new SqlCommand("SP_PA_SPB", conn))
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+
+
+                            command.Parameters.Add("@Option", System.Data.SqlDbType.Int);
+                            command.Parameters["@Option"].Value = 30;
+
+                            command.Parameters.Add("@NOMSurat", System.Data.SqlDbType.VarChar);
+                            command.Parameters["@NOMSurat"].Value = No_Surat;
+
+                            SqlDataAdapter dataAdapt5 = new SqlDataAdapter();
+                            dataAdapt5.SelectCommand = command;
+
+
+                            dataAdapt5.Fill(data, "Footer4");
+                        }
+                    }
+                    catch (Exception ex4)
+                    {
+
+                        throw ex4;
+                    }
+
+                    try
+                    {
+                        using (SqlCommand command = new SqlCommand("SP_PA_SPB", conn))
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+
+                            command.Parameters.Add("@NOMSurat", System.Data.SqlDbType.VarChar);
+                            command.Parameters["@NOMSurat"].Value = No_Surat;
+
+                            command.Parameters.Add("@Option", System.Data.SqlDbType.Int);
+                            command.Parameters["@Option"].Value = 26;
+
+                            SqlDataAdapter dataAdapt = new SqlDataAdapter();
+                            dataAdapt.SelectCommand = command;
+                            dataAdapt.Fill(data, "Header");
+                        }
+                    }
+                    catch (Exception ex0)
+                    {
+
+                        throw ex0;
+                    }
+
+                    try
+                    {
+                        using (SqlCommand command = new SqlCommand("SP_PA_SPB", conn))
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+
+                            command.Parameters.Add("@NOMSurat", System.Data.SqlDbType.VarChar);
+                            command.Parameters["@NOMSurat"].Value = No_Surat;
+
+                            command.Parameters.Add("@Option", System.Data.SqlDbType.Int);
+                            command.Parameters["@Option"].Value = 27;
+
+                            SqlDataAdapter dataAdapt1 = new SqlDataAdapter();
+                            dataAdapt1.SelectCommand = command;
+
+
+                            dataAdapt1.Fill(data, "PA_SPB");
+                        }
+                    }
+                    catch (Exception ex1)
+                    {
+
+                        throw ex1;
+                    }
+
+                    try
+                    {
+                        using (SqlCommand command = new SqlCommand("SP_PA_SPB", conn))
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+
+
+                            command.Parameters.Add("@NOMSurat", System.Data.SqlDbType.VarChar);
+                            command.Parameters["@NOMSurat"].Value = No_Surat;
+
+                            command.Parameters.Add("@Option", System.Data.SqlDbType.Int);
+                            command.Parameters["@Option"].Value = 28;
+
+
+                            SqlDataAdapter dataAdapt2 = new SqlDataAdapter();
+                            dataAdapt2.SelectCommand = command;
+
+
+                            dataAdapt2.Fill(data, "Approver");
+                        }
+                    }
+                    catch (Exception ex2)
+                    {
+
+                        throw ex2;
+
+                    }
+
                 //data.AcceptChanges();
                 conn.Close();
+
                     someDataSet.Load(Server.MapPath("~/Report_SPB/Report_SPB_Memo.rpt"));
+                    //someDataSet.Load(Server.MapPath("~/Report_SPB/SPB_Report_DETAIL.rpt"));
                     someDataSet.SetDatabaseLogon("sab7", "Welcome123");
                     someDataSet.SetDataSource(data);
                     someDataSet.VerifyDatabase();
@@ -204,7 +309,9 @@ namespace WebApplication1.Report_SPB
                     CrystalReportViewer1.PrintMode = CrystalDecisions.Web.PrintMode.ActiveX;
                     // CrystalReportViewer1.RefreshReport();
                     Session["myReport"] = someDataSet;
-                    
+
+                 
+
                 }
                 catch (Exception ex)
                 {
@@ -213,5 +320,6 @@ namespace WebApplication1.Report_SPB
 
             //}s
         }
+
     }
 }

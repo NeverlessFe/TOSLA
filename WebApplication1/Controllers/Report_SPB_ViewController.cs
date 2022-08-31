@@ -1,8 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CrystalDecisions.Shared;
+using PAOnline.Models;
+using ZXing;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Reflection;
+using ImageFormat = System.Drawing.Imaging.ImageFormat;
 
 namespace WebApplication1.Controllers
 {
@@ -37,5 +46,6 @@ namespace WebApplication1.Controllers
             ViewBag.No_Surat = No_Surat;
             return View();
         }
+
     }
 }

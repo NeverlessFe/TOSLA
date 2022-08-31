@@ -339,6 +339,7 @@ D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\CrystalDecisions.Crystal
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\CrystalDecisions.ReportAppServer.DataSetConversion.dll
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\CrystalDecisions.ReportSource.dll
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\CrystalDecisions.Shared.dll
+D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\CrystalDecisions.Web.dll
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\Dapper.dll
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\EntityFramework.dll
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\EntityFramework.SqlServer.dll
@@ -346,6 +347,7 @@ D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\log4net.dll
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\Microsoft.Web.Infrastructure.dll
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\Newtonsoft.Json.dll
+D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\RestSharp.dll
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\System.Web.Helpers.dll
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\System.Web.Mvc.dll
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\System.Web.Optimization.dll
@@ -354,10 +356,13 @@ D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\System.Web.WebPages.Depl
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\System.Web.WebPages.dll
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\System.Web.WebPages.Razor.dll
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\WebGrease.dll
+D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\zxing.dll
+D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\zxing.presentation.dll
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\Dapper.xml
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\EntityFramework.xml
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\EntityFramework.SqlServer.xml
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\log4net.xml
+D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\RestSharp.xml
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\System.Web.Helpers.xml
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\System.Web.Mvc.xml
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\System.Web.Optimization.xml
@@ -367,10 +372,11 @@ D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\System.Web.WebPages.Depl
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\System.Web.WebPages.Razor.xml
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\Newtonsoft.Json.xml
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\Antlr3.Runtime.pdb
+D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\zxing.xml
+D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\zxing.presentation.xml
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\obj\Debug\WebApplication1.csproj.AssemblyReference.cache
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\obj\Debug\WebApplication1.csproj.CoreCompileInputs.cache
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\obj\Debug\WebApplication1.csproj.CopyComplete
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\obj\Debug\WebApplication1.dll
 D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\obj\Debug\WebApplication1.pdb
-D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\bin\CrystalDecisions.Web.dll
