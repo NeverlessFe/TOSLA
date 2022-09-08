@@ -41,9 +41,11 @@
     <div class="row">
      
         <div class="col-lg-12">
-            <h2>CMS Signature</h2>
             <div class="card">
                 <div class="card-body">
+                    <h2>CMS Signature</h2>
+                    <hr class="solid">
+                    <br />
                     <div class="row form-group-sm">
                         <div class="col-md-4">
                             <h4>Choose Directory:</h4>
@@ -71,9 +73,17 @@
                         <br/>
                         <div class="row form-group-sm">
                             <div class="col-md-4">
+                                <label class="m-t-20">Email Employee<span style="color: red">*</span></label>
+
+                                <input class="form-control" type="text" id="txtEmailEmployee"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row form-group-sm">
+                            <div class="col-md-4">
                                 <label class="m-t-20">Username<span style="color: red">*</span></label>
 
-                                <input class="form-control" type="text" id="txtUsername"/>
+                                <input class="form-control" type="text" id="txtUsername123"/>
                             </div>
                         </div>
                         <br/>
@@ -323,7 +333,67 @@
         });
 
         $("#btnCreateUser").click(function () {
-            CreateUser();
+           
+            if ($('#txtNamaEmployee').val() == '' || $('#txtNamaEmployee').val() == null) {
+                swal({
+                    title: "Warning!",
+                    text: "Silahkan Mengisi Nama Employee Terlebih Dahulu!",
+                    type: "warning",
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
+            }
+            else if ($('#txtUsername123').val() == '' || $('#txtUsername123').val() == null) {
+                swal({
+                    title: "Warning!",
+                    text: "Silahkan Mengisi Username Terlebih Dahulu!",
+                    type: "warning",
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
+            }
+            else if ($('#txtEmailEmployee').val() == '' || $('#txtEmailEmployee').val() == null) {
+                swal({
+                    title: "Warning!",
+                    text: "Silahkan Mengisi Email Terlebih Dahulu!",
+                    type: "warning",
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
+            }
+            else if ($('#txtJabatan').val() == '' || $('#txtJabatan').val() == null) {
+                swal({
+                    title: "Warning!",
+                    text: "Silahkan Mengisi Jabatan Terlebih Dahulu!",
+                    type: "warning",
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
+            }
+            else if ($('#idFileUploadAttachNotAD').val() == '' || $('#idFileUploadAttachNotAD').val() == null) {
+                swal({
+                    title: "Warning!",
+                    text: "Silahkan Memilih File Signature Terlebih Dahulu!",
+                    type: "warning",
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
+            }
+            else if (flagUploadedFileNotAD === 'false') {
+                swal({
+                    title: "Warning!",
+                    text: "Silahkan Mengupload File Terlebih Dahulu!",
+                    type: "warning",
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
+            }
+            else {
+                CreateUser();
+                $('#btnCreateUser').attr('disabled', true);
+            }
+
+           
         });
 
         $("#insertSignature").click(function () {
@@ -429,7 +499,7 @@
 
         $("#btnUploadBuktiNotAD").click(function () {
             flagUploadedFileNotAD = 'true';
-            uploadFileSignatureNotAD();
+             uploadFileSignatureNotAD();
         });
 
         $("#btnUploadBuktiUpdate").click(function () {
@@ -521,7 +591,7 @@
                 processData: false,
                 success: function (data) {
                     filePathNotAD = data;
-                    swal({
+                    swal({  
                         title: "Success",
                         text: "Upload File Signature Berhasil!",
                         type: "success",
@@ -663,106 +733,53 @@
 
     function CreateUser() {
        @* alert(filePathNotAD)*@
-        var valid = true;
-        var dictlist = {
+       var dictlist = {
             Option: "Insert New User",
             NamaEmployee: $('#txtNamaEmployee').val(),
-            Username: $('#txtUsername').val(),
+            Username: $('#txtUsername123').val(),
             Password: $('#txtPassword').val(),
             Jabatan: $('#txtJabatan').val(),
+            Email: $('#txtEmailEmployee').val(),
             FileName: filePathNotAD,
             Uploader: "@Request.RequestContext.HttpContext.Session["UserName"]"
         }
-        var checklist = {
-            Option: "Insert New User",
-            Nama_Employee: $('#txtNamaEmployee').val(),
-            Username: $('#txtUsername').val(),
-            Password: $('#txtPassword').val(),
-            Jabatan: $('#txtJabatan').val(),
-            File_Name: $('#idFileUploadAttachNotAD').val(),
-            FlagUploaded: flagUploadedFileNotAD
-        }
 
-        $.each(checklist, function (key, value) {
-            if (value == null || value == '') {
-                if (key.indexOf('_') > 0) {
-                    var keysplit = key.split('_');
-                    var alert = ''
-                    for (var i = 0; i < keysplit.length; i++) {
-                        if (i == 0) {
-                            alert = keysplit[i];
-                        } else {
-                            alert += " " + keysplit[i];
-                        }
-                    }
-                    swal({
-                        title: "Warning!",
-                        text: "Silahkan Melengkapi " + alert + " Yang Kosong Terlebih Dahulu",
-                        type: "warning",
-                        showConfirmButton: false,
-                        timer: 2000,
-                    });
-                    return  valid = false;
-                }
-                else {
-                    swal({
-                        title: "Warning!",
-                        text: "Silahkan Melengkapi " + alert + " Yang Kosong Terlebih Dahulu",
-                        type: "warning",
-                        showConfirmButton: false,
-                        timer: 2000,
-                    });
-                    return  valid = false;
-                }
-            }
-            else if (value == 'false') {
-                Swal.fire({
-                    title: "Warning!",
-                    text: "Mohon Mengupload File Terlebih Dahulu",
-                    type: "warning",
-                    showConfirmButton: false,
-                    timer: 2000
-                });
-                return valid = false;
-            }
-        });
-
-
-        var dto = {
+       var dto = {
             Model: dictlist
         }
-        if (valid == true) {
-            $.ajax({
-                url: "../UploadMemo/DynamicController?spname=SP_Signature",
-                type: "POST",
-                dataType: "json",
-                data: JSON.stringify(dto),
-                contentType: "application/json;charset=utf-8",
-                success: function (data) {
-                    var result = JSON.parse(data);
+   
+        $.ajax({
+            url: "../UploadMemo/DynamicController?spname=SP_Signature",
+            type: "POST",
+            dataType: "json",
+            data: JSON.stringify(dto),
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                var result = JSON.parse(data);
 
-                    swal({
-                        title: "Success!",
-                        text: "User Berhasil Didaftarkan!",
-                        type: "success",
-                        showConfirmButton: false,
-                        timer: 3000
-                    });
+                swal({
+                    title: "Success!",
+                    text: "User Berhasil Didaftarkan!",
+                    type: "success",
+                    showConfirmButton: false,
+                    timer: 3000
+                });
 
-                    $('#btnCreateUser').attr('disabled', true);
-                    $('#txtJabatan').attr('disabled', true);
-                    $('#txtUsername').attr('disabled', true);
-                    $('#txtNamaEmployee').attr('disabled', true);
-                    $('#txtPassword').attr('disabled', true);
-                    $('#idFileUploadAttachNotAD').attr('disabled', true);
-                    $('#btnUploadBuktiNotAD').attr('disabled', true);
+                $('#btnCreateUser').attr('disabled', true);
+                $('#txtJabatan').attr('disabled', true);
+                $('#txtUsername123').attr('disabled', true);
+                $('#txtEmailEmployee').attr('disabled', true);
+                $('#txtNamaEmployee').attr('disabled', true);
+                $('#txtPassword').attr('disabled', true);
+                $('#idFileUploadAttachNotAD').attr('disabled', true);
+                $('#btnUploadBuktiNotAD').attr('disabled', true);
 
-                    getTableData();
-                }, error: function (ex) {
-                    console.log(JSON.stringify(ex));
-                }
-            });
-        }
+                getTableData();
+            }, error: function (ex) {
+                console.log(JSON.stringify(ex));
+            }
+        });
+        
     }
 
     function insertSignature() {

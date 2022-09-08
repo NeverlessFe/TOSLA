@@ -105,6 +105,33 @@ namespace WebApplication1.Report_TO
 
                 }
 
+                try
+                {
+                    using (SqlCommand command = new SqlCommand("SP_CrystalReport_TO", conn))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.Add("@NO_TO", System.Data.SqlDbType.VarChar);
+                        command.Parameters["@NO_TO"].Value = NoTO;
+
+                        command.Parameters.Add("@Option", System.Data.SqlDbType.NVarChar);
+                        command.Parameters["@Option"].Value = "Detail Table Data";
+
+
+                        SqlDataAdapter dataAdapt2 = new SqlDataAdapter();
+                        dataAdapt2.SelectCommand = command;
+
+
+                        dataAdapt2.Fill(data, "DetailTable");
+                    }
+                }
+                catch (Exception ex2)
+                {
+
+                    throw ex2;
+
+                }
+
 
                 //data.AcceptChanges();
                 conn.Close();

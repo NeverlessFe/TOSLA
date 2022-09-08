@@ -7,26 +7,39 @@
 <script src="https://kit.fontawesome.com/0507c93dbe.js" crossorigin="anonymous"></script>
 
 <style>
+    #wrap {
+        /*background: #e7e7e7;*/
+        padding: 5%;
+        text-align: center;
+        width: 100%;
+    }
+
+    #leftDetail, #rightDetail {
+        /*background: #ccc;*/
+        display: inline-block;
+        padding: 2%;
+    }
+@*
     .dataTables_filter {
         position: relative;
     }
 
-        .dataTables_filter input {
-            width: 250px;
-            height: 32px;
-            background: #fcfcfc;
-            border: 1px solid #aaa;
-            border-radius: 5px;
-            box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
-            text-indent: 10px;
-        }
+    .dataTables_filter input {
+        width: 250px;
+        height: 32px;
+        background: #fcfcfc;
+        border: 1px solid #aaa;
+        border-radius: 5px;
+        box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
+        text-indent: 10px;
+    }
 
-        .dataTables_filter .fa-search {
-            position: absolute;
-            top: 10px;
-            left: auto;
-            right: 10px;
-        }
+    .dataTables_filter .fa-search {
+        position: absolute;
+        top: 10px;
+        left: auto;
+        right: 10px;
+    }*@
 
     @@media (min-width: 768px) {
         .modal-xl {
@@ -51,10 +64,10 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-10" style="margin: 0 auto;
-                                     float: none;
-                                     margin-bottom: 10px; ">
+                                      float: none;
+                                      margin-bottom: 10px; ">
             <div class="card">
-              
+
                 <div class="card-body">
                     <div id="divNormal">
                         <div class="col-md-12">
@@ -63,14 +76,14 @@
                         <hr class="solid">
                     </div>
                     <div id="divReject" hidden>
-                        <div class="col-md-12" >
+                        <div class="col-md-12">
                             <h2>
                                 <img src="~/Content/images/rejected.png" width="190" height="70" style="float: right">
                                 Report SPB Preview (Rejected)
-                            </h2>   
+                            </h2>
 
                         </div>
-                        <div class="col-md-12" >
+                        <div class="col-md-12">
                             <label style="font-weight: bold; margin-right: 10px; font-size: 20px"> Alasan Reject: </label><label style=" margin-right: 10px; font-size: 20px" id="txtAlasanReject"></label>
                         </div>
                         <hr class="solid">
@@ -115,20 +128,20 @@
                                         <div id="form_tableSPB" class="form-group row">
                                             <table id="tbl_Payment" class="cell-border" style="width: 50%; float: left">
                                                 <thead style="">
-                                                    <tr>
-                                                        <th>TEAM</th>
-                                                        <th>PERIODE</th>
-                                                        <th>TOTAL INCOME</th>
-                                                    </tr>
+                                                <tr>
+                                                    <th>TEAM</th>
+                                                    <th>PERIODE</th>
+                                                    <th>TOTAL INCOME</th>
+                                                </tr>
                                                 </thead>
                                                 <tbody id="tBodyPayment">
                                                 </tbody>
                                                 <tfoot class="cell-border">
-                                                    <tr>
-                                                        <th>Total</th>
-                                                        <th></th>
-                                                        <th id="txtTotal">$180</th>
-                                                    </tr>
+                                                <tr>
+                                                    <th>Total</th>
+                                                    <th></th>
+                                                    <th id="txtTotal">$180</th>
+                                                </tr>
                                                 </tfoot>
                                             </table>
                                         </div>
@@ -178,56 +191,142 @@
 
                             </div>
                             @*<br /> <br /> <br />
-                <div class="col-md-12">
-                    <div style="">
-                        <div id="left" style="float: left; margin-right: -50px">
-                            <b>Head Office</b> <br />
-                            <text>Jl. Jend. A. Yani No.2,</text><br />
-                            <text>Pulomas Jakarta 13210 Indonesia</text><br />
-                            <text>P: 62-21-475-7777</text><br />
-                        </div>
-                        <div id="right" style="float: right; margin-left: 50px">
-                            <b>Factory 2</b> <br />
-                            <text>Kawasan Greenland International Industrial Center (GIIC)</text><br />
-                            <text>Blok BB No.7, Desa Sukamahi, Kecamatan Cikarang Pusat,</text><br />
-                            <text>Kabupaten Bekasi, Jawa Barat 17530 Indonesia</text><br />
-                            <text>P: 62-21-5085-0277</text><br />
-                        </div>
-                        <div id="center" style="margin: 0 auto; width: 300px; text-align: left;">
-                            <b>Factory 1</b> <br />
-                            <text>Jl. Rawa Sumur Barat II K-9,</text><br />
-                            <text>Kawasan Industri Pulogadung</text><br />
-                            <text>Jakarta 13930 Indonesia</text><br />
-                            <text>P: 62-21-460-5533</text><br />
+                                <div class="col-md-12">
+                                    <div style="">
+                                        <div id="left" style="float: left; margin-right: -50px">
+                                            <b>Head Office</b> <br />
+                                            <text>Jl. Jend. A. Yani No.2,</text><br />
+                                            <text>Pulomas Jakarta 13210 Indonesia</text><br />
+                                            <text>P: 62-21-475-7777</text><br />
+                                        </div>
+                                        <div id="right" style="float: right; margin-left: 50px">
+                                            <b>Factory 2</b> <br />
+                                            <text>Kawasan Greenland International Industrial Center (GIIC)</text><br />
+                                            <text>Blok BB No.7, Desa Sukamahi, Kecamatan Cikarang Pusat,</text><br />
+                                            <text>Kabupaten Bekasi, Jawa Barat 17530 Indonesia</text><br />
+                                            <text>P: 62-21-5085-0277</text><br />
+                                        </div>
+                                        <div id="center" style="margin: 0 auto; width: 300px; text-align: left;">
+                                            <b>Factory 1</b> <br />
+                                            <text>Jl. Rawa Sumur Barat II K-9,</text><br />
+                                            <text>Kawasan Industri Pulogadung</text><br />
+                                            <text>Jakarta 13930 Indonesia</text><br />
+                                            <text>P: 62-21-460-5533</text><br />
+                                        </div>
+                                    </div>
+                                </div>*@
                         </div>
                     </div>
-                </div>*@
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="card" id="divAction" >
-                <div class="card-body">
-                    @*  <h2>Action</h2>
-                    <hr class="solid">*@
-                    <div style="text-align: center;">
-                        <button class="btn btn-primary approve" style="background-color: #28de7a; border-color: #28de7a; margin-left: 10px;  width: 200px" id="btn_Approve">Approve <i class="fa-regular fa-circle-check"></i></button> 
-                        <button class="btn btn-primary reject" style="background-color: red; border-color: red; margin-left: 10px; margin: 0 auto; width: 200px" id="btn_Reject; " value="Reject">Reject <i class="fa-solid fa-ban"></i></button>
-                    </div>
-                    
                 </div>
             </div>
         </div>
     </div>
+    <div class="row" style="margin: 0 auto; ">
+        <div class="card" style="width: 95%; margin: 0 auto; ">
+            <div class="card-body">
+                <div style="border-style: groove">
+                    <div style="margin: 90px">
+                        <div class="col-md-12">
+                            <div style="height: 30px">
+                                <label style="line-height: 40px; margin-right: 2px; font-weight: bold; font-size: 14px">REKOMENDASI BAYAR TTAM TIM B7 </label>
+                            </div>
+                            <div style="height: 30px">
+                                <label style="line-height: 40px; font-weight: bold;font-size: 14px" id="txtSubdistBayar">PT. DUMMY 123 </label>
+                                <label style="line-height: 40px; font-weight: bold; margin-left: 200px; font-size: 14px" id="txtREG">REG </label>
+                                <label style="line-height: 40px; font-weight: bold; margin-left: 100px; font-size: 14px" id="txtCabang">CBG </label>
+                            </div>
+                            <table id="tbl_Detail" class="cell-border" style="width: 100%; float: left;margin-left: -32px">
+                                <thead style="font-size: 12px; text-align: center">
+                                <tr>
+                                    <th>PERIODE</th>
+                                    <th>NAMA TEAM</th>
+                                    <th>TEAM</th>
+                                    <th>NO KTP</th>
+                                    <th>BANK</th>
+                                    <th>NOMOR REKENING</th>
+                                    <th>FEE HARIAN</th>
+                                    <th>FEE PRODUKTIVITAS</th>
+                                    <th>BIAYA PEKERJAAN</th>
+                                    <th>BPJS</th>
+                                    <th>FEE LOYALITAS</th>
+                                    <th>KOREKSI FINANCE</th>
+                                    <th>TOTAL FEE</th>
+                                </tr>
+                                </thead>
+                                <tbody style="font-size: 12px"></tbody>
+                                <tfoot class="cell-border" style="font-size: 13px">
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Total</th>
+                                    <th id="txtTotalDetail">$180</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div id="wrap">
+                            <div id="leftDetail">
+                                <label>Diperiksa Oleh, </label>
+                                <br />
+                                <br /><br /><br />
+                                <b>
+                                    <p><u id="txtApprover1Detail">This text will be underlined.</u></p>
+                                </b>
+                                <b id="txtJabatan1Detail">Jabatan</b> <br />
+                            </div>
+
+                            <div id="rightDetail">
+                                <label>Disetujui, </label>
+                                <br /><br /><br /><br />
+                                
+                                <b>
+                                    <p><u id="txtApprover2Detail">This text will be underlined.</u></p>
+                                </b>
+                                <b id="txtJabatan2Detail">Jabatan</b> <br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <br />
+        <div class="card" id="divAction">
+            <div class="card-body" >
+                @*  <h2>Action</h2>
+                                <hr class="solid">*@
+                <div style="text-align: center;">
+                    <button class="btn btn-primary approve" style="background-color: #28de7a; border-color: #28de7a; margin-left: 10px;  width: 200px" id="btn_Approve">Approve <i class="fa-regular fa-circle-check"></i></button>
+                    <button class="btn btn-primary reject" style="background-color: red; border-color: red; margin-left: 10px; margin: 0 auto; width: 200px" id="btn_Reject" value="Reject">Reject <i class="fa-solid fa-ban"></i></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+   
+
 </div>
+
+
 
 <script>
     var No_Surat = "@Request.QueryString.Get("No_Surat")";
     var status = "@Request.QueryString.Get("Status")";
     var lineNumber = "@Request.QueryString.Get("LineNumber")";
+    var uploader = "@Request.RequestContext.HttpContext.Session["UserName"]";
     var alasanReject = '';
-
+    var currentdate = '';
+    var flagStatus = '';
     @*console.log(No_Surat);
     console.log(lineNumber);*@
 
@@ -235,6 +334,7 @@
         $('#tbl_Payment').dataTable();
         getData();
         getTableData();
+        getTableDataDetail();
         //Date Format -> dd MM yyyy
         var date = new Date();
         var options = { weekday: undefined, year: 'numeric', month: 'long', day: 'numeric' };
@@ -243,7 +343,9 @@
         var year = new Date().getFullYear();
         $('#txtYear').text(year);
 
-        $('#btn_Approve').click(function() {
+        $('#btn_Approve').click(function () {
+            flagStatus = 'approve';
+
             Swal.fire({
                 title: "Warning!",
                 text: "Approve Report?",
@@ -251,12 +353,15 @@
                 showConfirmButton: true
             }).then((result) => {
                 if (result.value) {
-                    approveReport();
+                    currentdate = new Date().toLocaleString('en-GB');
+                    getEmailData();
                 }
             });
         });
 
         $('#btn_Reject').click(function () {
+            flagStatus = 'rejected';
+
             Swal.fire({
                 type: 'warning',
                 title: 'Mohon Masukkan Alasan Reject!',
@@ -279,7 +384,8 @@
                     });
                 } else {
                     alasanReject = result.value;
-                    rejectReport();
+                    currentdate = new Date().toLocaleString('en-GB');
+                    getEmailData();
                 }
             });
         });
@@ -343,6 +449,68 @@
         });
     }
 
+    function getTableDataDetail() {
+        var dictlist = {
+            Option: "Get Table Payment Detail",
+            NoSPB: No_Surat
+        }
+        var dto = {
+            Model: dictlist
+        }
+        $.ajax({
+            url: "../UploadMemo/DynamicController?spname=SP_Signature",
+            type: "POST",
+            dataType: "json",
+            data: JSON.stringify(dto),
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                var result = JSON.parse(data);
+                var table = $('#tbl_Detail').DataTable({
+                    "pageLength": 5,
+                    "data": JSON.parse(data),
+                    "filter": false,
+                    "lengthChange": false,
+                    "paging": false,
+                    "info": false,
+                    "searching": false,
+                    "select": false,
+                    "bDestroy": true,
+                    "scrollCollapse": true,
+                    "columns": [
+                        { "data": "Periode" },
+                        { "data": "NamaTeam" },
+                        { "data": "Team" },
+                        { "data": "NoKTP" },
+                        { "data": "Bank" },
+                        { "data": "NoRek" },
+                        { "data": "FeeHarian" },
+                        { "data": "FeeProd" },
+                        { "data": "BiayaPekerjaan" },
+                        { "data": "BPJS" },
+                        { "data": "FeeLoyalitas" },
+                        { "data": "KoreksiFinance" },
+                        { "data": "TotalFee" }
+                    ],
+
+                    "order": [[0, 'asc']],
+                    "columnDefs": [
+                        //{ "width": "50%", "targets": [1] },
+                        { className: 'cell-border', "targets": "_all" },
+
+                    ]
+                });
+                $('#txtTotalDetail').text(result[0].Total);
+                $('#txtSubdistBayar').text(result[0].SubdistBayar);
+                $('#txtCabang').text(result[0].Cabang);
+                $('#txtREG').text(result[0].REG);
+            },
+            error: function(ex) {
+                console.log(JSON.stringify(ex));
+            }
+        });
+    }
+
+
     function getData() {
         var dictlist = {
             Option: "Get Report Data",
@@ -371,6 +539,10 @@
                 $('#txtJabatan1').text(result[0].Jabatan1);
                 $('#txtJabatan2').text(result[0].Jabatan2);
                 $('#txtJabatan3').text(result[0].Jabatan3);
+                $('#txtApprover1Detail').text(result[0].ApproverDetail);
+                $('#txtJabatan1Detail').text(result[0].JabatanDetail);
+                $('#txtApprover2Detail').text(result[0].Approver1);
+                $('#txtJabatan2Detail').text(result[0].Jabatan1);
             },
             error: function(ex) {
                 console.log(JSON.stringify(ex));
@@ -382,8 +554,10 @@
         var dictlist = {
             Option: "Approve Report",
             NoSPB: No_Surat,
-            LineNumber: lineNumber
+            LineNumber: lineNumber,
+            Uploader: uploader
         }
+
         var dto = {
             Model: dictlist
         }
@@ -414,7 +588,8 @@
             Option: "Reject Report",
             NoSPB: No_Surat,
             LineNumber: lineNumber,
-            AlasanReject: alasanReject
+            AlasanReject: alasanReject,
+            Uploader: uploader
         }
         var dto = {
             Model: dictlist
@@ -462,5 +637,51 @@
                 console.log(JSON.stringify(ex));
             }
         });
+    }
+
+    function getEmailData() {
+        if (flagStatus === 'approve') {
+            var dto = {
+                FlagStatus: flagStatus,
+                NoSPB: No_Surat,
+                LineNumber: lineNumber,
+                Uploader: "@Request.RequestContext.HttpContext.Session["UserName"]"
+            }
+            $.ajax({
+                url: "../CMS/GetEmailDataSPB",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify(dto),
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    approveReport();
+                }, error: function (ex) {
+                    console.log(JSON.stringify(ex));
+                }
+            });
+        }
+
+        else if (flagStatus === 'rejected') {
+            var dto = {
+                FlagStatus: flagStatus,
+                NoSPB: No_Surat,
+                LineNumber: lineNumber,
+                AlasanReject: alasanReject,
+                Uploader: "@Request.RequestContext.HttpContext.Session["UserName"]",
+                WaktuReject: currentdate
+            }
+            $.ajax({
+                url: "../CMS/GetEmailDataSPB",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify(dto),
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    rejectReport();
+                }, error: function (ex) {
+                    console.log(JSON.stringify(ex));
+                }
+            });
+        }
     }
 </script>
