@@ -7,26 +7,36 @@
 <script src="https://kit.fontawesome.com/0507c93dbe.js" crossorigin="anonymous"></script>
 
 <style>
+    #wrap {
+         /*background: #e7e7e7;*/
+        text-align: center;
+         width: 100%;
+     }
+
+    #leftDetail, #rightDetail {
+        /*background: #ccc;*/
+        display: inline-block;
+    }
     .dataTables_filter {
         position: relative;
     }
     
     .dataTables_filter input {
-            width: 250px;
-            height: 32px;
-            background: #fcfcfc;
-            border: 1px solid #aaa;
-            border-radius: 5px;
-            box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
-            text-indent: 10px;
-        }
+        width: 250px;
+        height: 32px;
+        background: #fcfcfc;
+        border: 1px solid #aaa;
+        border-radius: 5px;
+        box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
+        text-indent: 10px;
+    }
 
-        .dataTables_filter .fa-search {
-            position: absolute;
-            top: 10px;
-            left: auto;
-            right: 10px;
-        }
+    .dataTables_filter .fa-search {
+        position: absolute;
+        top: 10px;
+        left: auto;
+        right: 10px;
+    }
 
     @@media (min-width: 768px) {
         .modal-xl {
@@ -223,13 +233,70 @@
                     </div>
                 </div>
             </div>
-            <div class="card" id="divAction" hidden>
-                <div class="card-body">
-                    @*  <h2>Action</h2>
-                    <hr class="solid">*@
-                    <div style="text-align: center;">
-                        <button class="btn btn-primary approve" style="background-color: #28de7a; border-color: #28de7a; margin-left: 10px;  width: 200px" id="btn_Approve">Approve <i class="fa-regular fa-circle-check"></i></button> 
-                        <button class="btn btn-primary reject" style="background-color: red; border-color: red; margin-left: 10px; margin: 0 auto; width: 200px" id="btn_Reject">Reject <i class="fa-solid fa-ban"></i></button>
+
+        </div>
+    </div>
+<div class="row" style="margin: 0 auto; ">
+    <div class="card" style="width: 95%; margin: 0 auto; ">
+        <div class="card-body">
+            <div style="border-style: groove">
+                <div style="margin: 90px">
+                    <div class="col-md-12">
+                        <div style="height: 30px">
+                            <label style="line-height: 40px; margin-right: 2px; font-weight: bold; font-size: 20px">Lampiran Memo Gaji TO Bulan</label>
+                            <label style="line-height: 40px; font-weight: bold; margin-left: 100px; font-size: 20px" id="txtPeriodeDetail">Periode :</label>
+                            <label style="line-height: 40px; font-weight: bold; margin-left: 50px; font-size: 20px" id="txtNoSurat">NoSurat</label>
+                        </div>
+                        <table id="tbl_Detail" class="cell-border" style="width: 100%; float: left;margin-left: -32px">
+                            <thead style="font-size: 15px; text-align: center">
+                            <tr>
+                                <th>No</th>
+                                <th>Reg</th>
+                                <th>Cabang</th>
+                                <th>ShipToID</th>
+                                <th>Subdist</th>
+                                <th>Depo</th>
+                                <th>Nama</th>
+                                <th>Klaim TO</th>
+                                <th>No. Klaim</th>
+                            </tr>
+                            </thead>
+                            <tbody style="font-size: 15px"></tbody>
+                            <tfoot class="cell-border" style="font-size: 15px">
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div id="wrap">
+                        <div id="leftDetail">
+                         
+                            <br />
+                            <br /><br /><br />
+                            <b>
+                                <p><u id="txtApprover1Detail">This text will be underlined.</u></p>
+                            </b>
+                            <text id="txtJabatan1Detail" style="font-style: italic">Jabatan</text> <br />
+                        </div>
+
+                        <div id="rightDetail">
+                      
+                            <br /><br /><br /><br />
+
+                            <b>
+                                <p><u id="txtApprover2Detail">This text will be underlined.</u></p>
+                            </b>
+                            <text id="txtJabatan2Detail" style="font-style: italic">Jabatan</text> <br />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -237,13 +304,32 @@
     </div>
 </div>
 
+    <br/>
+<div class="card" id="divAction" hidden>
+    <br/>
+    <div class="card-body">
+        @*  <h2>Action</h2>
+                        <hr class="solid">*@
+        <div style="text-align: center;">
+            <button class="btn btn-primary approve" style="background-color: #28de7a; border-color: #28de7a; margin-left: 10px; width: 200px" id="btn_Approve">Approve <i class="fa-regular fa-circle-check"></i></button>
+            <button class="btn btn-primary reject" style="background-color: red; border-color: red; margin-left: 10px; margin: 0 auto; width: 200px" id="btn_Reject">Reject <i class="fa-solid fa-ban"></i></button>
+        </div>
+    </div>
+</div>
+
+
+</div>
+
 <script>
     var noTO = "@Request.QueryString.Get("No_TO")";
     var status = "@Request.QueryString.Get("Status")";
     var lineNumber = "@Request.QueryString.Get("LineNumber")";
     var alasanReject = '';
+    var currentdate = '';
+    var flagStatus = '';
 
-    $(document).ready(function() {
+    $(document).ready(function () {
+        getTableDataDetail()
         getData();
         if (status == 'Pending') {
             $('#divAction').attr('hidden', false);
@@ -251,7 +337,8 @@
             $('#divAction').attr('hidden', true);
         }
 
-        $('#btn_Approve').click(function() {
+        $('#btn_Approve').click(function () {
+            flagStatus = 'approve';
             Swal.fire({
                 title: "Warning!",
                 text: "Approve Report?",
@@ -259,12 +346,14 @@
                 showConfirmButton: true
             }).then((result) => {
                 if (result.value) {
-                    approveReport();
+                    currentdate = new Date().toLocaleString('en-GB');
+                    getEmailData();
                 }
             });
         });
 
         $('#btn_Reject').click(function () {
+            flagStatus = 'rejected';
           Swal.fire({
                 type: 'warning',
                 title: 'Mohon Masukkan Alasan Reject!',
@@ -287,7 +376,8 @@
                     });
                 } else {
                     alasanReject = result.value;
-                    rejectReport();
+                    currentdate = new Date().toLocaleString('en-GB');
+                    getEmailData();
                 }
             });
         });
@@ -423,6 +513,112 @@
                 var result = JSON.parse(data);
                 $('#txtAlasanReject').text(' ' + result[0].Reject_Reason);
             }, error: function (ex) {
+                console.log(JSON.stringify(ex));
+            }
+        });
+    }
+
+    function getEmailData() {
+        if (flagStatus === 'approve') {
+            var dto = {
+                FlagStatus: flagStatus,
+                NoTO: noTO,
+                LineNumber: lineNumber,
+                Uploader: "@Request.RequestContext.HttpContext.Session["UserName"]"
+            }
+            $.ajax({
+                url: "../CMS/GetEmailDataTO",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify(dto),
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    approveReport();
+                }, error: function (ex) {
+                    console.log(JSON.stringify(ex));
+                }
+            });
+        }
+
+        else if (flagStatus === 'rejected') {
+            var dto = {
+                FlagStatus: flagStatus,
+                NoTO: noTO,
+                LineNumber: lineNumber,
+                AlasanReject: alasanReject,
+                Uploader: "@Request.RequestContext.HttpContext.Session["UserName"]",
+                WaktuReject: currentdate
+            }
+            $.ajax({
+                url: "../CMS/GetEmailDataTO",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify(dto),
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    rejectReport();
+                }, error: function (ex) {
+                    console.log(JSON.stringify(ex));
+                }
+            });
+        }
+    }
+
+    function getTableDataDetail() {
+        var dictlist = {
+            Option: "Get Table TO Detail Preview",
+            NoTO: noTO
+        }
+        var dto = {
+            Model: dictlist
+        }
+        $.ajax({
+            url: "../UploadMemo/DynamicController?spname=SP_Signature",
+            type: "POST",
+            dataType: "json",
+            data: JSON.stringify(dto),
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                var result = JSON.parse(data);
+                var table = $('#tbl_Detail').DataTable({
+                    "pageLength": 5,
+                    "data": JSON.parse(data),
+                    "filter": false,
+                    "lengthChange": false,
+                    "paging": false,
+                    "info": false,
+                    "searching": false,
+                    "select": false,
+                    "bDestroy": true,
+                    "scrollCollapse": true,
+                    "columns": [
+                        { "data": "No" },
+                        { "data": "Reg" },
+                        { "data": "Cabang" },
+                        { "data": "ShipToID" },
+                        { "data": "Subdist" },
+                        { "data": "Depo" },
+                        { "data": "Nama" },
+                        { "data": "KlaimTO" },
+                        { "data": "NoKlaim" }
+                    ],
+
+                    "order": [[0, 'asc']],
+                    "columnDefs": [
+                        //{ "width": "50%", "targets": [1] },
+                        { className: 'cell-border', "targets": "_all" },
+
+                    ]   
+                });
+                $('#txtPeriodeDetail').text(result[0].PeriodeDetail);
+                $('#txtNoSurat').text(result[0].NoTO);
+                $('#txtApprover1Detail').text(result[0].Approver1Detail);
+                $('#txtJabatan1Detail').text(result[0].Jabatan1Detail);
+                $('#txtApprover2Detail').text(result[0].Approver2Detail);
+                $('#txtJabatan2Detail').text(result[0].Jabatan2Detail);
+          
+            },
+            error: function (ex) {
                 console.log(JSON.stringify(ex));
             }
         });

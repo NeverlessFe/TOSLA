@@ -73,6 +73,8 @@
     var lineNumber = '';
     var status = '';
     var alasanReject = '';
+    var flagStatus = '';
+    var currentdate = '';
 
     $(document).ready(function () {
         getTableData();
@@ -94,6 +96,7 @@
             noTO = data['NoTO'];
             lineNumber = data['LineNumber'];
             status = data['Status'];
+            flagStatus = 'approve';
 
             Swal.fire({
                 title: "Warning!",
@@ -102,7 +105,8 @@
                 showConfirmButton: true
             }).then((result) => {
                 if (result.value) {
-                    approveReport();
+                    currentdate = new Date().toLocaleString('en-GB');
+                    getEmailData();
                 }
             });
         });
@@ -113,6 +117,7 @@
             noTO = data['NoTO'];
             lineNumber = data['LineNumber'];
             status = data['Status'];
+            flagStatus = 'rejected';
 
             Swal.fire({
                 type: 'warning',
@@ -136,7 +141,8 @@
                     });
                 } else {
                     alasanReject = result.value;
-                    rejectReport();
+                    currentdate = new Date().toLocaleString('en-GB');
+                    getEmailData();
                 }
             });
         });
@@ -271,4 +277,49 @@
         });
     }
 
+    function getEmailData() {
+        if (flagStatus === 'approve') {
+            var dto = {
+                FlagStatus: flagStatus,
+                NoTO: noTO,
+                LineNumber: lineNumber,
+                Uploader: "@Request.RequestContext.HttpContext.Session["UserName"]"
+            }
+            $.ajax({
+                url: "GetEmailDataTO",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify(dto),
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    approveReport();
+                }, error: function (ex) {
+                    console.log(JSON.stringify(ex));
+                }
+            });
+        }
+
+        else if (flagStatus === 'rejected') {
+            var dto = {
+                FlagStatus: flagStatus,
+                NoTO: noTO,
+                LineNumber: lineNumber,
+                AlasanReject: alasanReject,
+                Uploader: "@Request.RequestContext.HttpContext.Session["UserName"]",
+                WaktuReject: currentdate
+            }
+            $.ajax({
+                url: "GetEmailDataTO",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify(dto),
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    rejectReport();
+                }, error: function (ex) {
+                    console.log(JSON.stringify(ex));
+                }
+            });
+        }
+    }
 </script>

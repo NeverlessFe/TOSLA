@@ -143,6 +143,24 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="divApproverDetail">
+                            <br />
+                            <hr class="solid">
+                            <h5>Approver Detail</h5>
+                            <div class="row form-group-sm">
+                                <div class="col-md-5" style="display: flex; vertical-align: middle;">
+                                    <label for="txtApproverDetail" style="line-height: 40px;">Nama:</label>
+                                    <input class="form-control" type="text" id="txtApproverDetail" style="width: 60%; margin-left: auto; margin-right: 0;" disabled />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row form-group-sm">
+                                <div class="col-md-5" style="display: flex; vertical-align: middle;">
+                                    <label for="txtJabatanDetail" style="line-height: 40px;">Jabatan:</label>
+                                    <input class="form-control" type="text" id="txtJabatanDetail" style="width: 60%; margin-left: auto; margin-right: 0;" disabled />
+                                </div>
+                            </div>
+                        </div>
                         <div id="divTO" hidden>
                             <br />
                             <hr class="solid">
@@ -179,12 +197,12 @@
 
 
 <script>
-
+    var waktu = '';
     $(document).ready(function () {
         getNoSPB();
         getNoTO();
         getApproverDDL();
-        getApprover2and3();
+        getApproverData();
 
         $('#ddlNoSPB').select2();
         $('#ddlChoose').select2();
@@ -192,7 +210,7 @@
         $('#ddlApprover1').select2();
 
         $('#ddlChoose').change(function () {
-            clearDDL();
+            clearDDL(); getApproverData()
             $('#divTO').attr('hidden', true);
             $('#divHidden').attr('hidden', true);
             if ($('#ddlChoose').val() == 'TO') {
@@ -236,6 +254,7 @@
                     showConfirmButton: true
                 }).then((result) => {
                     if (result.value) {
+                        waktu = new Date().toLocaleString('en-GB');
                         submitMappingSPB();
                         
                         $('#btnSubmitMapping').attr('disabled', true);
@@ -273,6 +292,7 @@
                         showConfirmButton: true
                     }).then((result) => {
                         if (result.value) {
+                            waktu = new Date().toLocaleString('en-GB');
                             submitMappingTO();
                             
                             $('#btnSubmitMapping').attr('disabled', true);
@@ -335,7 +355,7 @@
 
                 var result = JSON.parse(data);
                 $.each(result, function (key, value) {
-                    $('#ddlApprover1').append(new Option(value.NamaEmployee));
+                    $('#ddlApprover1').append(new Option(value.NamaEmployee, value.EmailEmployee));
                 });
 
                 console.log(result);
@@ -372,9 +392,10 @@
         });
     }
 
-    function getApprover2and3() {
+    function getApproverData() {
+     
         var dictlist = {
-            Option: "Get Approver 2 and 3",
+            Option: "Get Approver Data",
         }
 
         var dto = {
@@ -394,7 +415,14 @@
                 $('#txtJabatan2').val(result[0].JobTtlName2);
                 $('#txtApprover3').val(result[0].Approver3);
                 $('#txtJabatan3').val(result[0].JobTtlName3);
-
+                if ($('#ddlChoose').val() == 'TO') {
+                    $('#txtApproverDetail').val(result[0].ApproverDetailTO);
+                    $('#txtJabatanDetail').val(result[0].JobTtlDetailTO);
+                }
+                else if ($('#ddlChoose').val() == 'SPB') {
+                    $('#txtApproverDetail').val(result[0].ApproverDetailSPB);
+                    $('#txtJabatanDetail').val(result[0].JobTtlDetailSPB);
+                }
                 console.log(result);
             }, error: function (ex) {
                 alert(JSON.stringify(ex));
@@ -403,31 +431,33 @@
     }
 
     function submitMappingSPB() {
-        var dictlist = {
+        var dto = {
             Option: "Submit Mapping SPB",
             NoSPB: $('#ddlNoSPB option:selected').text(),
             Approver1: $('#ddlApprover1 option:selected').text(),
             Approver2: $('#txtApprover2').val(),
             Approver3: $('#txtApprover3').val(),
-            Uploader: "@Request.RequestContext.HttpContext.Session["UserName"]"
+            ApproverDetail: $('#txtApproverDetail').val(),
+            Uploader: "@Request.RequestContext.HttpContext.Session["UserName"]",
+            SubmitDate: waktu,
+            Email1: $('#ddlApprover1').val()
         }
-        var dto = {
-            Model: dictlist
-        }
+       
         $.ajax({
-            url: "../UploadMemo/DynamicController?spname=SP_Signature",
+            url: "SubmitMappingSPB",
             type: "post",
             dataType: "json",
             data: JSON.stringify(dto),
             contentType: "application/json;charset=utf-8",
             success: function (data) {
-                var result = JSON.parse(data);
                 Swal.fire({
                     title: "Success!",
                     text: "Mapping Approver SPB Berhasil di Submit!",
                     type: "success",
                     showConfirmButton: false,
                     timer: 3000
+                }).then((result) => {
+                    location.reload();
                 });
                 console.log(result);
             }, error: function (ex) {
@@ -438,7 +468,7 @@
 
     function submitMappingTO() {
 
-        var dictlist = {
+        var dto = {
             Option: "Submit Mapping TO",
             NoTO: $('#ddlNoTO option:selected').text(),
             Approver1: $('#ddlApprover1 option:selected').text(),
@@ -446,26 +476,27 @@
             Approver3: $('#txtApprover3').val(),
             Region: $('#txtRegion').val(),
             Remarks: $('#txtRemarks').val(),
+            SubmitDate: waktu,
+            Email1: $('#ddlApprover1').val(),
             Uploader: "@Request.RequestContext.HttpContext.Session["UserName"]"
         }
-        var dto = {
-            Model: dictlist
-        }
         $.ajax({
-            url: "../UploadMemo/DynamicController?spname=SP_Signature",
+            url: "SubmitMappingTO",
             type: "post",
             dataType: "json",
             data: JSON.stringify(dto),
             contentType: "application/json;charset=utf-8",
             success: function (data) {
-                var result = JSON.parse(data);
                 Swal.fire({
                     title: "Success!",
                     text: "Mapping Approver TO Berhasil di Submit!",
                     type: "success",
                     showConfirmButton: false,
                     timer: 3000
+                }).then((result) => {
+                    location.reload();
                 });
+               
                 console.log(result);
             }, error: function (ex) {
                 alert(JSON.stringify(ex));

@@ -778,13 +778,17 @@ namespace WebApplication1.Report_SPB {
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class ApproverDataTable : global::System.Data.TypedTableBase<ApproverRow> {
             
-            private global::System.Data.DataColumn columnNama_Checker;
+            private global::System.Data.DataColumn columnApprover1;
             
-            private global::System.Data.DataColumn columnJob_Checker;
+            private global::System.Data.DataColumn columnJabatan1;
             
-            private global::System.Data.DataColumn columnNama_Approver;
+            private global::System.Data.DataColumn columnApprover2;
             
-            private global::System.Data.DataColumn columnJob_Approver;
+            private global::System.Data.DataColumn columnJabatan2;
+            
+            private global::System.Data.DataColumn columnSignature1;
+            
+            private global::System.Data.DataColumn columnSignature2;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
@@ -821,33 +825,49 @@ namespace WebApplication1.Report_SPB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn Nama_CheckerColumn {
+            public global::System.Data.DataColumn Approver1Column {
                 get {
-                    return this.columnNama_Checker;
+                    return this.columnApprover1;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn Job_CheckerColumn {
+            public global::System.Data.DataColumn Jabatan1Column {
                 get {
-                    return this.columnJob_Checker;
+                    return this.columnJabatan1;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn Nama_ApproverColumn {
+            public global::System.Data.DataColumn Approver2Column {
                 get {
-                    return this.columnNama_Approver;
+                    return this.columnApprover2;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn Job_ApproverColumn {
+            public global::System.Data.DataColumn Jabatan2Column {
                 get {
-                    return this.columnJob_Approver;
+                    return this.columnJabatan2;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn Signature1Column {
+                get {
+                    return this.columnSignature1;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn Signature2Column {
+                get {
+                    return this.columnSignature2;
                 }
             }
             
@@ -888,13 +908,15 @@ namespace WebApplication1.Report_SPB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public ApproverRow AddApproverRow(string Nama_Checker, string Job_Checker, string Nama_Approver, string Job_Approver) {
+            public ApproverRow AddApproverRow(string Approver1, string Jabatan1, string Approver2, string Jabatan2, string Signature1, string Signature2) {
                 ApproverRow rowApproverRow = ((ApproverRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        Nama_Checker,
-                        Job_Checker,
-                        Nama_Approver,
-                        Job_Approver};
+                        Approver1,
+                        Jabatan1,
+                        Approver2,
+                        Jabatan2,
+                        Signature1,
+                        Signature2};
                 rowApproverRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowApproverRow);
                 return rowApproverRow;
@@ -917,23 +939,29 @@ namespace WebApplication1.Report_SPB {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             internal void InitVars() {
-                this.columnNama_Checker = base.Columns["Nama_Checker"];
-                this.columnJob_Checker = base.Columns["Job_Checker"];
-                this.columnNama_Approver = base.Columns["Nama_Approver"];
-                this.columnJob_Approver = base.Columns["Job_Approver"];
+                this.columnApprover1 = base.Columns["Approver1"];
+                this.columnJabatan1 = base.Columns["Jabatan1"];
+                this.columnApprover2 = base.Columns["Approver2"];
+                this.columnJabatan2 = base.Columns["Jabatan2"];
+                this.columnSignature1 = base.Columns["Signature1"];
+                this.columnSignature2 = base.Columns["Signature2"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             private void InitClass() {
-                this.columnNama_Checker = new global::System.Data.DataColumn("Nama_Checker", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnNama_Checker);
-                this.columnJob_Checker = new global::System.Data.DataColumn("Job_Checker", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnJob_Checker);
-                this.columnNama_Approver = new global::System.Data.DataColumn("Nama_Approver", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnNama_Approver);
-                this.columnJob_Approver = new global::System.Data.DataColumn("Job_Approver", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnJob_Approver);
+                this.columnApprover1 = new global::System.Data.DataColumn("Approver1", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnApprover1);
+                this.columnJabatan1 = new global::System.Data.DataColumn("Jabatan1", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnJabatan1);
+                this.columnApprover2 = new global::System.Data.DataColumn("Approver2", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnApprover2);
+                this.columnJabatan2 = new global::System.Data.DataColumn("Jabatan2", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnJabatan2);
+                this.columnSignature1 = new global::System.Data.DataColumn("Signature1", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSignature1);
+                this.columnSignature2 = new global::System.Data.DataColumn("Signature2", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSignature2);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1758,114 +1786,170 @@ namespace WebApplication1.Report_SPB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Nama_Checker {
+            public string Approver1 {
                 get {
                     try {
-                        return ((string)(this[this.tableApprover.Nama_CheckerColumn]));
+                        return ((string)(this[this.tableApprover.Approver1Column]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Nama_Checker\' in table \'Approver\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Approver1\' in table \'Approver\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableApprover.Nama_CheckerColumn] = value;
+                    this[this.tableApprover.Approver1Column] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Job_Checker {
+            public string Jabatan1 {
                 get {
                     try {
-                        return ((string)(this[this.tableApprover.Job_CheckerColumn]));
+                        return ((string)(this[this.tableApprover.Jabatan1Column]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Job_Checker\' in table \'Approver\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Jabatan1\' in table \'Approver\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableApprover.Job_CheckerColumn] = value;
+                    this[this.tableApprover.Jabatan1Column] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Nama_Approver {
+            public string Approver2 {
                 get {
                     try {
-                        return ((string)(this[this.tableApprover.Nama_ApproverColumn]));
+                        return ((string)(this[this.tableApprover.Approver2Column]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Nama_Approver\' in table \'Approver\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Approver2\' in table \'Approver\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableApprover.Nama_ApproverColumn] = value;
+                    this[this.tableApprover.Approver2Column] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Job_Approver {
+            public string Jabatan2 {
                 get {
                     try {
-                        return ((string)(this[this.tableApprover.Job_ApproverColumn]));
+                        return ((string)(this[this.tableApprover.Jabatan2Column]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Job_Approver\' in table \'Approver\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Jabatan2\' in table \'Approver\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableApprover.Job_ApproverColumn] = value;
+                    this[this.tableApprover.Jabatan2Column] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsNama_CheckerNull() {
-                return this.IsNull(this.tableApprover.Nama_CheckerColumn);
+            public string Signature1 {
+                get {
+                    try {
+                        return ((string)(this[this.tableApprover.Signature1Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Signature1\' in table \'Approver\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableApprover.Signature1Column] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetNama_CheckerNull() {
-                this[this.tableApprover.Nama_CheckerColumn] = global::System.Convert.DBNull;
+            public string Signature2 {
+                get {
+                    try {
+                        return ((string)(this[this.tableApprover.Signature2Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Signature2\' in table \'Approver\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableApprover.Signature2Column] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsJob_CheckerNull() {
-                return this.IsNull(this.tableApprover.Job_CheckerColumn);
+            public bool IsApprover1Null() {
+                return this.IsNull(this.tableApprover.Approver1Column);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetJob_CheckerNull() {
-                this[this.tableApprover.Job_CheckerColumn] = global::System.Convert.DBNull;
+            public void SetApprover1Null() {
+                this[this.tableApprover.Approver1Column] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsNama_ApproverNull() {
-                return this.IsNull(this.tableApprover.Nama_ApproverColumn);
+            public bool IsJabatan1Null() {
+                return this.IsNull(this.tableApprover.Jabatan1Column);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetNama_ApproverNull() {
-                this[this.tableApprover.Nama_ApproverColumn] = global::System.Convert.DBNull;
+            public void SetJabatan1Null() {
+                this[this.tableApprover.Jabatan1Column] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsJob_ApproverNull() {
-                return this.IsNull(this.tableApprover.Job_ApproverColumn);
+            public bool IsApprover2Null() {
+                return this.IsNull(this.tableApprover.Approver2Column);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetJob_ApproverNull() {
-                this[this.tableApprover.Job_ApproverColumn] = global::System.Convert.DBNull;
+            public void SetApprover2Null() {
+                this[this.tableApprover.Approver2Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsJabatan2Null() {
+                return this.IsNull(this.tableApprover.Jabatan2Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetJabatan2Null() {
+                this[this.tableApprover.Jabatan2Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsSignature1Null() {
+                return this.IsNull(this.tableApprover.Signature1Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetSignature1Null() {
+                this[this.tableApprover.Signature1Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsSignature2Null() {
+                return this.IsNull(this.tableApprover.Signature2Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetSignature2Null() {
+                this[this.tableApprover.Signature2Column] = global::System.Convert.DBNull;
             }
         }
         

@@ -47,6 +47,8 @@
                        
                         <div class="col-md-12">
                             <h2>SPB List</h2>
+                            <hr class="solid">
+                      
                             <div id="form_tableSPB" class="form-group row">
                                 <table id="tbl_SPB" class="table table-striped table-bordered" style="width: 100%;">
                                     <thead style="text-align: center; ">
@@ -82,13 +84,30 @@
                 var status = data['Status'];
                 window.open('../Report_SPB_View/Report_SPB_Preview?No_Surat=' + noSurat + '&Status=' + status);
         });
+
         $('#tbl_SPB').on('click',
             'tbody tr .view', function () {
                 var row = $(this).closest("TR");
                 var data = $('#tbl_SPB').DataTable().row(row).data();
                 var noSurat = data['NoSurat'];
+                var noSuratPath = noSurat.replace(/\//g, '-');
+                var QRCodeText = '../Report_SPB/Rpt_SPB_Memo.aspx?No_Surat=' + noSurat;
 
-                window.open('../Report_SPB/Rpt_SPB_Memo.aspx?No_Surat=' + noSurat);
+               
+                var dto = {
+                    QRCodeText: QRCodeText,
+                    NoSurat: noSuratPath,
+                    Flag: "SPB"
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "Generate",
+                    dataType: "json",
+                    data: JSON.stringify(dto),
+                    contentType: "application/json;charset=utf-8",
+                    success: function () {
+                        window.open('../Report_SPB/Rpt_SPB_Memo.aspx?No_Surat=' + noSurat);                    }
+                });
             });
     });
 
@@ -127,13 +146,14 @@
                         { "data": "NoSurat" },
                         {
                             "data": "Status",
-                            "render": function (data, meta) {
+                            "render": function (data, meta, row) {
                                 if (data === "REJECTED") {
-                                    return '<label style="text-align: center; font-weight:bold; color: red"> REJECTED </label>';
+                                    return '<label style="font-weight:bold; color:black"> REJECTED </label> <label style=" color: red">  <i class="fa-solid fa-square-xmark"></i></label>';
                                 } else if (data === "APPROVED") {
-                                    return '<label style="text-align: center; font-weight:bold; color:#1cd932"> APPROVED </label>';
+                                    return '<label style="font-weight:bold; color:black"> APPROVED </label> <label style="color:#1cd932"> <i class="fa-solid fa-square-check"></i></label>';
                                 } else {
-                                    return '<label style="text-align: center; font-weight:bold;"> PENDING </label>';
+                                    return '<label style="text-align: center; font-weight:bold; color:#f5a742"> PENDING <i class="fa-solid fa-clock"></i></label> <label style="font-weight:bold; color:black"> (' + row["NextApprover"] + ') </label>';
+                                    //return '<label style="font-weight:bold; color:black"> PENDING </label> <label style=" color:#f5a742"><i class="fa-solid fa-clock"></i></label> <label style="font-weight:bold; color:black"> (' + row["NextApprover"] + ') </label>';
                                 }
                             }
 
@@ -168,7 +188,6 @@
             }
         });
     }
-
 
 </script>
 

@@ -132,6 +132,9 @@
       <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="RestSharp, Version=104.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.104.0\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -197,6 +200,12 @@
     <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
+    <Reference Include="zxing, Version=0.16.8.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.8\lib\net45\zxing.dll</HintPath>
+    </Reference>
+    <Reference Include="zxing.presentation, Version=0.16.8.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZXing.Net.0.16.8\lib\net45\zxing.presentation.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
@@ -251,7 +260,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EJOLPendaftaranList.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\LibraryModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\MailModel.cs" />
     <Compile Include="Models\MonitoringModel.cs" />
     <Compile Include="Models\MonitoringPanenModel.cs" />
     <Compile Include="Models\MoUModel.cs" />
@@ -261,6 +272,7 @@
     <Compile Include="Models\RegistrationModel.cs" />
     <Compile Include="Models\SignatureModel.cs" />
     <Compile Include="Models\SosialisasiModel.cs" />
+    <Compile Include="Models\SPBTOModel.cs" />
     <Compile Include="Models\vw_EJOLSchedule.cs">
       <DependentUpon>EJOLPendaftaranList.tt</DependentUpon>
     </Compile>
@@ -295,10 +307,10 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Report_SPB\Report_SPB_Memo.cs">
-      <DependentUpon>Report_SPB_Memo.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
-      <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
+      <DependentUpon>Report_SPB_Memo.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Report_SPB\Rpt_SPB_Memo.aspx.cs">
       <DependentUpon>Rpt_SPB_Memo.aspx</DependentUpon>
@@ -306,6 +318,19 @@
     </Compile>
     <Compile Include="Report_SPB\Rpt_SPB_Memo.aspx.designer.cs">
       <DependentUpon>Rpt_SPB_Memo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report_SPB\SPB_Report_DETAIL.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SPB_Report_DETAIL.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report_SPB\SPB_Report_DETAIL.aspx.cs">
+      <DependentUpon>SPB_Report_DETAIL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report_SPB\SPB_Report_DETAIL.aspx.designer.cs">
+      <DependentUpon>SPB_Report_DETAIL.aspx</DependentUpon>
     </Compile>
     <Compile Include="Report_TO\Report_TO.aspx.cs">
       <DependentUpon>Report_TO.aspx</DependentUpon>
@@ -323,6 +348,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Report_TO_CR.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Report_TO\TO_DetailPage.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TO_DetailPage.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Scripts\CheckSession\SessionValidation.cs" />
@@ -1821,6 +1852,7 @@
     <Content Include="Content\images\custom-select.png" />
     <Content Include="Content\images\favicon.png" />
     <Content Include="Content\images\hand.jpg" />
+    <Content Include="Content\images\IconB7.png" />
     <Content Include="Content\images\imgs\1.jpg" />
     <Content Include="Content\images\imgs\1.png" />
     <Content Include="Content\images\imgs\10.png" />
@@ -1837,6 +1869,7 @@
     <Content Include="Content\images\l-white.png" />
     <Content Include="Content\images\loader.gif" />
     <Content Include="Content\images\Loading.gif" />
+    <Content Include="Content\images\loading2.gif" />
     <Content Include="Content\images\logo-compact.png" />
     <Content Include="Content\images\logo-text.png" />
     <Content Include="Content\images\logo-white.png" />
@@ -6442,6 +6475,7 @@
     </Content>
     <Content Include="Report_SPB\Report_Lampiran.aspx" />
     <Content Include="Report_SPB\Rpt_SPB_Memo.aspx" />
+    <Content Include="Report_SPB\SPB_Report_DETAIL.aspx" />
     <Content Include="Report_TO\Report_TO.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -6811,6 +6845,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\plugins\jqvmap\js\maps\" />
     <Folder Include="Content\plugins\summernote\css\" />
+    <Folder Include="Views\LibraryModel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -6836,11 +6871,19 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Report_SPB\Report_SPB_Memo.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>Report_SPB_Memo.cs</LastGenOutput>
+      <LastGenOutput>Report_SPB_Memo1.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report_SPB\SPB_Report_DETAIL.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>SPB_Report_DETAIL.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Report_TO\Report_TO_CR.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Report_TO_CR.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report_TO\TO_DetailPage.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>TO_DetailPage.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
