@@ -3,3 +3,7 @@
 ################################################################################
 
 /packages/log4net.2.0.12
+/WebApplication1/bin/Report_SPB
+/WebApplication1/bin/Report_TO
+/WebApplication1/obj/Release/Package/PackageTmp/bin/Report_SPB
+/WebApplication1/obj/Release/Package/PackageTmp/bin/Report_TO
