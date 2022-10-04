@@ -229,30 +229,43 @@ namespace WebApplication1.Controllers
                     {
                         command.CommandType = CommandType.StoredProcedure;
 
-                        command.Parameters.Add("@Option", SqlDbType.VarChar);
+                        command.Parameters.Add("@Option", SqlDbType.NVarChar);
                         command.Parameters["@Option"].Value = Model.Option;
 
-                        command.Parameters.Add("@NoSPB", SqlDbType.VarChar);
+                        command.Parameters.Add("@NoSPB", SqlDbType.NVarChar);
                         command.Parameters["@NoSPB"].Value = Model.NoSPB;
 
-                        command.Parameters.Add("@Approver1", SqlDbType.VarChar);
+                        command.Parameters.Add("@Approver1", SqlDbType.NVarChar);
                         command.Parameters["@Approver1"].Value = Model.Approver1;
 
-                        command.Parameters.Add("@Approver2", SqlDbType.VarChar);
+                        command.Parameters.Add("@Approver2", SqlDbType.NVarChar);
                         command.Parameters["@Approver2"].Value = Model.Approver2;
 
-                        command.Parameters.Add("@Approver3", SqlDbType.VarChar);
+                        command.Parameters.Add("@Approver3", SqlDbType.NVarChar);
                         command.Parameters["@Approver3"].Value = Model.Approver3;
 
-                        command.Parameters.Add("@ApproverDetail", SqlDbType.VarChar);
-                        command.Parameters["@ApproverDetail"].Value = Model.ApproverDetail;
+                        command.Parameters.Add("@Approver4", SqlDbType.NVarChar);
+                        command.Parameters["@Approver4"].Value = Model.Approver4;
 
-                        command.Parameters.Add("@Uploader", SqlDbType.VarChar);
+                        command.Parameters.Add("@ApproverDetail1", SqlDbType.NVarChar);
+                        command.Parameters["@ApproverDetail1"].Value = Model.ApproverDetail1;
+
+                        command.Parameters.Add("@ApproverDetail2", SqlDbType.NVarChar);
+                        command.Parameters["@ApproverDetail2"].Value = Model.ApproverDetail2;
+
+                        command.Parameters.Add("@ApproverDetail3", SqlDbType.NVarChar);
+                        command.Parameters["@ApproverDetail3"].Value = Model.ApproverDetail3;
+
+                        command.Parameters.Add("@ApproverDetail4", SqlDbType.NVarChar);
+                        command.Parameters["@ApproverDetail4"].Value = Model.ApproverDetail4;
+
+                        command.Parameters.Add("@Uploader", SqlDbType.NVarChar);
                         command.Parameters["@Uploader"].Value = Model.Uploader;
 
+
                         command.CommandType = CommandType.StoredProcedure;
-                        result = (string)command.ExecuteScalar();
-                }
+                            result = (string)command.ExecuteScalar();
+                    }
                     Conn.Close();
 
 
@@ -273,8 +286,8 @@ namespace WebApplication1.Controllers
                                        "</table>" +
                                        "</body>" +
                                        "</html>";
-                    objsend.mailTo = Model.Email1;
-                    //objsend.mailTo = "michaelken117@gmail.com";
+                    //objsend.mailTo = Model.Email1;
+                    objsend.mailTo = "michaelken117@gmail.com";
                     objsend.mailCC = null;
                     objsend.mailBCC = null;
 
@@ -320,6 +333,21 @@ namespace WebApplication1.Controllers
                     command.Parameters.Add("@Approver3", SqlDbType.NVarChar);
                     command.Parameters["@Approver3"].Value = Model.Approver3;
 
+                    command.Parameters.Add("@Approver4", SqlDbType.NVarChar);
+                    command.Parameters["@Approver4"].Value = Model.Approver4;
+
+                    command.Parameters.Add("@ApproverDetail1", SqlDbType.NVarChar);
+                    command.Parameters["@ApproverDetail1"].Value = Model.ApproverDetail1;
+
+                    command.Parameters.Add("@ApproverDetail2", SqlDbType.NVarChar);
+                    command.Parameters["@ApproverDetail2"].Value = Model.ApproverDetail2;
+
+                    command.Parameters.Add("@ApproverDetail3", SqlDbType.NVarChar);
+                    command.Parameters["@ApproverDetail3"].Value = Model.ApproverDetail3;
+
+                    command.Parameters.Add("@ApproverDetail4", SqlDbType.NVarChar);
+                    command.Parameters["@ApproverDetail4"].Value = Model.ApproverDetail4;
+
                     command.Parameters.Add("@Uploader", SqlDbType.NVarChar);
                     command.Parameters["@Uploader"].Value = Model.Uploader;
 
@@ -353,8 +381,8 @@ namespace WebApplication1.Controllers
                                    "</table>" +
                                    "</body>" +
                                    "</html>";
-                objsend.mailTo = Model.Email1;
-                //objsend.mailTo = "michaelken117@gmail.com";
+                var email = Model.Email1;
+                objsend.mailTo = "michaelken117@gmail.com";
                 objsend.mailCC = null;
                 objsend.mailBCC = null;
 
@@ -436,9 +464,9 @@ namespace WebApplication1.Controllers
                                        "</table>" +
                                        "</body>" +
                                        "</html>";
-                    objsend.mailTo = (string)rows[0]["EmailNext"];
+                    //objsend.mailTo = (string)rows[0]["EmailNext"];
                     //var emailnext = (string)rows[0]["EmailNext"];
-                    //objsend.mailTo = "michaelken117@gmail.com";
+                    objsend.mailTo = "michaelken117@gmail.com";
                     objsend.mailCC = null;
                     objsend.mailBCC = null;
 
@@ -515,8 +543,8 @@ namespace WebApplication1.Controllers
                                            "</table>" +
                                            "</body>" +
                                            "</html>";
-                        //objsend.mailTo = "michaelken117@gmail.com";
-                        objsend.mailTo = (string)rows[i]["Email"];
+                        objsend.mailTo = "michaelken117@gmail.com";
+                        //objsend.mailTo = (string)rows[i]["Email"];
                         objsend.mailCC = null;
                         objsend.mailBCC = null;
 
@@ -600,9 +628,9 @@ namespace WebApplication1.Controllers
                                        "</table>" +
                                        "</body>" +
                                        "</html>";
-                    objsend.mailTo = (string)rows[0]["EmailNext"];
+                    //objsend.mailTo = (string)rows[0]["EmailNext"];
                     var emailnext = (string)rows[0]["EmailNext"];
-                    //objsend.mailTo = "michaelken117@gmail.com";
+                    objsend.mailTo = "michaelken117@gmail.com";
                     objsend.mailCC = null;
                     objsend.mailBCC = null;
 
@@ -679,8 +707,8 @@ namespace WebApplication1.Controllers
                                            "</table>" +
                                            "</body>" +
                                            "</html>";
-                        //objsend.mailTo = "michaelken117@gmail.com";
-                        objsend.mailTo = (string)rows[i]["Email"];
+                        objsend.mailTo = "michaelken117@gmail.com";
+                        //objsend.mailTo = (string)rows[i]["Email"];
                         objsend.mailCC = null;
                         objsend.mailBCC = null;
 

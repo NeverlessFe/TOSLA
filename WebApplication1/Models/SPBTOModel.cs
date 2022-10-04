@@ -13,7 +13,11 @@ namespace WebApplication1.Models
         public string Approver1 { get; set; }
         public string Approver2 { get; set; }
         public string Approver3 { get; set; }
-        public string ApproverDetail { get; set; }
+        public string Approver4 { get; set; }
+        public string ApproverDetail1 { get; set; }
+        public string ApproverDetail2 { get; set; }
+        public string ApproverDetail3 { get; set; }
+        public string ApproverDetail4 { get; set; }
         public string Uploader { get; set; }
         public string SubmitDate { get; set; }
         public string Email1 { get; set; }

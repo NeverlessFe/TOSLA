@@ -137,6 +137,12 @@
 
         });
 
+        $(document).on('keypress',function(e) {
+            if(e.which == 13) {
+                $("#btnLogin").click();
+            }
+        });
+
         $('#ddlAD').change(function () {
             if ($('#ddlAD').val() == '' || $('#ddlAD').val() == null) {
                 $('#divInput').attr('hidden', true);
@@ -154,7 +160,7 @@
             contentType: "application/json;charset=utf-8",
             success: function (data) {
                 @* alert(data);*@
-                            if (data == "true") {
+                if (data == "true") {
                     Swal.fire({
                         title: "Warning!",
                         text: "Please Change Your Password!",

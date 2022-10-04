@@ -3339,6 +3339,18 @@ namespace WebApplication1.Report_SPB {
             
             private global::System.Data.DataColumn columnSignature2;
             
+            private global::System.Data.DataColumn columnApprover3;
+            
+            private global::System.Data.DataColumn columnJabatan3;
+            
+            private global::System.Data.DataColumn columnSignature3;
+            
+            private global::System.Data.DataColumn columnApprover4;
+            
+            private global::System.Data.DataColumn columnJabatan4;
+            
+            private global::System.Data.DataColumn columnSignature4;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public ApproverDataTable() {
@@ -3422,6 +3434,54 @@ namespace WebApplication1.Report_SPB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn Approver3Column {
+                get {
+                    return this.columnApprover3;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn Jabatan3Column {
+                get {
+                    return this.columnJabatan3;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn Signature3Column {
+                get {
+                    return this.columnSignature3;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn Approver4Column {
+                get {
+                    return this.columnApprover4;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn Jabatan4Column {
+                get {
+                    return this.columnJabatan4;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn Signature4Column {
+                get {
+                    return this.columnSignature4;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -3457,7 +3517,7 @@ namespace WebApplication1.Report_SPB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public ApproverRow AddApproverRow(string Approver1, string Jabatan1, string Approver2, string Jabatan2, string Signature1, string Signature2) {
+            public ApproverRow AddApproverRow(string Approver1, string Jabatan1, string Approver2, string Jabatan2, string Signature1, string Signature2, string Approver3, string Jabatan3, string Signature3, string Approver4, string Jabatan4, string Signature4) {
                 ApproverRow rowApproverRow = ((ApproverRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Approver1,
@@ -3465,7 +3525,13 @@ namespace WebApplication1.Report_SPB {
                         Approver2,
                         Jabatan2,
                         Signature1,
-                        Signature2};
+                        Signature2,
+                        Approver3,
+                        Jabatan3,
+                        Signature3,
+                        Approver4,
+                        Jabatan4,
+                        Signature4};
                 rowApproverRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowApproverRow);
                 return rowApproverRow;
@@ -3494,6 +3560,12 @@ namespace WebApplication1.Report_SPB {
                 this.columnJabatan2 = base.Columns["Jabatan2"];
                 this.columnSignature1 = base.Columns["Signature1"];
                 this.columnSignature2 = base.Columns["Signature2"];
+                this.columnApprover3 = base.Columns["Approver3"];
+                this.columnJabatan3 = base.Columns["Jabatan3"];
+                this.columnSignature3 = base.Columns["Signature3"];
+                this.columnApprover4 = base.Columns["Approver4"];
+                this.columnJabatan4 = base.Columns["Jabatan4"];
+                this.columnSignature4 = base.Columns["Signature4"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3511,6 +3583,18 @@ namespace WebApplication1.Report_SPB {
                 base.Columns.Add(this.columnSignature1);
                 this.columnSignature2 = new global::System.Data.DataColumn("Signature2", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnSignature2);
+                this.columnApprover3 = new global::System.Data.DataColumn("Approver3", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnApprover3);
+                this.columnJabatan3 = new global::System.Data.DataColumn("Jabatan3", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnJabatan3);
+                this.columnSignature3 = new global::System.Data.DataColumn("Signature3", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSignature3);
+                this.columnApprover4 = new global::System.Data.DataColumn("Approver4", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnApprover4);
+                this.columnJabatan4 = new global::System.Data.DataColumn("Jabatan4", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnJabatan4);
+                this.columnSignature4 = new global::System.Data.DataColumn("Signature4", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSignature4);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5160,6 +5244,102 @@ namespace WebApplication1.Report_SPB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Approver3 {
+                get {
+                    try {
+                        return ((string)(this[this.tableApprover.Approver3Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Approver3\' in table \'Approver\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableApprover.Approver3Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Jabatan3 {
+                get {
+                    try {
+                        return ((string)(this[this.tableApprover.Jabatan3Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Jabatan3\' in table \'Approver\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableApprover.Jabatan3Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Signature3 {
+                get {
+                    try {
+                        return ((string)(this[this.tableApprover.Signature3Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Signature3\' in table \'Approver\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableApprover.Signature3Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Approver4 {
+                get {
+                    try {
+                        return ((string)(this[this.tableApprover.Approver4Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Approver4\' in table \'Approver\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableApprover.Approver4Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Jabatan4 {
+                get {
+                    try {
+                        return ((string)(this[this.tableApprover.Jabatan4Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Jabatan4\' in table \'Approver\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableApprover.Jabatan4Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Signature4 {
+                get {
+                    try {
+                        return ((string)(this[this.tableApprover.Signature4Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Signature4\' in table \'Approver\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableApprover.Signature4Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsApprover1Null() {
                 return this.IsNull(this.tableApprover.Approver1Column);
             }
@@ -5228,6 +5408,78 @@ namespace WebApplication1.Report_SPB {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetSignature2Null() {
                 this[this.tableApprover.Signature2Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsApprover3Null() {
+                return this.IsNull(this.tableApprover.Approver3Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetApprover3Null() {
+                this[this.tableApprover.Approver3Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsJabatan3Null() {
+                return this.IsNull(this.tableApprover.Jabatan3Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetJabatan3Null() {
+                this[this.tableApprover.Jabatan3Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsSignature3Null() {
+                return this.IsNull(this.tableApprover.Signature3Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetSignature3Null() {
+                this[this.tableApprover.Signature3Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsApprover4Null() {
+                return this.IsNull(this.tableApprover.Approver4Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetApprover4Null() {
+                this[this.tableApprover.Approver4Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsJabatan4Null() {
+                return this.IsNull(this.tableApprover.Jabatan4Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetJabatan4Null() {
+                this[this.tableApprover.Jabatan4Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsSignature4Null() {
+                return this.IsNull(this.tableApprover.Signature4Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetSignature4Null() {
+                this[this.tableApprover.Signature4Column] = global::System.Convert.DBNull;
             }
         }
         

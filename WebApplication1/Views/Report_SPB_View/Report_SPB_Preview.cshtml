@@ -168,24 +168,31 @@
                             <div class="col-md-12">
                                 <br />
                                 <br />
-                                <div style="">
-                                    <div id="left" style="float: left; margin-right: -50px; text-align: center">
+                                <div style="text-align: center; display: flex;justify-content: center;">
+                                    <div  style="margin-left: 10px; margin-right: 10px ">
                                         <b>
                                             <p><u id="txtApprover1">This text will be underlined.</u></p>
                                         </b>
-                                        <b id="txtJabatan1">Jabatan</b> <br />
+                                        <b id="txtJabatan1">Jabatan</b> 
                                     </div>
-                                    <div id="right" style="float: right; margin-left: 50px; text-align: center">
-                                        <b>
-                                            <p><u id="txtApprover3">This text will be underlined.</u></p>
-                                        </b>
-                                        <b id="txtJabatan3">Jabatan</b> <br />
-                                    </div>
-                                    <div id="center" style="margin: 0 auto; width: 300px; text-align: left; text-align: center">
+                                    <div style="margin-left: 10px; margin-right: 10px ">
                                         <b>
                                             <p><u id="txtApprover2">This text will be underlined.</u></p>
                                         </b>
-                                        <b id="txtJabatan2">Jabatan</b> <br />
+                                        <b id="txtJabatan2">Jabatan</b>
+                                    </div>
+                                    <div  style="margin-left: 10px; margin-right: 10px ">
+                                        <b>
+                                            <p><u id="txtApprover3">This text will be underlined.</u></p>
+                                        </b>
+                                        <b id="txtJabatan3">Jabatan</b> 
+                                    </div>
+                                   
+                                    <div style="margin-left: 10px; margin-right: 10px ">
+                                        <b>
+                                            <p><u id="txtApprover4">This text will be underlined.</u></p>
+                                        </b>
+                                        <b id="txtJabatan4">Jabatan</b> 
                                     </div>
                                 </div>
 
@@ -273,26 +280,35 @@
                                 </tfoot>
                             </table>
                         </div>
-                        <div id="wrap">
-                            <div id="leftDetail">
-                                <label>Diperiksa Oleh, </label>
-                                <br />
-                                <br /><br /><br />
+                        <div id="wrap" style="text-align: center; display: flex; justify-content: center;">
+                            <div  style="margin-top: 60px; margin-left: 10px; margin-right: 10px">
                                 <b>
                                     <p><u id="txtApprover1Detail">This text will be underlined.</u></p>
                                 </b>
-                                <b id="txtJabatan1Detail">Jabatan</b> <br />
+                                <text id="txtJabatan1Detail" style="font-style: italic">Jabatan</text> <br />
                             </div>
 
-                            <div id="rightDetail">
-                                <label>Disetujui, </label>
-                                <br /><br /><br /><br />
-                                
+                            <div  style="margin-top: 60px; margin-left: 10px; margin-right: 10px">
                                 <b>
                                     <p><u id="txtApprover2Detail">This text will be underlined.</u></p>
                                 </b>
-                                <b id="txtJabatan2Detail">Jabatan</b> <br />
+                                <text id="txtJabatan2Detail" style="font-style: italic">Jabatan</text> <br />
                             </div>
+
+                            <div style="margin-top: 60px; margin-left: 10px; margin-right: 10px">
+                                <b>
+                                    <p><u id="txtApprover3Detail">This text will be underlined.</u></p>
+                                </b>
+                                <text id="txtJabatan3Detail" style="font-style: italic">Jabatan</text> <br />
+                            </div>
+                        
+                            <div style="margin-top: 60px; margin-left: 10px; margin-right: 10px">
+                                <b>
+                                    <p><u id="txtApprover4Detail">This text will be underlined.</u></p>
+                                </b>
+                                <text id="txtJabatan4Detail" style="font-style: italic">Jabatan</text> <br />
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -536,13 +552,19 @@
                 $('#txtApprover1').text(result[0].Approver1);
                 $('#txtApprover2').text(result[0].Approver2);
                 $('#txtApprover3').text(result[0].Approver3);
+                $('#txtApprover4').text(result[0].Approver4);
                 $('#txtJabatan1').text(result[0].Jabatan1);
                 $('#txtJabatan2').text(result[0].Jabatan2);
                 $('#txtJabatan3').text(result[0].Jabatan3);
-                $('#txtApprover1Detail').text(result[0].ApproverDetail);
-                $('#txtJabatan1Detail').text(result[0].JabatanDetail);
-                $('#txtApprover2Detail').text(result[0].Approver1);
-                $('#txtJabatan2Detail').text(result[0].Jabatan1);
+                $('#txtJabatan4').text(result[0].Jabatan4);
+                $('#txtApprover1Detail').text(result[0].Approver1Detail);
+                $('#txtJabatan1Detail').text(result[0].Jabatan1Detail);
+                $('#txtApprover2Detail').text(result[0].Approver2Detail);
+                $('#txtJabatan2Detail').text(result[0].Jabatan2Detail);
+                $('#txtApprover3Detail').text(result[0].Approver3Detail);
+                $('#txtJabatan3Detail').text(result[0].Jabatan3Detail);
+                $('#txtApprover4Detail').text(result[0].Approver4Detail);
+                $('#txtJabatan4Detail').text(result[0].Jabatan4Detail);
             },
             error: function(ex) {
                 console.log(JSON.stringify(ex));
