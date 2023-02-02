@@ -195,8 +195,12 @@
                         },
                         {
                             "data": null,
-                            "defaultContent": '<input type="button" class="btn btn-primary approve" style="background-color: #28de7a; border-color: #28de7a; margin-left: 10px" id="btn_Approve" value="Approve" />' +
-                                '<input type="button" class="btn btn-primary reject" style="background-color: red; border-color: red; margin-left: 10px" id="btn_Reject" value="Reject" />'
+                            "defaultContent":
+                                '<div style="margin-left:auto; margin-right:auto; display:block;text-align:center;position:relative;">' +
+                                    '<input type="button" class="btn btn-primary approve" style="background-color: #28de7a; border-color: #28de7a;  text-align:center; " id="btn_Approve" value="Approve" />' +
+                                '<input type="button" class="btn btn-primary reject" style="background-color: red; border-color: red; margin-left: 10px;margin-right: 10px; text-align:center" id="btn_Reject" value="Reject" />' +
+                            '</div>'
+                               
                         }
                     ],
 
@@ -206,7 +210,7 @@
                         { "className": "text-center", "targets": 0 },
                         { "width": "40%", "targets": 1 },
                         { "width": "5%", "targets": 4 },
-                        { "width": "7%", "targets": 5 }
+                        { "width": "10%", "targets": 5 }
                     ]
                 });
 
