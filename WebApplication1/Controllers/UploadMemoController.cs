@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using WebApplication1.DAL;
 using WebApplication1.Models;
 using static WebApplication1.Models.DapperModel;
@@ -36,18 +37,18 @@ namespace WebApplication1.Controllers
         }
         public ActionResult UploadAttachment(string Periode,string TypePembayaran)
         {
-            List<string> ModelData = new List<string>();
-            List<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
-            string Result;
-            var path = "";
-            string FileNameForDB;
-            string URLAttachment;
-            DataTable dt = new DataTable();
-            string conString = ConfigurationManager.ConnectionStrings["dbReserveDiscount"].ConnectionString;
-            SqlConnection conn = new SqlConnection(conString);
-
             try
             {
+                List<string> ModelData = new List<string>();
+                List<Dictionary<string, object>> rows = new List<Dictionary<string, object>>();
+                string Result;
+                var path = "";
+                string FileNameForDB;
+                string URLAttachment;
+                DataTable dt = new DataTable();
+                string conString = ConfigurationManager.ConnectionStrings["dbReserveDiscount"].ConnectionString;
+                SqlConnection conn = new SqlConnection(conString);
+
                 for (int i = 0; i < Request.Files.Count; i++)
                 {
                     var file = Request.Files[i];
@@ -55,17 +56,34 @@ namespace WebApplication1.Controllers
                     var fileName = Path.GetFileName(TypePembayaran + "_" + Periode + "_" + file.FileName);
                     if(TypePembayaran == "TO")
                     {
-                        path = Path.Combine(@"\\kalbox-b7.bintang7.com\Intranetportal\Intranet Attachment\TO\", fileName);
+                        //path = Path.Combine(@"\\kalbox-b7.bintang7.com\Intranetportal\Intranet Attachment\TO\", fileName);
+                        //path = Path.Combine(@"C:\FileUpload\Intranetportal\Intranet Attachment\TO\", fileName);
+
+                        string folderPath = @"C:\FileUpload\Intranetportal\Intranet Attachment\TO\";
+                        path = folderPath + fileName;
+
+                        // If the directory doesn't exist then create it.
+                        if (!Directory.Exists(folderPath))
+                        {
+                            Directory.CreateDirectory(folderPath);
+                        }
                     }
 
 
                     if (TypePembayaran == "SPB")
                     {
-                        path = Path.Combine(@"\\kalbox-b7.bintang7.com\Intranetportal\Intranet Attachment\SPB\", fileName);
-                    }
-                    //var path = Path.Combine("//10.167.1.78/File Sharing B7/Intranetportal/Intranet Attachment/CCC/AttachmentCC/CAPA/", fileName);
+                        //    path = Path.Combine(@"C:\FileUpload\Intranetportal\Intranet Attachment\SPB\", fileName);
+                        string folderPath = @"C:\FileUpload\Intranetportal\Intranet Attachment\SPB\";
+                        path = folderPath + fileName;
 
-                    file.SaveAs(path);
+                        if (!Directory.Exists(folderPath))
+                        {
+                            Directory.CreateDirectory(folderPath);
+                        }
+                    }
+                        //var path = Path.Combine("//10.167.1.78/File Sharing B7/Intranetportal/Intranet Attachment/CCC/AttachmentCC/CAPA/", fileName);
+
+                        file.SaveAs(path);
 
                     FileNameForDB = fileName;
                 }
@@ -182,14 +200,38 @@ namespace WebApplication1.Controllers
                     DynamicParameters parameters = new DynamicParameters(dictionary);
                     return Json(DAL.StoredProcedure(parameters, "SP_SPB"));
                 }
-                
+
+                return Json(rows);
+
             }
             catch(Exception ex)
             {
+                ConnectionStringSettings mySetting = ConfigurationManager.ConnectionStrings["dbITSupport"];
+                string conString = mySetting.ConnectionString;
 
+                DataTable dt = new DataTable();
+                SqlConnection conn = new SqlConnection(conString);
+                string error = ex.Message;
+
+                string log = error.Replace("'", "");
+
+                string query = @"INSERT INTO T_ErrorLog VALUES ('" + log + "', '" + DateTime.Now + "')";
+
+                using (SqlCommand command = new SqlCommand(query, conn))
+                {
+                    command.CommandType = CommandType.Text;
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter();
+                    dataAdapter.SelectCommand = command;
+                    dataAdapter.Fill(dt);
+                }
+
+                conn.Close();
+                //result = ex.ToString();
+                throw ex;
             }
-            return Json(rows);
+
         }
+
         public ActionResult KonfirmasiUpload(string NoMemo)
         {
             List<string> ModelData = new List<string>();
@@ -222,6 +264,7 @@ namespace WebApplication1.Controllers
 
             return Json(ModelData);
         }
+
         public ActionResult GetPeriod()
         {
             List<string> ModelData = new List<string>();
@@ -267,6 +310,7 @@ namespace WebApplication1.Controllers
             return Json(DAL.StoredProcedure(parameters, spname), JsonRequestBehavior.AllowGet);
 
         }
+
         public ActionResult InsertPaymentDet(InsertPaymentDet paymentDet,DynamicModel Models)
         {
             var pjg = paymentDet.PaymentDetail.Count;

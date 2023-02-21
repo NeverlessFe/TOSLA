@@ -1,10 +1,16 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models;
@@ -41,70 +47,80 @@ namespace WebApplication1.Controllers
 
 
         [HttpPost]
-        public ActionResult LoginExec(string Username, string Password, string ADFlag)
+        public async Task<ActionResult> LoginExec(string Username, string Password, string ADFlag)
         {
             List<string> ModelData = new List<string>();
             IntPtr tokenHandle = new IntPtr(0);
             DataTable dt = new DataTable();
             string conString = ConfigurationManager.ConnectionStrings["dbReserveDiscount"].ConnectionString;
             SqlConnection conn = new SqlConnection(conString);
-
-            try
+            using (var client = new HttpClient())
             {
-                string UserName, MachineName, Pwd = null;
+                string LoginApiBasePath = ConfigurationManager.AppSettings["LoginApiBasePath"];
+                client.DefaultRequestHeaders.Clear();
 
-                //The MachineName property gets the name of your computer.                
-                UserName = Username;
-                Pwd = Password;
-                MachineName = "ONEKALBE";
-                const int LOGON32_PROVIDER_DEFAULT = 0;
-                const int LOGON32_LOGON_INTERACTIVE = 2;
-                tokenHandle = IntPtr.Zero;
-
-                //Call the LogonUser function to obtain a handle to an access token.
-               
-
-                Session["LoginSuccess"] = "True";
-                Session["UserName"] = Username;
-
-                if (ADFlag == "isAD")
-                {
-                    bool returnValue = LogonUser(UserName, MachineName, Pwd, LOGON32_LOGON_INTERACTIVE, LOGON32_PROVIDER_DEFAULT, ref tokenHandle);
-                   /*if (returnValue == false) //matiin dulu fungsi ini biar bisa login pake AD
+                List<string> List = new List<string>();
+                try
+                 {
+                    string UserName, MachineName, Pwd = null;
+                    var json = JsonConvert.SerializeObject(new
                     {
-                        ModelData.Add("Wrong Credentials");
-                    }
-                    else
-                    {*/
-                        conn.Open();
-                        using (SqlCommand command = new SqlCommand("[dbo].[SP_Signature]", conn))
+                        Username = Username,
+                        Password = Password.ToString(),
+                    });
+                    ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+                    HttpResponseMessage Res = await client.PostAsync(LoginApiBasePath + "/Login", new StringContent(json, UnicodeEncoding.UTF8, "application/json"));
+
+                    dynamic response = JObject.Parse(await Res.Content.ReadAsStringAsync());
+                    string responseMessage = response.message.ToString().ToLower();
+                    //Session["LoginSuccess"] = "True";
+                    //Session["UserName"] = Username;
+
+                    if (ADFlag == "isAD")
+                    {
+                        //bool returnValue = LogonUser(UserName, MachineName, Pwd, LOGON32_LOGON_INTERACTIVE, LOGON32_PROVIDER_DEFAULT, ref tokenHandle);
+                        /*if (returnValue == false) //matiin dulu fungsi ini biar bisa login pake AD
+                         {
+                             ModelData.Add("Wrong Credentials");
+                         }
+                         else
+                         {*/
+                        if (Res.IsSuccessStatusCode && responseMessage == "success")
                         {
-                            command.CommandType = CommandType.StoredProcedure;
+                            conn.Open();
+                            using (SqlCommand command = new SqlCommand("[dbo].[SP_Signature]", conn))
+                            {
+                                command.CommandType = CommandType.StoredProcedure;
 
-                            command.Parameters.Add("@Option", System.Data.SqlDbType.NVarChar);
-                            command.Parameters["@Option"].Value = "Get Existing Data AD";
+                                command.Parameters.Add("@Option", System.Data.SqlDbType.NVarChar);
+                                command.Parameters["@Option"].Value = "Get Existing Data AD";
 
-                            command.Parameters.Add("@Username", System.Data.SqlDbType.NVarChar);
-                            command.Parameters["@Username"].Value = Username;
+                                command.Parameters.Add("@Username", System.Data.SqlDbType.NVarChar);
+                                command.Parameters["@Username"].Value = Username;
 
-                            SqlDataAdapter dataAdapt = new SqlDataAdapter();
-                            dataAdapt.SelectCommand = command;
+                                SqlDataAdapter dataAdapt = new SqlDataAdapter();
+                                dataAdapt.SelectCommand = command;
 
-                            dataAdapt.Fill(dt);
+                                dataAdapt.Fill(dt);
+                            }
+                            conn.Close();
+                            //This function returns the error code that the last unmanaged function returned.
+
+                            Session["LoginSuccess"] = "True";
+                            Session["UserName"] = Username;
+                            Session["Role"] = dt.Rows[0]["Role"].ToString();
+                            Session["NamaEmployee"] = dt.Rows[0]["NamaEmployee"].ToString();
+                            ModelData.Add(dt.Rows[0][0].ToString());
                         }
-                        conn.Close();
-                        //This function returns the error code that the last unmanaged function returned.
-
-                        Session["LoginSuccess"] = "True";
-                        Session["UserName"] = Username;
-                        Session["Role"] = dt.Rows[0]["Role"].ToString();
-                        Session["NamaEmployee"] = dt.Rows[0]["NamaEmployee"].ToString();
-                        ModelData.Add(dt.Rows[0][0].ToString());
-                    /*}*/
-                }
-                else if(ADFlag == "isNotAD")
-                {
-                    conn.Open();
+                        else
+                        {
+                            Session["LoginSuccess"] = "False";
+                            ModelData.Add("Wrong Credentials");
+                        }
+                    }
+                    else if(ADFlag == "isNotAD")
+                    {
+                        conn.Open();
                         using (SqlCommand command = new SqlCommand("[dbo].[SP_Signature]", conn))
                         {
                             command.CommandType = CommandType.StoredProcedure;
@@ -137,7 +153,9 @@ namespace WebApplication1.Controllers
             {
                 Session["LoginSuccess"] = "False";
             }
-            return Json(ModelData);
+
+                return Json(ModelData);
+            }
         }
         
     }

@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography.Xml;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml.Linq;
 using CrystalDecisions.Shared;
 using PAOnline.Models;
 using RestSharp;
@@ -111,23 +114,57 @@ namespace WebApplication1.Controllers
             string FileNameForDB;
             List<string> List = new List<string>();
 
-            for (int i = 0; i < Request.Files.Count; i++)
+            try
             {
-                var file = Request.Files[i];
+                for (int i = 0; i < Request.Files.Count; i++)
+                {
+                    var file = Request.Files[i];
 
-                string UniqueID = Guid.NewGuid().ToString("N");
+                    string UniqueID = Guid.NewGuid().ToString("N");
 
-                var fileName = Path.GetFileName(UniqueID + "_" + file.FileName);
+                    var fileName = Path.GetFileName(UniqueID + "_" + file.FileName);
 
-                path = Path.Combine(@"\\b7-drive.bintang7.com\File Upload Intranet\SPB\", fileName);
+                    //path = Path.Combine(@"\\b7-drive.bintang7.com\File Upload Intranet\SPB\", fileName);
 
-                file.SaveAs(path);
-                List.Add(path);
+                    //path = Path.Combine(@"D:\Documents\Internship\B7\Signatures\", fileName);
+                    //string folderPath = Server.MapPath("../Signatures");
 
-                FileNameForDB = fileName;
+                    string folderPath = @"C:\FileUpload\Signatures\";
+                    path = folderPath + fileName;
+
+                    file.SaveAs(path);
+                    List.Add(path);
+
+                    FileNameForDB = fileName;
+                }
             }
 
-            
+            catch (Exception ex)
+            {
+                ConnectionStringSettings mySetting = ConfigurationManager.ConnectionStrings["dbITSupport"];
+                string conString = mySetting.ConnectionString;
+                string Result;
+
+                DataTable dt = new DataTable();
+                SqlConnection conn = new SqlConnection(conString);
+                conn.Open();
+
+                string query = "INSERT INTO T_ErrorLog VALUES (" + ex + ", "+ DateTime.Now + ")";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                conn.Open();
+
+                // create data adapter
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                // this will query your database and return the result to your datatable
+                da.Fill(dt);
+                conn.Close();
+                da.Dispose();
+                conn.Close();
+                //result = ex.ToString();
+                throw ex;
+            }
+           
             return Json(path);
         }
 
@@ -147,69 +184,170 @@ namespace WebApplication1.Controllers
             }
             catch (Exception ex)
             {
-                //catch exception if there is any
+                ConnectionStringSettings mySetting = ConfigurationManager.ConnectionStrings["dbITSupport"];
+                string conString = mySetting.ConnectionString;
+
+                DataTable dt = new DataTable();
+                SqlConnection conn = new SqlConnection(conString);
+                string error = ex.Message;
+
+                string log = error.Replace("'", "");
+
+                string query = @"INSERT INTO T_ErrorLog VALUES ('" + log + "', '" + DateTime.Now + "')";
+
+                using (SqlCommand command = new SqlCommand(query, conn))
+                {
+                    command.CommandType = CommandType.Text;
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter();
+                    dataAdapter.SelectCommand = command;
+                    dataAdapter.Fill(DT);
+                }
+
+                conn.Close();
+                //result = ex.ToString();
+                throw ex;
             }
             return Json(qrcode.QRCodeImagePath);
         }
 
         private string GenerateQRCodeSPB(string qrcodeText, string NoSurat)
         {
-            string folderPath = @"\\b7-drive.bintang7.com\File Upload Intranet\DFISQRCode\SPB";
-            string imagePath = @"\\b7-drive.bintang7.com\File Upload Intranet\DFISQRCode\SPB\" + NoSurat + ".png";
-            // If the directory doesn't exist then create it.
-            /*if (!Directory.Exists(Server.MapPath(folderPath)))
-            {
-                Directory.CreateDirectory(Server.MapPath(folderPath));
-            }*/
+            //string folderPath = @"\\b7-drive.bintang7.com\File Upload Intranet\DFISQRCode\SPB";
+            //var path = Server.MapPath("~/App_Data");
+            //var fullpath = Path.Combine(path, "myfile.txt");
+            //string folderPath = @"D:\Documents\Internship\B7\Signatures\SPB";
+            //string imagePath = @"\\b7-drive.bintang7.com\File Upload Intranet\DFISQRCode\SPB\" + NoSurat + ".png";
 
-            var barcodeWriter = new BarcodeWriter();
-            barcodeWriter.Format = BarcodeFormat.QR_CODE;
-            var result = barcodeWriter.Write(qrcodeText);
-
-            //string barcodePath = Server.MapPath(imagePath);
-            string barcodePath = imagePath;
-            var barcodeBitmap = new Bitmap(result);
-            using (MemoryStream memory = new MemoryStream())
+            //string imagePath = @"D:\Documents\Internship\B7\Signatures\SPB\" + NoSurat + ".png";
+            try 
             {
-                using (FileStream fs = new FileStream(barcodePath, FileMode.Create, FileAccess.ReadWrite))
+                //string folderPath = Server.MapPath("../Signatures/SPB");
+                //string imagePath = Path.Combine(folderPath, NoSurat + ".png");
+
+                string folderPath = @"C:\FileUpload\Signatures\DFISQRCode\SPB\";
+                string imagePath = folderPath + NoSurat + ".png";
+
+                // If the directory doesn't exist then create it.
+                //if (!Directory.Exists(folderPath))
+                //{
+                //    Directory.CreateDirectory(folderPath);
+                //}
+
+                var barcodeWriter = new BarcodeWriter();
+                barcodeWriter.Format = BarcodeFormat.QR_CODE;
+                var result = barcodeWriter.Write(qrcodeText);
+
+                //string barcodePath = Server.MapPath(imagePath);
+                string barcodePath = imagePath;
+                var barcodeBitmap = new Bitmap(result);
+                using (MemoryStream memory = new MemoryStream())
                 {
-                    barcodeBitmap.Save(memory, ImageFormat.Jpeg);
-                    byte[] bytes = memory.ToArray();
-                    fs.Write(bytes, 0, bytes.Length);
+                    using (FileStream fs = new FileStream(barcodePath, FileMode.Create, FileAccess.ReadWrite))
+                    {
+                        barcodeBitmap.Save(memory, ImageFormat.Jpeg);
+                        byte[] bytes = memory.ToArray();
+                        fs.Write(bytes, 0, bytes.Length);
+                    }
                 }
+
+                return imagePath;
+            }
+            catch (Exception ex)
+            {
+                ConnectionStringSettings mySetting = ConfigurationManager.ConnectionStrings["dbITSupport"];
+                string conString = mySetting.ConnectionString;
+
+                DataTable dt = new DataTable();
+                SqlConnection conn = new SqlConnection(conString);
+                string error = ex.Message;
+
+                string log = error.Replace("'", "");
+
+                string query = @"INSERT INTO T_ErrorLog VALUES ('" + log + "', '" + DateTime.Now + "')";
+
+                using (SqlCommand command = new SqlCommand(query, conn))
+                {
+                    command.CommandType = CommandType.Text;
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter();
+                    dataAdapter.SelectCommand = command;
+                    dataAdapter.Fill(DT);
+                }
+
+                conn.Close();
+                //result = ex.ToString();
+                throw ex;
             }
 
-            return imagePath;
         }
+
+                    
+
 
         private string GenerateQRCodeTO(string qrcodeText, string NoTO)
         {
-            string folderPath = @"\\b7-drive.bintang7.com\File Upload Intranet\DFISQRCode\TO";
-            string imagePath = @"\\b7-drive.bintang7.com\File Upload Intranet\DFISQRCode\TO\" + NoTO + ".png";
-            // If the directory doesn't exist then create it.
-            /*if (!Directory.Exists(Server.MapPath(folderPath)))
-            {
-                Directory.CreateDirectory(Server.MapPath(folderPath));
-            }*/
+            //string folderPath = @"\\b7-drive.bintang7.com\File Upload Intranet\DFISQRCode\TO";
+            //string imagePath = @"\\b7-drive.bintang7.com\File Upload Intranet\DFISQRCode\TO\" + NoTO + ".png";
 
-            var barcodeWriter = new BarcodeWriter();
-            barcodeWriter.Format = BarcodeFormat.QR_CODE;
-            var result = barcodeWriter.Write(qrcodeText);
-
-            //string barcodePath = Server.MapPath(imagePath);
-            string barcodePath = imagePath;
-            var barcodeBitmap = new Bitmap(result);
-            using (MemoryStream memory = new MemoryStream())
+            // string folderPath = @"D:\Documents\Internship\B7\Signatures\TO";
+            //string imagePath = @"D:\Documents\Internship\B7\Signatures\TO\" + NoTO + ".png";
+            try
             {
-                using (FileStream fs = new FileStream(barcodePath, FileMode.Create, FileAccess.ReadWrite))
+                //string folderPath = Server.MapPath("../Signatures/TO");
+                //string imagePath = Path.Combine(folderPath, NoTO + ".png");
+
+                string folderPath = @"C:\FileUpload\Signatures\DFISQRCode\TO\";
+                string imagePath = folderPath + NoTO + ".png";
+
+                // If the directory doesn't exist then create it.
+                //if (!Directory.Exists(folderPath))
+                //{
+                //    Directory.CreateDirectory(folderPath);
+                //}
+
+                var barcodeWriter = new BarcodeWriter();
+                barcodeWriter.Format = BarcodeFormat.QR_CODE;
+                var result = barcodeWriter.Write(qrcodeText);
+
+                //string barcodePath = Server.MapPath(imagePath);
+                string barcodePath = imagePath;
+                var barcodeBitmap = new Bitmap(result);
+                using (MemoryStream memory = new MemoryStream())
                 {
-                    barcodeBitmap.Save(memory, ImageFormat.Jpeg);
-                    byte[] bytes = memory.ToArray();
-                    fs.Write(bytes, 0, bytes.Length);
+                    using (FileStream fs = new FileStream(barcodePath, FileMode.Create, FileAccess.ReadWrite))
+                    {
+                        barcodeBitmap.Save(memory, ImageFormat.Jpeg);
+                        byte[] bytes = memory.ToArray();
+                        fs.Write(bytes, 0, bytes.Length);
+                    }
                 }
-            }
 
-            return imagePath;
+                return imagePath;
+            }
+            catch (Exception ex)
+            {
+                ConnectionStringSettings mySetting = ConfigurationManager.ConnectionStrings["dbITSupport"];
+                string conString = mySetting.ConnectionString;
+                string Result;
+
+                DataTable dt = new DataTable();
+                SqlConnection conn = new SqlConnection(conString);
+                conn.Open();
+
+                string query = "INSERT INTO T_ErrorLog VALUES (" + ex + ", " + DateTime.Now + ")";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                conn.Open();
+
+                // create data adapter
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                // this will query your database and return the result to your datatable
+                da.Fill(dt);
+                conn.Close();
+                da.Dispose();
+                conn.Close();
+                //result = ex.ToString();
+                throw ex;
+            }
         }
 
         //EMAIL CONTROLLERS
@@ -291,7 +429,7 @@ namespace WebApplication1.Controllers
                     objsend.mailCC = null;
                     objsend.mailBCC = null;
 
-                    SendMail(objsend);
+                    //SendMail(objsend);
 
                 }
                 catch (Exception ex)
@@ -386,7 +524,7 @@ namespace WebApplication1.Controllers
                 objsend.mailCC = null;
                 objsend.mailBCC = null;
 
-                SendMail(objsend);
+                //SendMail(objsend);
 
             }
             catch (Exception ex)
@@ -470,7 +608,7 @@ namespace WebApplication1.Controllers
                     objsend.mailCC = null;
                     objsend.mailBCC = null;
 
-                    SendMail(objsend);
+                    //SendMail(objsend);
 
                 }
                 catch (Exception ex)
@@ -548,7 +686,7 @@ namespace WebApplication1.Controllers
                         objsend.mailCC = null;
                         objsend.mailBCC = null;
 
-                        SendMail(objsend);
+                        //SendMail(objsend);
                     }
 
                 }
@@ -634,7 +772,7 @@ namespace WebApplication1.Controllers
                     objsend.mailCC = null;
                     objsend.mailBCC = null;
 
-                    SendMail(objsend);
+                    //SendMail(objsend);
 
                 }
                 catch (Exception ex)
@@ -712,7 +850,7 @@ namespace WebApplication1.Controllers
                         objsend.mailCC = null;
                         objsend.mailBCC = null;
 
-                        SendMail(objsend);
+                        //SendMail(objsend);
                     }
 
                 }
@@ -726,6 +864,7 @@ namespace WebApplication1.Controllers
             return Json(rows);
         }
 
+        //KOMEN DULU BIAR GA KE KIRIM EMAIL
         private string SendMail(MailModel value)
         {
             string result = "";

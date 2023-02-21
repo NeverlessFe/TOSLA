@@ -390,6 +390,7 @@
             }
             else {
                 CreateUser();
+                location.reload();
                 $('#btnCreateUser').attr('disabled', true);
             }
 
@@ -419,6 +420,7 @@
             else {
                 insertSignature();
                 $('#ddlNama').attr('disabled', true);
+                location.reload();
                 $('#btnReloadPage').attr('hidden', false);
             }
         });

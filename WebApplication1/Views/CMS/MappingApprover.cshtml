@@ -133,7 +133,7 @@
                             <div class="row form-group-sm">
                                 <div class="col-md-5" style="display: flex; vertical-align: middle;">
                                     <label for="txtApprover3" style="line-height: 40px;">Nama:</label>
-                                    <input class="form-control" type="text" id="txtApprover3" style="width: 60%; margin-left: auto; margin-right: 0;" disabled />
+                                    <input class="form-control" type="text" id="txtApprover3" placeholder="-"  style="width: 60%; margin-left: auto; margin-right: 0;" disabled />
                                 </div>
                             </div>
                             <br />
@@ -154,7 +154,7 @@
                             <div class="row form-group-sm">
                                 <div class="col-md-5" style="display: flex; vertical-align: middle;">
                                     <label for="txtApprover4" style="line-height: 40px;">Nama:</label>
-                                    <input class="form-control" type="text" id="txtApprover4" style="width: 60%; margin-left: auto; margin-right: 0;" disabled />
+                                    <input class="form-control" type="text" id="txtApprover4" placeholder="-" style="width: 60%; margin-left: auto; margin-right: 0;" disabled />
                                 </div>
                             </div>
                             <br />
@@ -314,7 +314,7 @@
 
         $('#ddlChoose').change(function () {
             clearDDL();
-            getApproverData();
+            //getApproverData();
             $('#divTO').attr('hidden', true);
             $('#divHidden').attr('hidden', true);
             $('#divDetail').attr('hidden', true);
@@ -355,7 +355,6 @@
         });
 
         $('#ddlApproverDetail1').change(function () {
-            
             getJabatan(5);
             if ($('#ddlApproverDetail1').val() == '5') {
                 $('#txtJabatanDetail1').val('-');
@@ -426,8 +425,11 @@
 
                     approverArr.push($('#ddlApprover1 option:selected').text());
                     approverArr.push($('#ddlApprover2 option:selected').text());
-                    approverArr.push($('#txtApprover3').val());
-                    approverArr.push($('#txtApprover4').val());
+                    //approverArr.push($('#txtApprover3').val());
+                    //approverArr.push($('#txtApprover4').val());
+
+                    approverArr.push('3');
+                    approverArr.push('4');
 
                     var flagDuplicate = 0;
 
@@ -446,13 +448,13 @@
                                 });
                             }
 
-                            console.log(str);
+                            //console.log(str);
                         } else {
                             duplicatesArr[str] = true;
                         }
                     });
-                    console.log(approverArr)
-                    console.log(duplicatesArr);
+                    //console.log(approverArr)
+                    //console.log(duplicatesArr);
                     if (flagDuplicate == 0) {
                         //Approver detail duplicate validation
                         var approverDetailArr = [];
@@ -479,7 +481,7 @@
                                     });
                                 }
 
-                                console.log(str);
+                                //console.log(str);
                             } else {
                                 duplicates[str] = true;
                             }
@@ -518,8 +520,11 @@
 
                         approverArr.push($('#ddlApprover1 option:selected').text());
                         approverArr.push($('#ddlApprover2 option:selected').text());
-                        approverArr.push($('#txtApprover3').val());
-                        approverArr.push($('#txtApprover4').val());
+                        //approverArr.push($('#txtApprover3').val());
+                        //approverArr.push($('#txtApprover4').val());
+
+                        approverArr.push('3');
+                        approverArr.push('4');
 
                         var flagDuplicate = 0;
 
@@ -538,13 +543,13 @@
                                     });
                                 }
 
-                                console.log(str);
+                                //console.log(str);
                             } else {
                                 duplicatesArr[str] = true;
                             }
                         });
-                        console.log(approverArr)
-                        console.log(duplicatesArr);
+                        //console.log(approverArr)
+                        //console.log(duplicatesArr);
                         if (flagDuplicate == 0) {
                             //Approver detail duplicate validation
                             var approverDetailArr = [];
@@ -661,7 +666,7 @@
                     $('#ddlNoSPB').append(new Option(value.NoSPB));
                 });
 
-                console.log(result);
+               // console.log(result);
             }, error: function (ex) {
                 alert(JSON.stringify(ex));
             }
@@ -694,7 +699,7 @@
                     $('#ddlApproverDetail4').append(new Option(value.NamaEmployee, value.EmailEmployee));
                 });
 
-                console.log(result);
+                //console.log(result);
             }, error: function (ex) {
                 alert(JSON.stringify(ex));
             }
@@ -702,7 +707,7 @@
     }
 
     function getJabatan(approveNo) {
-        var namaEmployee = null;
+        var namaEmployee = ' ';
 
         if (approveNo == 1) {
             namaEmployee = $('#ddlApprover1 option:selected').text();
@@ -758,9 +763,7 @@
                 else if (approveNo == 8) {
                     $('#txtJabatanDetail4').val(result[0].JobTtlName);
                 }
-                
-
-                console.log(result);
+               
             }, error: function (ex) {
                 alert(JSON.stringify(ex));
             }
@@ -802,7 +805,7 @@
                     $('#txtJabatanDetail').val(result[0].JobTtlDetailSPB);
                 }*@
 
-                console.log(result);
+                //console.log(result);
             }, error: function (ex) {
                 alert(JSON.stringify(ex));
             }
@@ -821,8 +824,10 @@
             NoSPB: $('#ddlNoSPB option:selected').text(),
             Approver1: $('#ddlApprover1 option:selected').text(),
             Approver2: $('#ddlApprover2 option:selected').text(),
-            Approver3: $('#txtApprover3').val(),
-            Approver4: $('#txtApprover4').val(),
+            //Approver3: $('#txtApprover3').val(),
+            //Approver4: $('#txtApprover4').val(),
+            Approver3: '-',
+            Approver4: '-',
             ApproverDetail1: $('#ddlApproverDetail1 option:selected').text(),
             ApproverDetail2: $('#ddlApproverDetail2 option:selected').text(),
             ApproverDetail3: $('#ddlApproverDetail3 option:selected').text(),
@@ -848,7 +853,7 @@
                 }).then((result) => {
                     location.reload();
                 });
-                console.log(result);
+                //console.log(result);
             }, error: function (ex) {
                 alert(JSON.stringify(ex));
             }
@@ -868,8 +873,11 @@
             NoTO: $('#ddlNoTO option:selected').text(),
             Approver1: $('#ddlApprover1 option:selected').text(),
             Approver2: $('#ddlApprover2 option:selected').text(),
-            Approver3: $('#txtApprover3').val(),
-            Approver4: $('#txtApprover4').val(),
+            //Approver3: $('#txtApprover3').val(),
+            //Approver4: $('#txtApprover4').val(),
+
+            Approver3: '-',
+            Approver4: '-',
             ApproverDetail1: $('#ddlApproverDetail1 option:selected').text(),
             ApproverDetail2: $('#ddlApproverDetail2 option:selected').text(),
             ApproverDetail3: $('#ddlApproverDetail3 option:selected').text(),
@@ -897,7 +905,7 @@
                     location.reload();
                 });
                
-                console.log(result);
+               // console.log(result);
             }, error: function (ex) {
                 alert(JSON.stringify(ex));
             }
@@ -937,7 +945,7 @@
                     $('#ddlNoTO').append(new Option(value.NoTO));
                 });
 
-                console.log(result);
+               // console.log(result);
             }, error: function (ex) {
                 alert(JSON.stringify(ex));
             }

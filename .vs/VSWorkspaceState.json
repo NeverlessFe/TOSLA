@@ -1,16 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\WebApplication1",
-    "\\WebApplication1\\Report_SPB",
-    "\\WebApplication1\\Report_TO",
-    "\\WebApplication1\\Views",
-    "\\WebApplication1\\Views\\CMS",
-    "\\WebApplication1\\Views\\Login",
-    "\\WebApplication1\\Views\\Report_SPB_View",
-    "\\WebApplication1\\Views\\Report_TO_View",
-    "\\WebApplication1\\Views\\Shared"
+    ""
   ],
-  "SelectedNode": "\\WebApplication1\\Views\\Report_SPB_View\\Report_SPB_Preview.cshtml",
+  "SelectedNode": "\\debug.log",
   "PreviewInSolutionExplorer": false
 }

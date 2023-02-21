@@ -294,7 +294,7 @@ namespace WebApplication1.Report_SPB
                 //data.AcceptChanges();
                 conn.Close();
 
-                    someDataSet.Load(Server.MapPath("~/Report_SPB/Report_SPB_Memo.rpt"));
+                    someDataSet.Load("../Report_SPB/Report_SPB_Memo.rpt");
                     //someDataSet.Load(Server.MapPath("~/Report_SPB/SPB_Report_DETAIL.rpt"));
                     someDataSet.SetDatabaseLogon("sab7", "Welcome123");
                     someDataSet.SetDataSource(data);

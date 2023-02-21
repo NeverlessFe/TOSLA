@@ -81,18 +81,55 @@
                         var trav = 0;
                         var Count = data.length;
                         var Stat_Subd = false;
+
+
                         if ($("#ddlTipe").val() == 'TO') {
+                            //Previous Code
+                            //if (Count > 0) {
+                            //    for (trav = 0; trav < Count; trav++) {
+                            //        trHTML += '<tr><td>' + data[trav].NoMemo + '</td><td>' + data[trav].Reg + '</td><td>' + data[trav].ShipToID + '</td><td>' + data[trav].Base + '</td><td>' + data[trav].Nama + '</td><td>' + data[trav].Subdist + '</td><td align="right">' + data[trav].KlaimTO + '</td></tr>';
+                            //        $("#tBodyItemList").empty();
+                            //        $("#tblItemList").append(trHTML);
+                            //    }
+                            //}
 
                             if (Count > 0) {
+                                let dataInvalid = 0  // count error returned caused by unmatch subdist
+
+
                                 for (trav = 0; trav < Count; trav++) {
-                                    trHTML += '<tr><td>' + data[trav].NoMemo + '</td><td>' + data[trav].Reg + '</td><td>' + data[trav].ShipToID + '</td><td>' + data[trav].Base + '</td><td>' + data[trav].Nama + '</td><td>' + data[trav].Subdist + '</td><td align="right">' + data[trav].KlaimTO + '</td></tr>';
+                                    // return match status from stored_procedure = data[trav].status
+                                    if (data[trav].IsValid == '0') {
+                                        trHTML += '<tr class="bg-danger text-white"><td>' + data[trav].NoMemo + '</td><td>' + data[trav].Reg + '</td><td>' + data[trav].ShipToID + '</td><td>' + data[trav].Base + '</td><td>' + data[trav].Nama + '</td><td>' + data[trav].Subdist + '</td><td align="right">' + data[trav].KlaimTO + '</td></tr>';
+                                        dataInvalid++
+                                    } else {
+                                        trHTML += '<tr><td>' + data[trav].NoMemo + '</td><td>' + data[trav].Reg + '</td><td>' + data[trav].ShipToID + '</td><td>' + data[trav].Base + '</td><td>' + data[trav].Nama + '</td><td>' + data[trav].Subdist + '</td><td align="right">' + data[trav].KlaimTO + '</td></tr>';
+                                    }
                                     $("#tBodyItemList").empty();
                                     $("#tblItemList").append(trHTML);
                                 }
+
+                                // add error tag
+                                if (dataInvalid > 0) {
+
+                                    Swal.fire({
+                                        title: "Error!",
+                                        text: "Beberapa Kodesubdist/Namasubdist tidak sesuai dengan system, harap perbaiki data terlebih dahulu! ",
+                                        type: "error",
+                                        showConfirmButton: false,
+                                        timer: 5000,
+                                    });
+                                    $('#UploadAttachment').attr("disabled", true);
+                                    
+                                    //$("#btnSaveDetail").attr("data-error", true);
+                                    //$("#btnSaveDetail").attr("disabled", true);
+                                    $("#btnSaveDetail").text("Reload Page");
+                                }
                             }
+
                         }
                         else if ($("#ddlTipe").val() == 'SPB') {
-                            alert('masuk if')
+                            //alert('masuk if')
                             var table = $('#tblSPB').DataTable({
                                 "pageLength": 25,
                                 "data": data,
@@ -191,12 +228,12 @@
     });
     $(document).ready(function () {
         $("#btnSaveDetail").click(function () {
-            alert($('#ddlPeriode').val());
+            //alert($('#ddlPeriode').val());
             if ($('#btnSaveDetail').text() == 'Reload Page') {
                 window.location.reload();
                 return
             }
-            swal({
+            Swal.fire({
                 title: "Konfirmasi",
                 text: "Apakah anda yakin ?",
                 type: "info",
@@ -204,8 +241,10 @@
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Konfirmasi",
                 closeOnConfirm: !1
-            }, function () {
-                KonfirmasiData();
+            }).then((result) => {
+                if (result.value) {
+                    KonfirmasiData();
+                }
             });
 
         });
