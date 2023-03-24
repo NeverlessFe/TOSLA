@@ -294,9 +294,9 @@ namespace WebApplication1.Report_SPB
                 //data.AcceptChanges();
                 conn.Close();
 
-                    someDataSet.Load("../Report_SPB/Report_SPB_Memo.rpt");
-                    //someDataSet.Load(Server.MapPath("~/Report_SPB/SPB_Report_DETAIL.rpt"));
-                    someDataSet.SetDatabaseLogon("sab7", "Welcome123");
+                //someDataSet.Load(@"D:\Documents\Internship\B7\B7 TOSLA\WebApplication1\Report_SPB\Report_SPB_Memo.rpt");
+                someDataSet.Load(Server.MapPath("~/Report_SPB/Report_SPB_Memo.rpt"));
+                someDataSet.SetDatabaseLogon("sab7", "sqlb7");
                     someDataSet.SetDataSource(data);
                     someDataSet.VerifyDatabase();
                     //someDataSet.SetDatabaseLogon("sab7", "Welcome1234");

@@ -48,7 +48,7 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         public async Task<ActionResult> LoginExec(string Username, string Password, string ADFlag)
-        {
+            {
             List<string> ModelData = new List<string>();
             IntPtr tokenHandle = new IntPtr(0);
             DataTable dt = new DataTable();

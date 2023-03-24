@@ -63,6 +63,7 @@
                     contentType: false,
                     processData: false,
                     success: function (data) {
+                        console.log(data);
                         $('#ddlTipe').attr("disabled", true);
                         $('#ddlPeriode').attr("disabled", true);
                         $("#divloading").attr("hidden", true);
@@ -132,7 +133,7 @@
                             //alert('masuk if')
                             var table = $('#tblSPB').DataTable({
                                 "pageLength": 25,
-                                "data": data,
+                                "data": JSON.parse(data),
                                 "lengthChange": true,
                                 "paging": true,
                                 "info": true,
@@ -475,7 +476,7 @@
                                 <table id="tblSPB" class="table table-striped table-bordered zero-configuration">
                                     <thead>
                                         <tr>
-                                            <th hidden></th>
+                                            <th hidden>Stat Subdist</th>
                                             <th>Periode</th>
                                             <th>Reg</th>
                                             <th>Cabang</th>

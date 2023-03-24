@@ -77,7 +77,18 @@
                             <select id="ddlNoSPB" class="form-control" style="width: 100%">
                                 <option value="" class="dropdown-header" selected disabled>Select Nomor SPB</option>
                             </select>
+
+                            <div style="display: flex; vertical-align: middle; margin-top:10px">
+                                <label for="txtRegionSPB" style="line-height: 40px;">Region:</label>
+                                <input class="form-control" type="text" id="txtRegionSPB" style="width: 70%; margin-left: auto; margin-right: 0;" disabled />
+                            </div>
+
+                            <div style="display: flex; vertical-align: middle; margin-top:10px">
+                                <label for="txtSubdistSPB" style="line-height: 40px;">Subdist:</label>
+                                <input class="form-control" type="text" id="txtSubdistSPB" style="width: 70%; margin-left: auto; margin-right: 0;" disabled />
+                            </div>
                         </div>
+
                     </div>
                 </div>
                 <br />
@@ -132,8 +143,15 @@
                             <h5>Approver 3</h5>
                             <div class="row form-group-sm">
                                 <div class="col-md-5" style="display: flex; vertical-align: middle;">
-                                    <label for="txtApprover3" style="line-height: 40px;">Nama:</label>
-                                    <input class="form-control" type="text" id="txtApprover3" placeholder="-"  style="width: 60%; margin-left: auto; margin-right: 0;" disabled />
+                                    <label for="ddlApprover3" style="line-height: 40px;">Nama:</label>
+                                    <div style="width: 60%; margin-left: auto; margin-right: 0; ">
+                                        <select id="ddlApprover3" class="form-control" style="width: 100%;" disabled>
+                                            <option value="3" class="dropdown-header" selected>-</option>
+                                        </select>
+                                    </div>
+
+                                    @*<label for="ddlApprover3" style="line-height: 40px;">Nama:</label>
+                                    <input class="form-control" type="text" id="ddlApprover3" style="width: 60%; margin-left: auto; margin-right: 0;" disabled />*@
                                 </div>
                             </div>
                             <br />
@@ -153,8 +171,15 @@
                             <h5>Approver 4</h5>
                             <div class="row form-group-sm">
                                 <div class="col-md-5" style="display: flex; vertical-align: middle;">
-                                    <label for="txtApprover4" style="line-height: 40px;">Nama:</label>
-                                    <input class="form-control" type="text" id="txtApprover4" placeholder="-" style="width: 60%; margin-left: auto; margin-right: 0;" disabled />
+                                    <label for="ddlApprover4" style="line-height: 40px;">Nama:</label>
+                                    <div style="width: 60%; margin-left: auto; margin-right: 0; ">
+                                        <select id="ddlApprover4" class="form-control" style="width: 100%;" disabled>
+                                            <option value="4" class="dropdown-header" selected>-</option>
+                                        </select>
+                                    </div>
+
+                                    @*<label for="txtApprover4" style="line-height: 40px;">Nama:</label>
+                                    <input class="form-control" type="text" id="txtApprover4" placeholder="-" style="width: 60%; margin-left: auto; margin-right: 0;" disabled />*@
                                 </div>
                             </div>
                             <br />
@@ -298,7 +323,7 @@
         getNoSPB();
         getNoTO();
         getApproverDDL();
-        getApproverData();
+        //getApproverData();
 
         $('#ddlNoSPB').select2();
         $('#ddlChoose').select2();
@@ -306,6 +331,8 @@
 
         $('#ddlApprover1').select2();
         $('#ddlApprover2').select2();
+        $('#ddlApprover3').select2();
+        $('#ddlApprover4').select2();
 
         $('#ddlApproverDetail1').select2();
         $('#ddlApproverDetail2').select2();
@@ -340,6 +367,8 @@
                 $('#txtJabatan1').val('-');
                 $('#ddlApprover2').attr('disabled', true);
                 $('#ddlApprover2').val('2').change();
+                $('#ddlApprover3').val('3').change();
+                $('#ddlApprover4').val('4').change();
             } else {
                 $('#ddlApprover2').attr('disabled', false);
             }
@@ -351,6 +380,27 @@
             getJabatan(2);
             if ($('#ddlApprover2').val() == '2') {
                 $('#txtJabatan2').val('-');
+                $('#ddlApprover3').attr('disabled', true);
+                $('#ddlApprover3').val('3').change();
+                $('#ddlApprover4').val('4').change();
+            } else {
+                $('#ddlApprover3').attr('disabled', false);
+            }
+        });
+        $('#ddlApprover3').change(function () {
+            getJabatan(3);
+            if ($('#ddlApprover3').val() == '3') {
+                $('#txtJabatan3').val('-');
+                $('#ddlApprover4').attr('disabled', true);
+                $('#ddlApprover4').val('4').change();
+            } else {
+                $('#ddlApprover4').attr('disabled', false);
+            }
+        });
+        $('#ddlApprover4').change(function () {
+            getJabatan(4);
+            if ($('#ddlApprover4').val() == '4') {
+                $('#txtJabatan4').val('-');
             }
         });
 
@@ -406,6 +456,7 @@
 
 
         $('#ddlNoSPB').change(function () {
+            getRegionSubdistSPB();
             $('#divHidden').attr('hidden', false);
             $('#divDetail').attr('hidden', false);
             $('#divTO').attr('hidden', true);
@@ -425,11 +476,8 @@
 
                     approverArr.push($('#ddlApprover1 option:selected').text());
                     approverArr.push($('#ddlApprover2 option:selected').text());
-                    //approverArr.push($('#txtApprover3').val());
-                    //approverArr.push($('#txtApprover4').val());
-
-                    approverArr.push('3');
-                    approverArr.push('4');
+                    approverArr.push($('#ddlApprover3 option:selected').text());
+                    approverArr.push($('#ddlApprover4 option:selected').text());
 
                     var flagDuplicate = 0;
 
@@ -673,6 +721,34 @@
         });
     }
 
+    function getRegionSubdistSPB() {
+        var dictlist = {
+            Option: "Get Region Subdist SPB",
+            NoSPB: $("#ddlNoSPB option:selected").text()
+        }
+
+        var dto = {
+            Model: dictlist
+        }
+        $.ajax({
+            url: "../UploadMemo/DynamicController?spname=SP_Signature",
+            type: "post",
+            dataType: "json",
+            data: JSON.stringify(dto),
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+
+                var result = JSON.parse(data);
+                $('#txtRegionSPB').val(result[0].Region);
+                $('#txtSubdistSPB').val(result[0].Subdist);
+
+                // console.log(result);
+            }, error: function (ex) {
+                alert(JSON.stringify(ex));
+            }
+        });
+    }
+
     function getApproverDDL() {
         var dictlist = {
             Option: "Get Approver DDL"
@@ -693,6 +769,8 @@
                 $.each(result, function (key, value) {
                     $('#ddlApprover1').append(new Option(value.NamaEmployee, value.EmailEmployee));
                     $('#ddlApprover2').append(new Option(value.NamaEmployee, value.EmailEmployee));
+                    $('#ddlApprover3').append(new Option(value.NamaEmployee, value.EmailEmployee));
+                    $('#ddlApprover4').append(new Option(value.NamaEmployee, value.EmailEmployee));
                     $('#ddlApproverDetail1').append(new Option(value.NamaEmployee, value.EmailEmployee));
                     $('#ddlApproverDetail2').append(new Option(value.NamaEmployee, value.EmailEmployee));
                     $('#ddlApproverDetail3').append(new Option(value.NamaEmployee, value.EmailEmployee));
@@ -714,6 +792,12 @@
         }
         else if (approveNo == 2) {
             namaEmployee = $('#ddlApprover2 option:selected').text();
+        }
+        else if (approveNo == 3) {
+            namaEmployee = $('#ddlApprover3 option:selected').text();
+        }
+        else if (approveNo == 4) {
+            namaEmployee = $('#ddlApprover4 option:selected').text();
         }
         else if (approveNo == 5) {
             namaEmployee = $('#ddlApproverDetail1 option:selected').text();
@@ -750,6 +834,12 @@
                 }
                 else if (approveNo == 2) {
                     $('#txtJabatan2').val(result[0].JobTtlName);
+                }
+                else if (approveNo == 3) {
+                    $('#txtJabatan3').val(result[0].JobTtlName);
+                }
+                else if (approveNo == 4) {
+                    $('#txtJabatan4').val(result[0].JobTtlName);
                 }
                 else if (approveNo == 5) {
                     $('#txtJabatanDetail1').val(result[0].JobTtlName);
@@ -824,10 +914,9 @@
             NoSPB: $('#ddlNoSPB option:selected').text(),
             Approver1: $('#ddlApprover1 option:selected').text(),
             Approver2: $('#ddlApprover2 option:selected').text(),
-            //Approver3: $('#txtApprover3').val(),
-            //Approver4: $('#txtApprover4').val(),
-            Approver3: '-',
-            Approver4: '-',
+            Approver3: $('#ddlApprover3 option:selected').text(),
+            Approver4: $('#ddlApprover4 option:selected').text(),
+
             ApproverDetail1: $('#ddlApproverDetail1 option:selected').text(),
             ApproverDetail2: $('#ddlApproverDetail2 option:selected').text(),
             ApproverDetail3: $('#ddlApproverDetail3 option:selected').text(),
@@ -873,11 +962,10 @@
             NoTO: $('#ddlNoTO option:selected').text(),
             Approver1: $('#ddlApprover1 option:selected').text(),
             Approver2: $('#ddlApprover2 option:selected').text(),
-            //Approver3: $('#txtApprover3').val(),
-            //Approver4: $('#txtApprover4').val(),
+            Approver3: $('#ddlApprover3 option:selected').text(),
+            Approver4: $('#ddlApprover4 option:selected').text(),
 
-            Approver3: '-',
-            Approver4: '-',
+   
             ApproverDetail1: $('#ddlApproverDetail1 option:selected').text(),
             ApproverDetail2: $('#ddlApproverDetail2 option:selected').text(),
             ApproverDetail3: $('#ddlApproverDetail3 option:selected').text(),
@@ -917,6 +1005,8 @@
         $('#ddlNoSPB').val('').change();
         $('#ddlApprover1').val('1').change();
         $('#ddlApprover2').val('2').change();
+        $('#ddlApprover3').val('3').change();
+        $('#ddlApprover4').val('4').change();
         $('#ddlNoTO').val('').change();
         $('#ddlApproverDetail1').val('5').change();
         $('#ddlApproverDetail2').val('6').change();
